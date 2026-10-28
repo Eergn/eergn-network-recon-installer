@@ -30,8 +30,9 @@ A single-file Bash CLI that installs a standard toolkit of network discovery and
 7. [How it works](#how-it-works)
 8. [Quick reference for the installed tools](#quick-reference-for-the-installed-tools)
 9. [Troubleshooting](#troubleshooting)
-10. [Contributing](#contributing)
-11. [License](#license)
+10. [Roadmap](#roadmap)
+11. [Contributing](#contributing)
+12. [License](#license)
 
 ---
 
@@ -229,6 +230,26 @@ sudo nethogs                       # bandwidth per process
 | A package failed | Open the log file path printed by the installer for the exact error |
 | `nethogs` unavailable on macOS | It is Linux-focused; the installer will report it as failed and continue |
 | Colors look broken | Run with `NO_COLOR=1` |
+
+## Roadmap
+
+Planned tools and features are tracked in the public [project board](https://github.com/Eergn/eergn-network-recon-installer/projects) and as [issues labeled `roadmap`](https://github.com/Eergn/eergn-network-recon-installer/issues?q=label%3Aroadmap).
+
+Planned tool groups:
+
+- Network traffic and detection (Wireshark, TShark, tcpdump, Suricata, Zeek, Snort, Arkime)
+- Auditing and hardening (Lynis, AIDE, auditd, Fail2ban, CrowdSec)
+- VPS monitoring (Prometheus, Grafana, Node Exporter, Alertmanager, Uptime Kuma)
+- Endpoint security and SIEM (Wazuh, osquery, Velociraptor, Elastic, Graylog, Loki)
+- Threat hunting and forensics (YARA, Sigma, Volatility 3, Autopsy, Sleuth Kit, Plaso)
+- Containers and virtualization (Docker, KVM/QEMU, libvirt, virt-manager)
+- Web, vulnerability and code scanning (ZAP, Nikto, Nuclei, Trivy, Grype, Semgrep, Gitleaks)
+- Reverse engineering, wireless and password auditing for authorized lab use
+- Identity, secrets and backups (age, SOPS, Restic, BorgBackup, KeePassXC)
+
+Planned installer features: install profiles, a `--sysinfo` hardware report, `--uninstall`, `--update`, vendor-repository support, shell completions, JSON output, an RPM package, a Homebrew tap and a Docker image.
+
+Want something added? [Open an issue](https://github.com/Eergn/eergn-network-recon-installer/issues/new) and describe the tool and why it belongs.
 
 ## Contributing
 
