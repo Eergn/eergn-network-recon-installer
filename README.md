@@ -66,7 +66,22 @@ Requirements: Bash 3.2 or newer (macOS default works), `sudo` or root on Linux, 
 
 Pick one method.
 
-**Option A: Debian package (Debian, Ubuntu, Kali, Mint)**
+**Option A: APT repository (Debian, Ubuntu, Kali, Mint) - recommended**
+
+Add the signed repository once, then install and update like any other package:
+
+```bash
+curl -fsSL https://eergn.github.io/eergn-network-recon-installer/eergn-archive-keyring.gpg \
+  | sudo tee /usr/share/keyrings/eergn-archive-keyring.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/eergn-archive-keyring.gpg] https://eergn.github.io/eergn-network-recon-installer ./" \
+  | sudo tee /etc/apt/sources.list.d/eergn.list
+sudo apt update
+sudo apt install eergn-recon-installer
+```
+
+Future versions arrive with `sudo apt update && sudo apt upgrade`.
+
+**Option B: Debian package file**
 
 Download the `.deb` from the [latest release](https://github.com/Eergn/eergn-network-recon-installer/releases/latest), then:
 
@@ -78,7 +93,7 @@ man eergn-recon-installer
 
 Remove it later with `sudo apt remove eergn-recon-installer`.
 
-**Option B: download just the script (any supported system)**
+**Option C: download just the script (any supported system)**
 
 ```bash
 curl -LO https://github.com/Eergn/eergn-network-recon-installer/releases/latest/download/eergn-recon-installer.sh
@@ -86,7 +101,7 @@ chmod +x eergn-recon-installer.sh
 sudo ./eergn-recon-installer.sh
 ```
 
-**Option C: clone the repository**
+**Option D: clone the repository**
 
 ```bash
 git clone https://github.com/Eergn/eergn-network-recon-installer.git
@@ -95,7 +110,7 @@ chmod +x eergn-recon-installer.sh
 sudo ./eergn-recon-installer.sh
 ```
 
-To build the `.deb` yourself, run `./build-deb.sh` (needs `dpkg-deb`, from the `dpkg-dev` package).
+To build the `.deb` yourself, run `./build-deb.sh` (needs `dpkg-deb`, from the `dpkg-dev` package). Maintainers publish the APT repository with `./make-apt-repo.sh`, which signs it and writes it to `docs/` for GitHub Pages.
 
 ## Quick start
 

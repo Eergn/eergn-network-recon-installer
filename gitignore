@@ -1,2 +1,5 @@
-# Build output (attach .deb files to GitHub Releases instead)
+# Build output: attach .deb files to GitHub Releases instead
 *.deb
+
+# ...except the packages served by the APT repository on GitHub Pages
+!docs/*.deb

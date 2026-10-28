@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eergn APT repository</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 46rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+  pre { background: #f2f2f2; padding: 1rem; overflow-x: auto; border-radius: 6px; }
+  @media (prefers-color-scheme: dark) { body { background: #111; color: #eee; } pre { background: #222; } a { color: #7ab7ff; } }
+</style>
+</head>
+<body>
+<h1>Eergn APT repository</h1>
+<p>Packages: <strong>eergn-recon-installer</strong> &mdash; installer for network reconnaissance and diagnostic tools.</p>
+<pre>curl -fsSL https://eergn.github.io/eergn-network-recon-installer/eergn-archive-keyring.gpg | sudo tee /usr/share/keyrings/eergn-archive-keyring.gpg &gt;/dev/null
+echo "deb [signed-by=/usr/share/keyrings/eergn-archive-keyring.gpg] https://eergn.github.io/eergn-network-recon-installer ./" | sudo tee /etc/apt/sources.list.d/eergn.list
+sudo apt update
+sudo apt install eergn-recon-installer</pre>
+<p>Source: <a href="https://github.com/Eergn/eergn-network-recon-installer">github.com/Eergn/eergn-network-recon-installer</a></p>
+</body>
+</html>

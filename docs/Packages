@@ -1,0 +1,22 @@
+Package: eergn-recon-installer
+Version: 1.0.0
+Architecture: all
+Maintainer: Eergn <Eergn@users.noreply.github.com>
+Installed-Size: 40
+Depends: bash
+Filename: ./eergn-recon-installer_1.0.0_all.deb
+Size: 9678
+MD5sum: 9dfe858a695af5bc154d09c19b4555ed
+SHA1: 1f80fe97828a52b5add56d9982937a022b25980d
+SHA256: a6d442c40c1e1447cfefa786ee5238bb9d93a04a33be1aaefc40274de34b1a05
+Section: net
+Priority: optional
+Homepage: https://github.com/Eergn/eergn-network-recon-installer
+Description: installer for network reconnaissance and diagnostic tools
+ One command installs Nmap/Ncat, Netcat, arp-scan, fping, MTR, dig/whois,
+ OpenSSL/testssl.sh, iperf3 and iftop/nethogs on Debian, Ubuntu, Kali and
+ other supported systems. Includes an interactive menu, a dry-run mode and
+ a status check.
+ .
+ Use only on networks and systems you own or are authorized to test.
+
