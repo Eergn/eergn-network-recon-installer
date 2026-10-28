@@ -9,6 +9,8 @@
 ╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
 ```
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+
 A single-file Bash CLI that installs a standard toolkit of network discovery and diagnostic utilities on Linux and macOS.
 
 **Developer:** [@Eergn](https://github.com/Eergn)
@@ -194,7 +196,9 @@ Issues and pull requests are welcome.
 
 ## License
 
-Add a license file of your choice (for example MIT) and reference it here.
+This project is licensed under the **GNU General Public License v3.0** (GPL-3.0). You are free to use, study, modify and share it, provided that any distributed derivative work is also released under GPL-3.0 with its source code available. The software comes with no warranty.
+
+See the [LICENSE](LICENSE) file for the full terms.
 
 ---
 
