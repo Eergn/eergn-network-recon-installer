@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ----------------------------------------------------------------------------
-#  greenk's network reconnaissance tools installer
-#  Developer: @greenk
+#  Eergn's network reconnaissance tools installer
+#  Developer: @Eergn
 #
 #  Installs common network diagnostic / reconnaissance utilities on
 #  Debian/Ubuntu/Kali, Fedora/RHEL, Arch, openSUSE, Alpine and macOS (Homebrew).
@@ -12,8 +12,8 @@
 set -uo pipefail
 
 VERSION="1.0.0"
-DEV="@greenk"
-TOOL_NAME="greenk's network reconnaissance tools installer"
+DEV="@Eergn"
+TOOL_NAME="Eergn's network reconnaissance tools installer"
 ALL_IDS="nmap netcat arp-scan fping mtr dns tls iperf3 bandwidth"
 
 # ------------------------------- colours ------------------------------------
@@ -34,7 +34,7 @@ FORCE=0
 PM=""              # detected package manager
 PKGKEY=""          # key used for package-name lookup
 SUDO=""
-LOG="$(mktemp -t greenk-installer.XXXXXX 2>/dev/null || echo /tmp/greenk-installer.log)"
+LOG="$(mktemp -t Eergn-installer.XXXXXX 2>/dev/null || echo /tmp/Eergn-installer.log)"
 FAILED_PKGS=""
 
 # ------------------------------- helpers ------------------------------------
@@ -42,12 +42,12 @@ banner() {
   printf '%s' "$G"
   cat <<'EOF'
 
- ██████╗ ██████╗ ███████╗███████╗███╗   ██╗██╗  ██╗
-██╔════╝ ██╔══██╗██╔════╝██╔════╝████╗  ██║██║ ██╔╝
-██║  ███╗██████╔╝█████╗  █████╗  ██╔██╗ ██║█████╔╝
-██║   ██║██╔══██╗██╔══╝  ██╔══╝  ██║╚██╗██║██╔═██╗
-╚██████╔╝██║  ██║███████╗███████╗██║ ╚████║██║  ██╗
- ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝
+███████╗███████╗██████╗  ██████╗ ███╗   ██╗
+██╔════╝██╔════╝██╔══██╗██╔════╝ ████╗  ██║
+█████╗  █████╗  ██████╔╝██║  ███╗██╔██╗ ██║
+██╔══╝  ██╔══╝  ██╔══██╗██║   ██║██║╚██╗██║
+███████╗███████╗██║  ██║╚██████╔╝██║ ╚████║
+╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
 EOF
   printf '%s' "$X"
   printf '%s  %s%s\n' "$B" "$TOOL_NAME" "$X"
@@ -71,7 +71,7 @@ Usage: $(basename "$0") [options]
   -y, --yes            Do not ask for confirmation
   -n, --dry-run        Print the commands without running them
   -f, --force          Reinstall even if the commands are already present
-      --no-banner      Hide the GREENK logo
+      --no-banner      Hide the EERGN logo
   -v, --version        Print version
   -h, --help           Show this help
 

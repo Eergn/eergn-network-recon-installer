@@ -1,17 +1,17 @@
-# greenk's network reconnaissance tools installer
+# Eergn's network reconnaissance tools installer
 
 ```
- ██████╗ ██████╗ ███████╗███████╗███╗   ██╗██╗  ██╗
-██╔════╝ ██╔══██╗██╔════╝██╔════╝████╗  ██║██║ ██╔╝
-██║  ███╗██████╔╝█████╗  █████╗  ██╔██╗ ██║█████╔╝
-██║   ██║██╔══██╗██╔══╝  ██╔══╝  ██║╚██╗██║██╔═██╗
-╚██████╔╝██║  ██║███████╗███████╗██║ ╚████║██║  ██╗
- ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝
+███████╗███████╗██████╗  ██████╗ ███╗   ██╗
+██╔════╝██╔════╝██╔══██╗██╔════╝ ████╗  ██║
+█████╗  █████╗  ██████╔╝██║  ███╗██╔██╗ ██║
+██╔══╝  ██╔══╝  ██╔══██╗██║   ██║██║╚██╗██║
+███████╗███████╗██║  ██║╚██████╔╝██║ ╚████║
+╚══════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
 ```
 
 A single-file Bash CLI that installs a standard toolkit of network discovery and diagnostic utilities on Linux and macOS.
 
-**Developer:** [@greenk](https://github.com/greenk)
+**Developer:** [@Eergn](https://github.com/Eergn)
 
 > **Authorized use only.** These tools can generate traffic that looks like scanning. Use them only on networks and systems you own or have explicit permission to assess.
 
@@ -62,8 +62,8 @@ Requirements: Bash 3.2 or newer (macOS default works), `sudo` or root on Linux, 
 ## Quick start
 
 ```bash
-git clone https://github.com/greenk/<your-repo-name>.git
-cd <your-repo-name>
+git clone https://github.com/Eergn/greenk-network-recon-installer.git
+cd greenk-network-recon-installer
 chmod +x greenk-recon-installer.sh
 sudo ./greenk-recon-installer.sh
 ```
@@ -93,7 +93,7 @@ Usage: greenk-recon-installer.sh [options]
   -y, --yes            Do not ask for confirmation
   -n, --dry-run        Print the commands without running them
   -f, --force          Reinstall even if the commands are already present
-      --no-banner      Hide the GREENK logo
+      --no-banner      Hide the EERGN logo
   -v, --version        Print version
   -h, --help           Show this help
 ```
@@ -198,4 +198,4 @@ Add a license file of your choice (for example MIT) and reference it here.
 
 ---
 
-Made by [@greenk](https://github.com/greenk)
+Made by [@Eergn](https://github.com/Eergn)
