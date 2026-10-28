@@ -62,10 +62,10 @@ Requirements: Bash 3.2 or newer (macOS default works), `sudo` or root on Linux, 
 ## Quick start
 
 ```bash
-git clone https://github.com/Eergn/greenk-network-recon-installer.git
-cd greenk-network-recon-installer
-chmod +x greenk-recon-installer.sh
-sudo ./greenk-recon-installer.sh
+git clone https://github.com/Eergn/eergn-network-recon-installer.git
+cd eergn-network-recon-installer
+chmod +x eergn-recon-installer.sh
+sudo ./eergn-recon-installer.sh
 ```
 
 With no options in a terminal, an interactive menu appears:
@@ -84,7 +84,7 @@ Choice (e.g. "1 3 5", or "a"):
 ## Usage
 
 ```
-Usage: greenk-recon-installer.sh [options]
+Usage: eergn-recon-installer.sh [options]
 
   -a, --all            Install every tool group (no menu)
   -t, --tool ID        Install one group (repeatable). See --list for IDs
@@ -108,19 +108,19 @@ Notes:
 
 ```bash
 # Install everything without prompts
-sudo ./greenk-recon-installer.sh --all -y
+sudo ./eergn-recon-installer.sh --all -y
 
 # Install only Nmap/Ncat and the TLS tools
-sudo ./greenk-recon-installer.sh -t nmap -t tls
+sudo ./eergn-recon-installer.sh -t nmap -t tls
 
 # See what a full install would run, without changing anything
-./greenk-recon-installer.sh --all --dry-run
+./eergn-recon-installer.sh --all --dry-run
 
 # Audit the current machine
-./greenk-recon-installer.sh --check
+./eergn-recon-installer.sh --check
 
 # Use in a provisioning script (no logo, no prompts)
-sudo ./greenk-recon-installer.sh --all -y --no-banner
+sudo ./eergn-recon-installer.sh --all -y --no-banner
 ```
 
 ## How it works
@@ -188,9 +188,9 @@ sudo nethogs                       # bandwidth per process
 
 Issues and pull requests are welcome.
 
-- Add a new tool by editing `ALL_IDS`, `tool_desc`, `tool_cmds` and `pkgs_for` in `greenk-recon-installer.sh`.
+- Add a new tool by editing `ALL_IDS`, `tool_desc`, `tool_cmds` and `pkgs_for` in `eergn-recon-installer.sh`.
 - Add a new package manager in `detect_pm`, `pm_install` and `pkgs_for`.
-- Before submitting, run `bash -n greenk-recon-installer.sh` and `./greenk-recon-installer.sh --all --dry-run`.
+- Before submitting, run `bash -n eergn-recon-installer.sh` and `./eergn-recon-installer.sh --all --dry-run`.
 
 ## License
 
