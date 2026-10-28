@@ -8,7 +8,7 @@
 #  Developer: @Eergn
 #
 #  Run this on YOUR machine (the signing key stays in your GPG keyring):
-#      ./make-apt-repo.sh
+#      ./scripts/make-apt-repo.sh
 #
 #  Requires: gnupg, dpkg-dev (dpkg-deb, dpkg-scanpackages)
 #      sudo apt install gnupg dpkg-dev
@@ -19,7 +19,7 @@
 #      KEY_NAME / KEY_EMAIL   identity used when a new key is generated
 # ----------------------------------------------------------------------------
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 SITE_URL="${SITE_URL:-https://eergn.github.io/eergn-network-recon-installer}"
 KEY_NAME="${KEY_NAME:-Eergn APT Repository}"
@@ -35,7 +35,7 @@ need gpg                "sudo apt install gnupg"
 need dpkg-deb           "sudo apt install dpkg-dev"
 need dpkg-scanpackages  "sudo apt install dpkg-dev"
 need gzip               "sudo apt install gzip"
-[ -x ./build-deb.sh ] || { echo "error: ./build-deb.sh missing or not executable (chmod +x build-deb.sh)" >&2; exit 1; }
+[ -x ./scripts/build-deb.sh ] || { echo "error: ./scripts/build-deb.sh missing or not executable (chmod +x scripts/build-deb.sh)" >&2; exit 1; }
 
 find_fpr() {
   gpg --batch --list-secret-keys --with-colons "$KEY_NAME" 2>/dev/null \
@@ -56,7 +56,7 @@ echo "==> Signing key: $KEY_FPR"
 
 # --- 2. build the package ----------------------------------------------------
 echo "==> Building the .deb"
-./build-deb.sh >/dev/null
+./scripts/build-deb.sh >/dev/null
 mkdir -p "$OUT"
 cp -f ${PKG}_*_all.deb "$OUT"/
 touch "$OUT/.nojekyll"

@@ -3,14 +3,14 @@
 #  Builds a .deb package for eergn-recon-installer.
 #  Developer: @Eergn
 #
-#  Usage:   ./build-deb.sh
+#  Usage:   ./scripts/build-deb.sh
 #  Output:  eergn-recon-installer_<version>_all.deb  (in this folder)
 #
 #  Requires: dpkg-deb  (sudo apt install dpkg-dev)
 #  The version is read from VERSION="..." in eergn-recon-installer.sh.
 # ----------------------------------------------------------------------------
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 PKG="eergn-recon-installer"
 SRC="eergn-recon-installer.sh"
@@ -18,7 +18,7 @@ MAINTAINER="Eergn <Eergn@users.noreply.github.com>"
 HOMEPAGE="https://github.com/Eergn/eergn-network-recon-installer"
 YEAR="$(date +%Y)"
 
-[ -f "$SRC" ] || { echo "error: $SRC not found next to build-deb.sh" >&2; exit 1; }
+[ -f "$SRC" ] || { echo "error: $SRC not found in the repository root" >&2; exit 1; }
 command -v dpkg-deb >/dev/null 2>&1 || { echo "error: dpkg-deb not found (sudo apt install dpkg-dev)" >&2; exit 1; }
 
 VERSION="$(sed -n 's/^VERSION="\(.*\)"/\1/p' "$SRC" | head -n1)"

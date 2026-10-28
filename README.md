@@ -111,7 +111,7 @@ chmod +x eergn-recon-installer.sh
 sudo ./eergn-recon-installer.sh
 ```
 
-To build the `.deb` yourself, run `./build-deb.sh` (needs `dpkg-deb`, from the `dpkg-dev` package). Maintainers publish the APT repository with `./make-apt-repo.sh`, which signs it and writes it to `docs/` for GitHub Pages.
+To build the `.deb` yourself, run `./scripts/build-deb.sh` (needs `dpkg-deb`, from the `dpkg-dev` package). Maintainers publish the APT repository with `./scripts/make-apt-repo.sh`, which signs it and writes it to `docs/` for GitHub Pages.
 
 ## Quick start
 
