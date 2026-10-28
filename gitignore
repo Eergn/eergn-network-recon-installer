@@ -1,0 +1,2 @@
+# Build output (attach .deb files to GitHub Releases instead)
+*.deb

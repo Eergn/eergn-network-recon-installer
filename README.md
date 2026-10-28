@@ -23,14 +23,15 @@ A single-file Bash CLI that installs a standard toolkit of network discovery and
 
 1. [What gets installed](#what-gets-installed)
 2. [Supported platforms](#supported-platforms)
-3. [Quick start](#quick-start)
-4. [Usage](#usage)
-5. [Examples](#examples)
-6. [How it works](#how-it-works)
-7. [Quick reference for the installed tools](#quick-reference-for-the-installed-tools)
-8. [Troubleshooting](#troubleshooting)
-9. [Contributing](#contributing)
-10. [License](#license)
+3. [Installation](#installation)
+4. [Quick start](#quick-start)
+5. [Usage](#usage)
+6. [Examples](#examples)
+7. [How it works](#how-it-works)
+8. [Quick reference for the installed tools](#quick-reference-for-the-installed-tools)
+9. [Troubleshooting](#troubleshooting)
+10. [Contributing](#contributing)
+11. [License](#license)
 
 ---
 
@@ -61,7 +62,31 @@ A single-file Bash CLI that installs a standard toolkit of network discovery and
 
 Requirements: Bash 3.2 or newer (macOS default works), `sudo` or root on Linux, and an internet connection. On macOS, install [Homebrew](https://brew.sh) first and run the script **without** `sudo`.
 
-## Quick start
+## Installation
+
+Pick one method.
+
+**Option A: Debian package (Debian, Ubuntu, Kali, Mint)**
+
+Download the `.deb` from the [latest release](https://github.com/Eergn/eergn-network-recon-installer/releases/latest), then:
+
+```bash
+sudo apt install ./eergn-recon-installer_1.0.0_all.deb
+sudo eergn-recon-installer
+man eergn-recon-installer
+```
+
+Remove it later with `sudo apt remove eergn-recon-installer`.
+
+**Option B: download just the script (any supported system)**
+
+```bash
+curl -LO https://github.com/Eergn/eergn-network-recon-installer/releases/latest/download/eergn-recon-installer.sh
+chmod +x eergn-recon-installer.sh
+sudo ./eergn-recon-installer.sh
+```
+
+**Option C: clone the repository**
 
 ```bash
 git clone https://github.com/Eergn/eergn-network-recon-installer.git
@@ -69,6 +94,10 @@ cd eergn-network-recon-installer
 chmod +x eergn-recon-installer.sh
 sudo ./eergn-recon-installer.sh
 ```
+
+To build the `.deb` yourself, run `./build-deb.sh` (needs `dpkg-deb`, from the `dpkg-dev` package).
+
+## Quick start
 
 With no options in a terminal, an interactive menu appears:
 
