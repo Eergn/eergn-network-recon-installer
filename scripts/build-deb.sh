@@ -4,7 +4,7 @@
 #  Developer: @Eergn
 #
 #  Usage:   ./scripts/build-deb.sh
-#  Output:  eergn-recon-installer_<version>_all.deb  (in this folder)
+#  Output:  eergn-recon-installer_<version>_all.deb  (in the dist/ folder)
 #
 #  Requires: dpkg-deb  (sudo apt install dpkg-dev)
 #  The version is read from VERSION="..." in eergn-recon-installer.sh.
@@ -155,7 +155,8 @@ Description: installer for network reconnaissance and diagnostic tools
 EOF
 
 # --- build -------------------------------------------------------------------
-OUT="${PKG}_${VERSION}_all.deb"
+mkdir -p dist
+OUT="dist/${PKG}_${VERSION}_all.deb"
 dpkg-deb --root-owner-group --build "$ROOT" "$OUT" >/dev/null
 echo "Built $OUT"
 dpkg-deb -I "$OUT" | sed -n '1,12p'

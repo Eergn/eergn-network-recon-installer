@@ -58,7 +58,7 @@ echo "==> Signing key: $KEY_FPR"
 echo "==> Building the .deb"
 ./scripts/build-deb.sh >/dev/null
 mkdir -p "$OUT"
-cp -f ${PKG}_*_all.deb "$OUT"/
+cp -f dist/${PKG}_*_all.deb "$OUT"/
 touch "$OUT/.nojekyll"
 
 # --- 3. repository indexes ---------------------------------------------------
