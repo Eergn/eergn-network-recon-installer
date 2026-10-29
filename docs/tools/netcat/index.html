@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Netcat · Eergn Network Recon Installer</title>
+<meta name="description" content="How Netcat is installed and used with Eergn Network Recon Installer, including OpenBSD nc options, port checks, listeners and limitations.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/" class="is-active" aria-current="page">Tools</a>
+      <a href="../../documentation/">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/" class="is-active" aria-current="page">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Tool reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Tool reference</a><span class="sep">/</span><span>Netcat</span>
+    </nav>
+        <article class="prose">
+<div class="tool-hero">
+  <p class="eyebrow">Utility · Tool 3 of 13</p>
+  <h1>Netcat</h1>
+  <p class="tool-tagline">The traditional TCP/IP Swiss Army knife, installed as OpenBSD netcat on Debian and Ubuntu for simple connections, listeners and port checks.</p>
+  <div class="tool-badges"><span class="badge badge-sage">netcat group</span><span class="badge badge">CLI</span><span class="badge badge-amber">Active</span><span class="badge badge">Usually unprivileged</span></div>
+</div>
+<dl class="tool-meta">
+  <div><dt>Installer group</dt><dd><code>netcat</code></dd></div>
+  <div><dt>Commands checked</dt><dd><code>nc</code></dd></div>
+  <div><dt>Access</dt><dd>Unprivileged for high ports; root for privileged source ports</dd></div>
+  <div><dt>Traffic</dt><dd>Active</dd></div>
+  <div><dt>Upstream</dt><dd><a href="https://man.openbsd.org/nc">OpenBSD nc manual</a></dd></div>
+  <div><dt>Installed by</dt><dd>Group <code>netcat</code></dd></div>
+</dl>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Authorized networks only</span><p>This tool sends traffic to the systems you point it at. Use it only on infrastructure you own or have explicit written permission to test. The examples use private documentation ranges and placeholder names.</p></div>
+</div>
+
+<h2>Overview</h2>
+<p>Netcat is the long-standing "TCP/IP Swiss Army knife": a small utility that connects standard input and output to a network socket. It can act as a client, a listener, a quick port checker and a data-transfer helper.</p>
+<p>The installer's <code>netcat</code> group installs <code>netcat-openbsd</code> on Debian/Ubuntu and the distribution's equivalent elsewhere, then checks for the command <code>nc</code>. Implementations differ: OpenBSD netcat, GNU netcat and Nmap's Ncat do not all support the same flags.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Open outbound TCP or UDP connections.</li>
+  <li>Listen on a local port for inbound connections.</li>
+  <li>Check whether a TCP port accepts a connection.</li>
+  <li>Pipe files or command output over a network connection.</li>
+  <li>Support IPv4 and IPv6, source-address binding and timeouts.</li>
+</ul>
+
+<div class="doc-category-grid">
+  <div class="doc-category"><h2>Good for</h2><ul>
+  <li>A minimal check that a port is reachable and accepting connections.</li>
+  <li>A quick temporary listener in an isolated lab.</li>
+  <li>A fallback when Ncat is unavailable.</li>
+  <li>Simple line-oriented data exchange for protocol experiments.</li>
+</ul></div>
+  <div class="doc-category"><h2>Limits</h2><ul>
+  <li>Plaintext only; it has no built-in TLS.</li>
+  <li>No authentication or access control in the basic tool.</li>
+  <li>Flags differ between implementations. Scripts written for one <code>nc</code> may fail on another.</li>
+  <li>The audited Debian/Ubuntu OpenBSD netcat help did not list <code>-e</code>; do not assume command execution support.</li>
+  <li>It does not identify services or enumerate ports.</li>
+</ul></div>
+</div>
+
+<h2>How the installer handles it</h2>
+<p>The <code>netcat</code> group checks only for the command <code>nc</code>. Debian/Ubuntu gets <code>netcat-openbsd</code>; Fedora-family systems get <code>nmap-ncat</code>. On systems where Ncat is installed, <code>nc</code> may be provided by an alternatives link or by the Ncat package.</p>
+<p>The installer does not replace the system default <code>nc</code> alternative. If multiple Netcat implementations are installed, check <code>readlink -f "$(command -v nc)"</code> before relying on a particular flag set.</p>
+<p>The installer's <code>netcat</code> group is considered complete only when these commands exist: <code>nc</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Package manager</th><th>Package(s) the installer requests</th><th>Note</th></tr></thead><tbody><tr><td>Debian / Ubuntu</td><td><code>netcat-openbsd</code></td><td>Provides <code>/usr/bin/nc</code> through the alternatives system.</td></tr><tr><td>Fedora / RHEL family</td><td><code>nmap-ncat</code></td><td>Provides Ncat; the checked command is still <code>nc</code>.</td></tr><tr><td>Arch Linux</td><td><code>openbsd-netcat</code></td><td>Requested by the installer.</td></tr><tr><td>openSUSE</td><td><code>netcat-openbsd</code></td><td>Requested by the installer.</td></tr><tr><td>Alpine</td><td><code>netcat-openbsd</code></td><td>Requested by the installer.</td></tr><tr><td>macOS (Homebrew)</td><td><code>netcat</code></td><td>Requested by the installer; the system also ships a BSD <code>nc</code>.</td></tr></tbody></table></div>
+<h3>Install just this group</h3>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool netcat</code></pre>
+<p>From a downloaded standalone script, use <code>sudo ./eergn-recon-installer.sh --tool netcat</code>. To install every group without the menu, use <code>sudo eergn-recon-installer --all</code>.</p>
+
+<h2>Installation</h2>
+<h3>Install the group</h3>
+<p>Installs the distribution's Netcat package and verifies <code>nc</code>.</p>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool netcat</code></pre>
+<h3>Verify</h3>
+<pre><code data-lang="bash">nc -h
+readlink -f &quot;$(command -v nc)&quot;
+eergn-recon-installer --check</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Verification is not a functional test</span><p>A version banner only proves the binary is on PATH. Run the smallest safe command against a lab endpoint to confirm the tool works in your environment.</p></div>
+</div>
+
+<h2>Basic usage</h2>
+<h3>Check a TCP port</h3>
+<p>Zero-I/O mode with a timeout. The exact output varies by implementation.</p>
+<pre><code data-lang="bash">nc -zv -w 3 192.168.1.10 22</code></pre>
+<h3>Listen on a high port</h3>
+<p>Listens for one connection. Use <code>-k</code> only if your implementation supports it and the test needs multiple connections.</p>
+<pre><code data-lang="bash">nc -l 8080</code></pre>
+<h3>Send a line to a lab service</h3>
+<p>Sends bytes exactly as written. Use this only against a service you control.</p>
+<pre><code data-lang="bash">printf &#x27;HELLO&#x27; | nc -w 3 192.168.1.10 9000</code></pre>
+<h2>Command reference</h2>
+<p>These are the options most useful for the workflows in this documentation. Run <code>nc -h</code> for the complete list supported by your installed version.</p>
+<div class="table-scroll"><table><thead><tr><th>Option</th><th>What it does</th></tr></thead><tbody><tr><td><code>-z</code></td><td>Zero-I/O scan mode; report connection status only.</td></tr><tr><td><code>-v</code></td><td>Verbose output.</td></tr><tr><td><code>-w</code></td><td>Connection or read timeout.</td></tr><tr><td><code>-l</code></td><td>Listen mode.</td></tr><tr><td><code>-k</code></td><td>Keep listening after a connection (implementation-dependent).</td></tr><tr><td><code>-u</code></td><td>Use UDP.</td></tr><tr><td><code>-p</code></td><td>Specify the local source port.</td></tr><tr><td><code>-s</code></td><td>Bind the source address.</td></tr><tr><td><code>-n</code></td><td>Do not resolve names or services.</td></tr><tr><td><code>-q</code></td><td>Quit a delay after end of input (OpenBSD nc).</td></tr><tr><td><code>-N</code></td><td>Shut down the socket after end of input (OpenBSD nc).</td></tr><tr><td><code>-4 / -6</code></td><td>Force IPv4 or IPv6.</td></tr></tbody></table></div>
+
+<h2>Examples for an authorized lab</h2>
+<h3>Check several lab ports</h3>
+<p>Loop over a short list and record which ports accept connections.</p>
+<pre><code data-lang="bash">for port in 22 80 443 8080; do
+  if nc -z -w 2 192.168.1.10 &quot;$port&quot;; then
+    echo &quot;open: $port&quot;
+  else
+    echo &quot;closed or filtered: $port&quot;
+  fi
+done</code></pre>
+<p>This distinguishes success from non-success, not open from filtered. Use Nmap when that distinction matters.</p>
+<h3>Bind a listener to loopback</h3>
+<p>Keep a temporary listener off the network.</p>
+<pre><code data-lang="bash">nc -l -s 127.0.0.1 -p 9000</code></pre>
+<p>Source and port flags vary by implementation; check <code>nc -h</code> on your system.</p>
+<h3>IPv6 check</h3>
+<p>Force IPv6 when a hostname resolves to both families.</p>
+<pre><code data-lang="bash">nc -6 -zv -w 3 lab.example.internal 443</code></pre>
+<p>Use a hostname that actually has an AAAA record.</p>
+<h2>Understanding the output</h2>
+<p>OpenBSD netcat prints a short success or failure line. Wording varies between implementations and versions.</p>
+<pre><code data-lang="text">Connection to 192.168.1.10 22 port [tcp/ssh] succeeded!</code></pre>
+<ul>
+  <li>Success means the TCP handshake completed.</li>
+  <li>No output with a non-zero exit status often means refusal or timeout; check the shell status.</li>
+  <li>Netcat does not tell you which application is listening.</li>
+  <li>Use <code>-w</code> in scripts so a filtered port cannot hang the loop.</li>
+</ul>
+<h2>Advanced usage</h2>
+<p>OpenBSD netcat supports proxy connections with <code>-X</code> and <code>-x</code>, source routing options and Unix-domain sockets on some builds. These are implementation-specific and not portable across every <code>nc</code>. For TLS, use Ncat or OpenSSL rather than trying to bolt encryption onto plain Netcat.</p>
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to try</th></tr></thead><tbody><tr><td><code>nc: invalid option -- 'z'</code></td><td>A different Netcat implementation is selected.</td><td>Inspect <code>readlink -f "$(command -v nc)"</code> and use the flags documented by that version.</td></tr><tr><td>A port check hangs</td><td>No timeout was set and the packets are being dropped.</td><td>Add <code>-w 2</code> or use Nmap with a host timeout.</td></tr><tr><td>Listener refuses connections</td><td>It is bound to the wrong address, or a firewall blocks the port.</td><td>Check the bind address, local firewall and whether the listener is still running.</td></tr><tr><td><code>-e</code> is unavailable</td><td>The OpenBSD implementation does not provide remote command execution.</td><td>Do not work around this; use SSH for administration.</td></tr></tbody></table></div>
+
+<h2>Security and etiquette</h2>
+<ul>
+  <li>Netcat is unencrypted and unauthenticated by default.</li>
+  <li>Do not use it to move credentials or sensitive data over untrusted links.</li>
+  <li>Bind listeners to loopback or a specific lab address.</li>
+  <li>Prefer Ncat when you need TLS or access control.</li>
+  <li>Remove temporary listeners and test files when finished.</li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://man.openbsd.org/nc">OpenBSD nc manual</a></li>
+  <li><a href="https://packages.debian.org/stable/netcat-openbsd">Debian netcat-openbsd package</a></li>
+  <li><a href="https://nmap.org/book/ncat-man.html">Ncat reference for comparison</a></li>
+</ul>
+<p>Related guides: <a href="../../guides/host-discovery/">host discovery</a>, <a href="../../guides/service-discovery/">service discovery</a>, <a href="../../guides/working-with-results/">working with results</a>. Return to the <a href="../">tool catalog</a>.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../ncat/"><span>← Previous</span><strong>Ncat</strong></a>
+          <a class="next" href="../arp-scan/"><span>Next →</span><strong>arp-scan</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

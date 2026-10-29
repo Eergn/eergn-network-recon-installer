@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dig · Eergn Network Recon Installer</title>
+<meta name="description" content="How dig is installed and used with Eergn Network Recon Installer: record types, resolvers, trace, DNSSEC and the dnsutils package change.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/" class="is-active" aria-current="page">Tools</a>
+      <a href="../../documentation/">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/" class="is-active" aria-current="page">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Tool reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Tool reference</a><span class="sep">/</span><span>dig</span>
+    </nav>
+        <article class="prose">
+<div class="tool-hero">
+  <p class="eyebrow">DNS · Tool 7 of 13</p>
+  <h1>dig</h1>
+  <p class="tool-tagline">The BIND DNS lookup utility: query specific record types, servers and flags, trace delegations and produce script-friendly answers.</p>
+  <div class="tool-badges"><span class="badge badge-sage">dns group</span><span class="badge badge">CLI</span><span class="badge badge-amber">Active (DNS)</span><span class="badge badge">Unprivileged</span></div>
+</div>
+<dl class="tool-meta">
+  <div><dt>Installer group</dt><dd><code>dns</code></dd></div>
+  <div><dt>Commands checked</dt><dd><code>dig</code>, <code>whois</code></dd></div>
+  <div><dt>Access</dt><dd>Unprivileged</dd></div>
+  <div><dt>Traffic</dt><dd>Active (DNS)</dd></div>
+  <div><dt>Upstream</dt><dd><a href="https://bind9.readthedocs.io/">bind9.readthedocs.io</a></dd></div>
+  <div><dt>Installed by</dt><dd>Group <code>dns</code></dd></div>
+</dl>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Authorized networks only</span><p>This tool sends traffic to the systems you point it at. Use it only on infrastructure you own or have explicit written permission to test. The examples use private documentation ranges and placeholder names.</p></div>
+</div>
+
+<h2>Overview</h2>
+<p>dig is the DNS lookup utility from the BIND project. It sends a query to a resolver and prints the question, answer, authority and additional sections. Unlike a browser lookup, it lets you choose the record type, server, transport and flags.</p>
+<p>The installer groups <code>dig</code> and <code>whois</code> under the <code>dns</code> group. The group is only complete when both commands exist. On Debian/Ubuntu the apt mapping requests <code>dnsutils</code> and <code>whois</code>; newer Ubuntu releases may provide dig through <code>bind9-dnsutils</code> instead, which is an important compatibility detail.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Query A, AAAA, CNAME, MX, NS, SOA, TXT, SRV, CAA and other record types.</li>
+  <li>Choose the resolver with <code>@server</code>.</li>
+  <li>Show short answers or full protocol sections.</li>
+  <li>Trace the delegation chain from the root with <code>+trace</code>.</li>
+  <li>Request DNSSEC records and inspect the AD flag.</li>
+  <li>Use TCP or a specific source address and port.</li>
+</ul>
+
+<div class="doc-category-grid">
+  <div class="doc-category"><h2>Good for</h2><ul>
+  <li>Checking which addresses and mail servers a name publishes.</li>
+  <li>Comparing answers from different resolvers.</li>
+  <li>Verifying SPF, DMARC and other TXT records.</li>
+  <li>Tracing where a delegation breaks.</li>
+  <li>Producing short answer lists for scripts.</li>
+</ul></div>
+  <div class="doc-category"><h2>Limits</h2><ul>
+  <li>It reads DNS data; it does not prove that a service is reachable.</li>
+  <li>Cached answers can be stale or differ by resolver.</li>
+  <li>The absence of a record in one query does not prove it does not exist elsewhere.</li>
+  <li>Zone transfers usually require authorization and are often refused.</li>
+  <li>DNSSEC validation depends on the resolver and the <code>+dnssec</code> request, not on dig alone.</li>
+</ul></div>
+</div>
+
+<h2>How the installer handles it</h2>
+<p>The <code>dns</code> group installs the DNS client package and <code>whois</code>, then checks for both <code>dig</code> and <code>whois</code>. On the audited Ubuntu 26.04 system, the apt mapping's <code>dnsutils</code> had no installation candidate; <code>bind9-dnsutils</code> provided <code>dig</code>. This means the group can require a manual package adjustment on newer Ubuntu releases.</p>
+<p>The installer's <code>dns</code> group is considered complete only when these commands exist: <code>dig</code>, <code>whois</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Package manager</th><th>Package(s) the installer requests</th><th>Note</th></tr></thead><tbody><tr><td>Debian / Ubuntu</td><td><code>dnsutils whois</code></td><td>On Ubuntu 26.04, <code>dnsutils</code> had no candidate; <code>bind9-dnsutils</code> provided <code>dig</code>.</td></tr><tr><td>Fedora / RHEL family</td><td><code>bind-utils whois</code></td><td>Installed directly by the group.</td></tr><tr><td>Arch Linux</td><td><code>bind whois</code></td><td>Installed directly by the group.</td></tr><tr><td>openSUSE</td><td><code>bind-utils whois</code></td><td>Installed directly by the group.</td></tr><tr><td>Alpine</td><td><code>bind-tools whois</code></td><td>Installed directly by the group.</td></tr><tr><td>macOS (Homebrew)</td><td><code>bind whois</code></td><td>Installed directly by the group.</td></tr></tbody></table></div>
+<h3>Install just this group</h3>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool dns</code></pre>
+<p>From a downloaded standalone script, use <code>sudo ./eergn-recon-installer.sh --tool dns</code>. To install every group without the menu, use <code>sudo eergn-recon-installer --all</code>.</p>
+
+<h2>Installation</h2>
+<h3>Install the DNS group</h3>
+<p>Installs the mapped DNS package and whois, then checks both commands.</p>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool dns</code></pre>
+<h3>Ubuntu fallback if dnsutils is unavailable</h3>
+<p>Use this when APT cannot find <code>dnsutils</code>. It provides <code>dig</code> on newer Ubuntu releases.</p>
+<pre><code data-lang="bash">sudo apt install bind9-dnsutils whois</code></pre>
+<h3>Verify</h3>
+<pre><code data-lang="bash">dig -v
+whois --version
+eergn-recon-installer --check</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Verification is not a functional test</span><p>A version banner only proves the binary is on PATH. Run the smallest safe command against a lab endpoint to confirm the tool works in your environment.</p></div>
+</div>
+
+<h2>Basic usage</h2>
+<h3>Look up an address record</h3>
+<p>The short form prints only the answer data, which is convenient for scripts.</p>
+<pre><code data-lang="bash">dig example.com A +short</code></pre>
+<h3>Query a specific resolver</h3>
+<p>Useful for comparing the local resolver with an authoritative or public resolver.</p>
+<pre><code data-lang="bash">dig @192.168.1.53 example.com A</code></pre>
+<h3>Fetch several record types</h3>
+<p>Run each type separately; <code>ANY</code> is often minimized or refused.</p>
+<pre><code data-lang="bash">dig example.com MX
+dig example.com TXT
+dig example.com NS</code></pre>
+<h2>Command reference</h2>
+<p>These are the options most useful for the workflows in this documentation. Run <code>dig -h</code> for the complete list supported by your installed version.</p>
+<div class="table-scroll"><table><thead><tr><th>Option</th><th>What it does</th></tr></thead><tbody><tr><td><code>@server</code></td><td>Send the query to a specific resolver.</td></tr><tr><td><code>-t TYPE</code></td><td>Set the query type.</td></tr><tr><td><code>-x ADDRESS</code></td><td>Perform a reverse lookup for an IPv4 or IPv6 address.</td></tr><tr><td><code>-4 / -6</code></td><td>Use IPv4 or IPv6 transport.</td></tr><tr><td><code>-p PORT</code></td><td>Query a non-standard DNS port.</td></tr><tr><td><code>+short</code></td><td>Print only the answer data.</td></tr><tr><td><code>+noall +answer</code></td><td>Print only the answer section with normal formatting.</td></tr><tr><td><code>+trace</code></td><td>Trace the delegation from the root.</td></tr><tr><td><code>+dnssec</code></td><td>Request DNSSEC records and set the DO bit.</td></tr><tr><td><code>+tcp</code></td><td>Use TCP instead of UDP.</td></tr><tr><td><code>+time=SECONDS</code></td><td>Set the query timeout.</td></tr><tr><td><code>+tries=N</code></td><td>Set the number of attempts.</td></tr><tr><td><code>+norecurse</code></td><td>Clear the recursion-desired flag.</td></tr></tbody></table></div>
+
+<h2>Examples for an authorized lab</h2>
+<h3>Check common records</h3>
+<p>Collect the address, mail, name-server and TXT records for a lab domain.</p>
+<pre><code data-lang="bash">for type in A AAAA MX NS TXT; do
+  echo &quot;== $type ==&quot;
+  dig example.com &quot;$type&quot; +noall +answer
+done</code></pre>
+<p>Use a domain you own or are authorized to query. The output shows record data, not service health.</p>
+<h3>Compare resolvers</h3>
+<p>Ask the local resolver and an authoritative server the same question.</p>
+<pre><code data-lang="bash">dig @192.168.1.53 example.com A +noall +answer
+dig @198.51.100.53 example.com A +noall +answer</code></pre>
+<p>Different answers can indicate caching, split-horizon DNS or a delegation problem.</p>
+<h3>Reverse lookup</h3>
+<p>Map an address back to a name when a PTR record exists.</p>
+<pre><code data-lang="bash">dig -x 192.0.2.10 +short</code></pre>
+<p>Private ranges often have no PTR records; an empty answer is normal.</p>
+<h2>Understanding the output</h2>
+<p>A normal query prints header, question, answer, authority and additional sections. The values below are illustrative.</p>
+<pre><code data-lang="text">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 12345
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; QUESTION SECTION:
+;example.com.                   IN      A
+
+;; ANSWER SECTION:
+example.com.            300     IN      A       192.0.2.10
+
+;; Query time: 12 msec
+;; SERVER: 192.168.1.53#53(192.168.1.53) (UDP)</code></pre>
+<ul>
+  <li><strong>status</strong> reports the DNS response code, such as NOERROR, NXDOMAIN, SERVFAIL or REFUSED.</li>
+  <li><strong>flags</strong> include <code>qr</code>, <code>rd</code>, <code>ra</code> and, when validated, <code>ad</code>.</li>
+  <li>The TTL is the remaining cache time, not the record's configured lifetime.</li>
+  <li>The <code>SERVER</code> line shows which resolver actually answered.</li>
+</ul>
+<h2>Advanced usage</h2>
+<p><code>+trace</code> performs iterative queries from the root and is useful for understanding delegation, but it can be slow and may be blocked. For DNSSEC, request <code>+dnssec</code> and inspect the <code>ad</code> flag from a validating resolver; dig itself is not a validator. For zone transfers, use <code>AXFR</code> only with explicit authorization, and expect refusal on most servers.</p>
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to try</th></tr></thead><tbody><tr><td><code>dig: command not found</code></td><td>The DNS group is incomplete or the package name changed.</td><td>Install <code>bind9-dnsutils</code> on newer Ubuntu, or the distribution's DNS client package.</td></tr><tr><td><code>status: SERVFAIL</code></td><td>The resolver could not complete the query, often due to DNSSEC or upstream failure.</td><td>Try another resolver and check the delegation with <code>+trace</code>.</td></tr><tr><td><code>status: REFUSED</code></td><td>The server does not allow queries from this client or for this zone.</td><td>Use an authorized resolver or ask the DNS owner.</td></tr><tr><td>Query times out</td><td>UDP is blocked, the server is unreachable, or the port is wrong.</td><td>Try <code>+tcp</code>, verify the resolver address, and set a short <code>+time</code>.</td></tr><tr><td>Empty answer for a name that works in a browser</td><td>The browser may use a different resolver or search domain.</td><td>Query the same resolver explicitly and try the fully qualified name with a trailing dot.</td></tr></tbody></table></div>
+
+<h2>Security and etiquette</h2>
+<ul>
+  <li>Query only domains you own or are authorized to investigate.</li>
+  <li>DNS queries are visible to resolvers and network monitoring.</li>
+  <li>Do not attempt zone transfers without written authorization.</li>
+  <li>Treat internal DNS data as sensitive topology information.</li>
+  <li>Prefer encrypted DNS only where policy permits it; local resolvers may be required for split-horizon names.</li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://bind9.readthedocs.io/">BIND 9 documentation</a></li>
+  <li><a href="https://bind9.readthedocs.io/en/latest/manpages.html#dig">dig manual</a></li>
+  <li><a href="https://www.iana.org/assignments/dns-parameters/">IANA DNS parameters</a></li>
+</ul>
+<p>Related guides: <a href="../../guides/host-discovery/">host discovery</a>, <a href="../../guides/service-discovery/">service discovery</a>, <a href="../../guides/working-with-results/">working with results</a>. Return to the <a href="../">tool catalog</a>.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../mtr/"><span>← Previous</span><strong>MTR</strong></a>
+          <a class="next" href="../whois/"><span>Next →</span><strong>whois</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

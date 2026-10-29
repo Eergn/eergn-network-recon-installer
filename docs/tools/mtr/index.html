@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MTR · Eergn Network Recon Installer</title>
+<meta name="description" content="How MTR is installed and used with Eergn Network Recon Installer for path analysis, packet loss, latency and machine-readable reports.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/" class="is-active" aria-current="page">Tools</a>
+      <a href="../../documentation/">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/" class="is-active" aria-current="page">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Tool reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Tool reference</a><span class="sep">/</span><span>MTR</span>
+    </nav>
+        <article class="prose">
+<div class="tool-hero">
+  <p class="eyebrow">Diagnostics · Tool 6 of 13</p>
+  <h1>MTR</h1>
+  <p class="tool-tagline">Combined traceroute and ping: follow a path hop by hop while measuring loss and latency, with report, JSON, XML and CSV output.</p>
+  <div class="tool-badges"><span class="badge badge-sage">mtr group</span><span class="badge badge">CLI / TUI</span><span class="badge badge-amber">Active (ICMP, TCP or UDP)</span><span class="badge badge">Usually root</span></div>
+</div>
+<dl class="tool-meta">
+  <div><dt>Installer group</dt><dd><code>mtr</code></dd></div>
+  <div><dt>Commands checked</dt><dd><code>mtr</code></dd></div>
+  <div><dt>Access</dt><dd>Root for the default ICMP mode on many packages; TCP mode may work unprivileged</dd></div>
+  <div><dt>Traffic</dt><dd>Active (ICMP, TCP or UDP)</dd></div>
+  <div><dt>Upstream</dt><dd><a href="https://github.com/traviscross/mtr">github.com/traviscross/mtr</a></dd></div>
+  <div><dt>Installed by</dt><dd>Group <code>mtr</code></dd></div>
+</dl>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Authorized networks only</span><p>This tool sends traffic to the systems you point it at. Use it only on infrastructure you own or have explicit written permission to test. The examples use private documentation ranges and placeholder names.</p></div>
+</div>
+
+<h2>Overview</h2>
+<p>MTR combines traceroute and ping. It discovers the path to a target and continuously probes each hop, showing packet loss and round-trip latency per hop. It is the fastest way to tell whether a problem is local, on the path, or at the destination.</p>
+<p>The installer's <code>mtr</code> group installs <code>mtr-tiny</code> on Debian/Ubuntu and the distribution's MTR package elsewhere, then checks for the <code>mtr</code> command. The tiny package omits the GTK interface, which is appropriate for servers.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Discover the layer-3 path to a target.</li>
+  <li>Continuously measure loss and latency at each hop.</li>
+  <li>Use ICMP, UDP or TCP probes to work around filtering.</li>
+  <li>Render an interactive terminal view or a static report.</li>
+  <li>Export JSON, XML or CSV for later analysis.</li>
+</ul>
+
+<div class="doc-category-grid">
+  <div class="doc-category"><h2>Good for</h2><ul>
+  <li>Locating where latency or loss begins on a path.</li>
+  <li>Comparing a direct path with a VPN or overlay path.</li>
+  <li>Producing evidence for a network owner when a link degrades.</li>
+  <li>Testing whether a filtered target responds to TCP but not ICMP.</li>
+</ul></div>
+  <div class="doc-category"><h2>Limits</h2><ul>
+  <li>It measures the path from this host at this moment, not a historical baseline.</li>
+  <li>ICMP rate limiting can make later hops appear lossy even when the path is healthy.</li>
+  <li>Routers may not respond to the probe type, so blank hops are common.</li>
+  <li>The default ICMP mode often needs root.</li>
+  <li>A TCP probe to one port does not represent all application traffic.</li>
+</ul></div>
+</div>
+
+<h2>How the installer handles it</h2>
+<p>The <code>mtr</code> group installs <code>mtr-tiny</code> on Debian/Ubuntu and <code>mtr</code> on the other mapped package managers. It checks for the <code>mtr</code> command.</p>
+<p>The installer does not grant raw-socket capabilities. On the audited Ubuntu system, <code>/usr/bin/mtr</code> had no file capabilities, so the default ICMP mode was expected to need <code>sudo</code>.</p>
+<p>The installer's <code>mtr</code> group is considered complete only when these commands exist: <code>mtr</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Package manager</th><th>Package(s) the installer requests</th><th>Note</th></tr></thead><tbody><tr><td>Debian / Ubuntu</td><td><code>mtr-tiny</code></td><td>No GTK interface; suitable for servers.</td></tr><tr><td>Fedora / RHEL family</td><td><code>mtr</code></td><td>Installed directly by the group.</td></tr><tr><td>Arch Linux</td><td><code>mtr</code></td><td>Installed directly by the group.</td></tr><tr><td>openSUSE</td><td><code>mtr</code></td><td>Installed directly by the group.</td></tr><tr><td>Alpine</td><td><code>mtr</code></td><td>Installed directly by the group.</td></tr><tr><td>macOS (Homebrew)</td><td><code>mtr</code></td><td>Installed directly by the group.</td></tr></tbody></table></div>
+<h3>Install just this group</h3>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool mtr</code></pre>
+<p>From a downloaded standalone script, use <code>sudo ./eergn-recon-installer.sh --tool mtr</code>. To install every group without the menu, use <code>sudo eergn-recon-installer --all</code>.</p>
+
+<h2>Installation</h2>
+<h3>Install the group</h3>
+<p>Installs the distribution package and verifies <code>mtr</code>.</p>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool mtr</code></pre>
+<h3>Verify</h3>
+<pre><code data-lang="bash">mtr --version
+mtr --help | head
+eergn-recon-installer --check</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Verification is not a functional test</span><p>A version banner only proves the binary is on PATH. Run the smallest safe command against a lab endpoint to confirm the tool works in your environment.</p></div>
+</div>
+
+<h2>Basic usage</h2>
+<h3>Static report</h3>
+<p><code>-r</code> report mode, <code>-w</code> wide output, <code>-c</code> 20 cycles. This is the form to save with an incident.</p>
+<pre><code data-lang="bash">mtr -rw -c 20 192.168.1.1</code></pre>
+<h3>Use TCP to a specific port</h3>
+<p>TCP mode often works when ICMP is filtered. It probes only the path to that port.</p>
+<pre><code data-lang="bash">mtr -T -P 443 -rw -c 10 lab.example.internal</code></pre>
+<h3>Machine-readable output</h3>
+<p>JSON is easier to store and compare than the interactive view.</p>
+<pre><code data-lang="bash">mtr -j -c 10 192.168.1.1</code></pre>
+<h2>Command reference</h2>
+<p>These are the options most useful for the workflows in this documentation. Run <code>mtr --help</code> for the complete list supported by your installed version.</p>
+<div class="table-scroll"><table><thead><tr><th>Option</th><th>What it does</th></tr></thead><tbody><tr><td><code>-r, --report</code></td><td>Print a static report and exit.</td></tr><tr><td><code>-w, --report-wide</code></td><td>Use a wider report layout.</td></tr><tr><td><code>-c, --report-cycles</code></td><td>Set the number of probe cycles.</td></tr><tr><td><code>-j, --json</code></td><td>Output JSON.</td></tr><tr><td><code>-x, --xml</code></td><td>Output XML.</td></tr><tr><td><code>-C, --csv</code></td><td>Output CSV.</td></tr><tr><td><code>-T, --tcp</code></td><td>Use TCP probes.</td></tr><tr><td><code>-u, --udp</code></td><td>Use UDP probes.</td></tr><tr><td><code>-P, --port</code></td><td>Set the target port for TCP, UDP or SCTP.</td></tr><tr><td><code>-n, --no-dns</code></td><td>Do not resolve hostnames.</td></tr><tr><td><code>-b, --show-ips</code></td><td>Show both IP addresses and names.</td></tr><tr><td><code>-m, --max-ttl</code></td><td>Set the maximum number of hops.</td></tr><tr><td><code>-f, --first-ttl</code></td><td>Start at a later hop.</td></tr><tr><td><code>-z, --aslookup</code></td><td>Show AS numbers.</td></tr></tbody></table></div>
+
+<h2>Examples for an authorized lab</h2>
+<h3>Save a path report</h3>
+<p>Capture a fixed number of cycles in a file for later comparison.</p>
+<pre><code data-lang="bash">mtr -rw -c 30 -n 192.168.1.1 | tee mtr-gateway-$(date +%F-%H%M).txt</code></pre>
+<p>Use <code>-n</code> for speed or omit it to see names. Record the time and source host.</p>
+<h3>Test a filtered web host over TCP</h3>
+<p>Probe the path to port 443 when ICMP is blocked.</p>
+<pre><code data-lang="bash">mtr -T -P 443 -rw -c 15 -n lab.example.internal</code></pre>
+<p>A successful TCP path does not prove the application is healthy.</p>
+<h3>Export JSON for comparison</h3>
+<p>Keep structured data with a run label.</p>
+<pre><code data-lang="bash">mtr -j -c 10 -n 192.168.1.1 &gt; mtr-192.168.1.1.json</code></pre>
+<p>JSON schemas can vary by MTR version; store the version with the file.</p>
+<h2>Understanding the output</h2>
+<p>Report mode prints one row per hop. The values below are illustrative and truncated.</p>
+<pre><code data-lang="text">Start: 2026-01-01T12:00:00+0000
+HOST: lab-client                    Loss%   Snt   Last   Avg  Best  Wrst StDev
+  1.|-- 192.168.1.1                  0.0%    20    0.4   0.4   0.3   0.6   0.1
+  2.|-- 192.0.2.1                    0.0%    20    1.8   2.1   1.5   3.0   0.4
+  3.|-- 198.51.100.10                0.0%    20    8.4   8.9   8.1  10.2   0.6
+  4.|-- 203.0.113.20                 0.0%    20    9.1   9.4   8.8  11.0   0.7</code></pre>
+<ul>
+  <li><strong>Loss%</strong> at intermediate hops can be an artifact of control-plane rate limiting; loss at the final hop is more meaningful.</li>
+  <li><strong>Avg</strong> and <strong>StDev</strong> show latency and jitter. A rising average along the path localizes added delay.</li>
+  <li>Blank or <code>???</code> hops did not answer that probe type, which is not necessarily a fault.</li>
+  <li>Save the command, cycle count, probe type and time with the report.</li>
+</ul>
+<h2>Advanced usage</h2>
+<p>Use <code>-T</code> or <code>-u</code> when ICMP is filtered, and always record the probe type because different types can produce different paths. For comparisons, keep the cycle count, source host, target name and timestamp constant. Very long runs are rarely useful; a few dozen cycles are usually enough to distinguish persistent loss from a transient blip.</p>
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to try</th></tr></thead><tbody><tr><td><code>mtr: Permission denied</code></td><td>ICMP raw sockets require privilege on this build.</td><td>Run the report with <code>sudo</code>, or use <code>-T</code> if local policy permits unprivileged TCP probes.</td></tr><tr><td>Loss at every hop but the target is fine</td><td>ICMP responses from routers are rate-limited or deprioritized.</td><td>Focus on the final hop and compare with TCP mode or application measurements.</td></tr><tr><td>All hops show <code>???</code></td><td>The network blocks the probe type or the target is unreachable.</td><td>Try <code>-T -P 443</code> or another in-scope port, and confirm routing.</td></tr><tr><td>Names are slow</td><td>Reverse DNS is timing out for many hops.</td><td>Add <code>-n</code> for numeric output.</td></tr></tbody></table></div>
+
+<h2>Security and etiquette</h2>
+<ul>
+  <li>Use MTR only against targets in scope; it sends repeated probes and is visible.</li>
+  <li>Prefer the smallest cycle count that answers the question.</li>
+  <li>Do not use TCP mode to probe arbitrary ports outside the agreed scope.</li>
+  <li>Stored path data reveals internal addresses and topology.</li>
+  <li>Coordinate long-running tests with the network owner.</li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://github.com/traviscross/mtr">MTR project</a></li>
+  <li><a href="https://www.bitwizard.nl/mtr/man/mtr.8">MTR manual</a></li>
+  <li><a href="https://github.com/traviscross/mtr/releases">MTR releases</a></li>
+</ul>
+<p>Related guides: <a href="../../guides/host-discovery/">host discovery</a>, <a href="../../guides/service-discovery/">service discovery</a>, <a href="../../guides/working-with-results/">working with results</a>. Return to the <a href="../">tool catalog</a>.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../fping/"><span>← Previous</span><strong>fping</strong></a>
+          <a class="next" href="../dig/"><span>Next →</span><strong>dig</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

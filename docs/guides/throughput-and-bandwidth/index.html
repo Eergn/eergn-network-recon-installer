@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Throughput and bandwidth · Eergn Network Recon Installer</title>
+<meta name="description" content="Measure throughput with iperf3 and attribute live traffic with iftop and nethogs on authorized systems.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/">Tools</a>
+      <a href="../../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/" class="is-active" aria-current="page">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Guides</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Guides</a><span class="sep">/</span><span>Throughput & bandwidth</span>
+    </nav>
+        <article class="prose">
+<h1>Throughput and bandwidth</h1>
+<p class="page-lede">Measure what a link can carry with iperf3, then attribute live traffic to connections or processes with iftop and nethogs. These tools answer different questions and should not be used interchangeably.</p>
+
+<h2>Purpose</h2>
+<ul>
+  <li><strong>iperf3</strong> measures achievable throughput between two endpoints you control.</li>
+  <li><strong>iftop</strong> shows live bandwidth by host/connection on an interface.</li>
+  <li><strong>nethogs</strong> shows live bandwidth by process.</li>
+</ul>
+<p>None of these tools is a discovery or vulnerability scanner. They observe or generate traffic for performance work.</p>
+
+<h2>Prerequisites</h2>
+<ul>
+  <li>Installed groups <code>iperf3</code> and <code>bandwidth</code>.</li>
+  <li>Two endpoints you control for iperf3: a server and a client.</li>
+  <li>Root or <code>sudo</code> for packet capture in iftop and nethogs, and permission to open the iperf3 port (default 5201).</li>
+  <li>A maintenance window if the test could saturate a production link.</li>
+</ul>
+
+<h2>Step 1 — start an iperf3 server</h2>
+<p>On the server endpoint:</p>
+<pre><code data-lang="bash">iperf3 -s</code></pre>
+<p>The server listens on TCP port 5201 by default and waits for a client. The command stays in the foreground; use a separate terminal or a service manager for longer tests. Open the port in the host firewall only for the client addresses that need it.</p>
+<p>For a single test then exit:</p>
+<pre><code data-lang="bash">iperf3 -s -1</code></pre>
+
+<h2>Step 2 — run a bounded client test</h2>
+<pre><code data-lang="bash"># 10-second TCP test
+iperf3 -c 192.168.1.20 -t 10
+
+# Four parallel streams
+iperf3 -c 192.168.1.20 -t 10 -P 4
+
+# Reverse direction: server sends, client receives
+iperf3 -c 192.168.1.20 -t 10 -R</code></pre>
+<p><code>-t 10</code> limits the test to ten seconds. <code>-P 4</code> runs four parallel streams, which can reveal whether a single stream is limited by latency or window size. <code>-R</code> reverses the direction. Compare both directions, because asymmetric links and shaping are common.</p>
+
+<h2>Step 3 — UDP or bidirectional tests (when appropriate)</h2>
+<pre><code data-lang="bash"># UDP at a target bitrate
+iperf3 -c 192.168.1.20 -u -b 100M -t 10
+
+# Bidirectional TCP
+iperf3 -c 192.168.1.20 --bidir -t 10</code></pre>
+<p><code>-u</code> switches to UDP. <code>-b 100M</code> sets the target bitrate; without a target, UDP behavior can be unintended. UDP results include loss and jitter, not just throughput. <code>--bidir</code> is supported by the installed iperf3 3.20 help output; older versions may not accept it.</p>
+
+<h2>Step 4 — save machine-readable results</h2>
+<pre><code data-lang="bash">iperf3 -c 192.168.1.20 -t 10 -J &gt; ~/engagements/lab-2026-10-29/raw/iperf3-tcp.json
+iperf3 -c 192.168.1.20 -t 10 -R -J &gt; ~/engagements/lab-2026-10-29/raw/iperf3-reverse.json</code></pre>
+<p><code>-J</code> produces JSON. The schema is version-dependent; record the iperf3 version alongside the results.</p>
+
+<h2>Step 5 — attribute live traffic with iftop</h2>
+<pre><code data-lang="bash"># Per-connection view, no DNS/service lookups
+sudo iftop -i eth0 -n -N -P
+
+# Text mode, one 10-second sample, then exit
+sudo iftop -i eth0 -n -N -P -t -s 10</code></pre>
+<p><code>-i</code> selects the interface. <code>-n</code> disables hostname lookups and <code>-N</code> disables service-name lookups, which keeps the display fast and avoids extra DNS traffic. <code>-P</code> shows ports. <code>-t</code> uses the text interface; <code>-s 10</code> prints one sample after ten seconds and exits.</p>
+
+<h2>Step 6 — attribute live traffic to processes with nethogs</h2>
+<pre><code data-lang="bash"># Monitor the default interfaces
+sudo nethogs
+
+# Two-second refresh on a specific interface
+sudo nethogs -d 2 eth0
+
+# Trace mode for scripted output
+sudo nethogs -t eth0</code></pre>
+<p><code>-d</code> sets the refresh interval in seconds. <code>-t</code> enables trace mode, which is more suitable for logging than the interactive display. nethogs is Linux-focused; the README notes that it may be unavailable or fail on macOS.</p>
+
+<h2>Interpreting the numbers</h2>
+<div class="table-scroll"><table><thead><tr><th>Tool</th><th>Units / view</th><th>What it tells you</th><th>Limitations</th></tr></thead><tbody><tr><td>iperf3</td><td>bits/sec by default; <code>-f</code> changes format</td><td>Achievable throughput between two controlled endpoints</td><td>Synthetic traffic; does not reflect real application mix</td></tr><tr><td>iftop</td><td>bits/sec by default; <code>-B</code> for bytes</td><td>Live traffic by host/connection</td><td>Snapshot of the interface; hostname attribution can be noisy</td></tr><tr><td>nethogs</td><td>kB/s or totals depending on view mode</td><td>Live traffic by process</td><td>Linux-focused; process attribution can be incomplete for some traffic</td></tr></tbody></table></div>
+<p>Do not compare iperf3 results directly with iftop's instantaneous rate and call one of them wrong. iperf3 reports a controlled test over a window; iftop and nethogs report live traffic with different sampling and aggregation. Record the interface, time window and direction for every measurement.</p>
+
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>What to check</th></tr></thead><tbody><tr><td>iperf3 cannot connect</td><td>Server running, port 5201 reachable, firewall, correct address, not a captive network</td></tr><tr><td><code>the server is busy running a test</code></td><td>Another client is using the server; wait or use <code>-1</code> for one-off mode</td></tr><tr><td>Throughput much lower than link speed</td><td>Duplex mismatch, shaping, latency/window size, parallel streams, CPU limits</td></tr><tr><td>iftop shows no traffic</td><td>Wrong interface, promiscuous mode not needed for own traffic, permissions</td></tr><tr><td>nethogs cannot open interfaces</td><td>Run with <code>sudo</code>; check the device name and kernel support</td></tr></tbody></table></div>
+<h2>Security considerations</h2>
+<ul>
+  <li>An iperf3 test can saturate a link. Schedule it and agree on limits with the network owner.</li>
+  <li>iftop and nethogs capture packet metadata. Treat captured hostnames, addresses and process names as sensitive.</li>
+  <li>Do not run promiscuous-mode captures on networks you do not own; you may observe other people's traffic.</li>
+  <li>Use <code>-1</code> or stop the iperf3 server after the test to avoid leaving a service listening.</li>
+</ul>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../tls-inspection/"><span>← Previous</span><strong>TLS inspection</strong></a>
+          <a class="next" href="../working-with-results/"><span>Next →</span><strong>Working with results</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

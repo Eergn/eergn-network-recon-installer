@@ -3,6 +3,9 @@
 #  Builds a signed APT repository for eergn-recon-installer in ./docs
 #  so it can be served by GitHub Pages and installed with:
 #
+#  An existing docs/index.html (the documentation landing page) is preserved.
+#  A minimal repository page is written only when no landing page exists.
+#
 #      sudo apt install eergn-recon-installer
 #
 #  Developer: @Eergn
@@ -84,7 +87,8 @@ gpg --batch --yes --default-key "$KEY_FPR" -abs -o Release.gpg Release
 gpg --batch --yes --export "$KEY_FPR" > eergn-archive-keyring.gpg
 gpg --batch --yes --armor --export "$KEY_FPR" > eergn-archive-keyring.asc
 
-# --- 5. landing page ---------------------------------------------------------
+# --- 5. landing page fallback -----------------------------------------------
+if [ ! -f index.html ]; then
 cat > index.html <<EOF
 <!doctype html>
 <html lang="en">
@@ -109,6 +113,7 @@ sudo apt install $PKG</pre>
 </body>
 </html>
 EOF
+fi
 cd ..
 
 echo

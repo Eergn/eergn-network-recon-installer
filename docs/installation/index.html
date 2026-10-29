@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installation · Eergn Network Recon Installer</title>
+<meta name="description" content="Install Eergn Network Recon Installer from the signed APT repository, a .deb file, the standalone Bash script or a clone.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-base="../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../">Home</a>
+      <a href="../index.html#features">Features</a>
+      <a href="../tools/">Tools</a>
+      <a href="../documentation/">Documentation</a>
+      <a href="../installation/" class="is-active" aria-current="page">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../documentation/">Documentation home</a>
+      <a href="../getting-started/">Getting started</a>
+      <a href="../installation/" class="is-active" aria-current="page">Installation</a>
+      <a href="../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../guides/">Guide index</a>
+      <a href="../guides/host-discovery/">Host discovery</a>
+      <a href="../guides/service-discovery/">Service discovery</a>
+      <a href="../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../guides/tls-inspection/">TLS inspection</a>
+      <a href="../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../guides/working-with-results/">Working with results</a>
+      <a href="../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../tools/nmap/">Nmap</a>
+      <a href="../tools/ncat/">Ncat</a>
+      <a href="../tools/netcat/">Netcat</a>
+      <a href="../tools/arp-scan/">arp-scan</a>
+      <a href="../tools/fping/">fping</a>
+      <a href="../tools/mtr/">MTR</a>
+      <a href="../tools/dig/">dig</a>
+      <a href="../tools/whois/">whois</a>
+      <a href="../tools/openssl/">OpenSSL s_client</a>
+      <a href="../tools/testssl/">testssl.sh</a>
+      <a href="../tools/iperf3/">iperf3</a>
+      <a href="../tools/iftop/">iftop</a>
+      <a href="../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../reference/commands/">Installer commands</a>
+      <a href="../reference/architecture/">Architecture</a>
+      <a href="../reference/configuration/">Configuration</a>
+      <a href="../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../reference/security/">Security</a>
+      <a href="../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Introduction</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../documentation/">Introduction</a><span class="sep">/</span><span>Installation</span>
+    </nav>
+        <article class="prose">
+<h1>Installation</h1>
+<p class="page-lede">The installer is distributed as a signed APT package for Debian-based systems, a downloadable <code>.deb</code>, a standalone Bash script for every supported platform, and the repository itself.</p>
+
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <div><span class="callout-title">Before you install</span><p>These tools are for networks and systems you own or are explicitly authorized to assess. Installing them does not create authorization. On Linux, the installer needs root or <code>sudo</code> for package installation. On macOS it uses Homebrew and must <strong>not</strong> be run as root.</p></div>
+</div>
+
+<h2>Prerequisites</h2>
+<ul>
+  <li><strong>Linux:</strong> Bash 3.2 or newer, a supported package manager, and root or <code>sudo</code>.</li>
+  <li><strong>macOS:</strong> Bash 3.2 or newer and <a href="https://brew.sh/">Homebrew</a>. Run the installer without <code>sudo</code>.</li>
+  <li>An internet connection to download packages and, for <code>testssl.sh</code>, possibly Git and the upstream repository.</li>
+  <li>For the APT route: Debian, Ubuntu, Kali, Linux Mint or a compatible Debian-based distribution with <code>apt</code> and network access to GitHub Pages.</li>
+</ul>
+<p>Supported package managers in the source are <code>apt</code>, <code>dnf</code>, <code>yum</code>, <code>pacman</code>, <code>zypper</code>, <code>apk</code> and Homebrew. The README lists Debian, Ubuntu, Kali, Mint, Fedora, RHEL, Rocky, Alma, Arch, Manjaro, openSUSE, Alpine and macOS as the intended platforms.</p>
+
+<h2 id="apt">Option A — signed APT repository (recommended for Debian-based systems)</h2>
+<p>This is the method published on the project's GitHub Pages site. It installs the package and lets future versions arrive through normal APT upgrades.</p>
+<h3>1. Add the signing key</h3>
+<pre><code data-lang="bash">curl -fsSL https://eergn.github.io/eergn-network-recon-installer/eergn-archive-keyring.gpg \
+  | sudo tee /usr/share/keyrings/eergn-archive-keyring.gpg &gt;/dev/null</code></pre>
+<p><code>curl -fsSL</code> fails on HTTP errors and suppresses progress output. The key is written to the system keyring directory, not to the legacy trusted-key list. The published key is an Ed25519 signing key with fingerprint:</p>
+<pre><code data-lang="text">900D437EB8F512053DA25632AEF17B55E71A8350</code></pre>
+<h3>2. Add the repository</h3>
+<pre><code data-lang="bash">echo &quot;deb [signed-by=/usr/share/keyrings/eergn-archive-keyring.gpg] https://eergn.github.io/eergn-network-recon-installer ./&quot; \
+  | sudo tee /etc/apt/sources.list.d/eergn.list</code></pre>
+<p>The <code>signed-by</code> option restricts this repository to the downloaded key. The suite is <code>./</code> because the repository is a flat package directory served from the project site. Do not change it to a distribution codename unless the repository is rebuilt that way.</p>
+<h3>3. Refresh and install</h3>
+<pre><code data-lang="bash">sudo apt update
+sudo apt install eergn-recon-installer</code></pre>
+<p>The package name is <code>eergn-recon-installer</code>. It is architecture <code>all</code>, depends on <code>bash</code>, and installs the command at <code>/usr/bin/eergn-recon-installer</code> plus a man page.</p>
+<h3>4. Verify</h3>
+<pre><code data-lang="bash">eergn-recon-installer --version
+eergn-recon-installer --list
+dpkg -s eergn-recon-installer
+man eergn-recon-installer</code></pre>
+<p><code>--version</code> prints the installer name, version and author. <code>--list</code> prints the nine group IDs. <code>dpkg -s</code> confirms the package is installed. The man page documents the same options that appear in <code>--help</code>.</p>
+
+<h2 id="debian-package">Option B — install a .deb file</h2>
+<p>Download the package from the <a href="https://github.com/Eergn/eergn-network-recon-installer/releases/latest">latest GitHub release</a>, or use the copy served in this repository, then install it locally:</p>
+<pre><code data-lang="bash">sudo apt install ./eergn-recon-installer_1.0.0_all.deb
+sudo eergn-recon-installer</code></pre>
+<p>A local path beginning with <code>./</code> tells APT to install the file rather than looking up a repository package. Remove it later with <code>sudo apt remove eergn-recon-installer</code>.</p>
+
+<h2 id="script">Option C — download the standalone script</h2>
+<p>This route works on every supported system, including distributions without the APT package.</p>
+<pre><code data-lang="bash">curl -LO https://github.com/Eergn/eergn-network-recon-installer/releases/latest/download/eergn-recon-installer.sh
+chmod +x eergn-recon-installer.sh
+sudo ./eergn-recon-installer.sh</code></pre>
+<p>On macOS, omit <code>sudo</code>:</p>
+<pre><code data-lang="bash">chmod +x eergn-recon-installer.sh
+./eergn-recon-installer.sh</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg>
+  <div><span class="callout-title">Release asset availability</span><p>The README documents this download URL. This documentation could not verify that a GitHub release asset named <code>eergn-recon-installer.sh</code> is attached to the latest release from the repository contents alone. If the URL returns 404, use the repository clone method or the APT package.</p></div>
+</div>
+
+<h2 id="clone">Option D — clone the repository</h2>
+<pre><code data-lang="bash">git clone https://github.com/Eergn/eergn-network-recon-installer.git
+cd eergn-network-recon-installer
+chmod +x eergn-recon-installer.sh
+sudo ./eergn-recon-installer.sh</code></pre>
+<p>Use this route if you want to inspect the source before running it or contribute changes. The script is self-contained; it does not source files from the repository at runtime.</p>
+
+<h2>Install tools, not just the installer</h2>
+<p>Installing the package or script only places the installer. To install the external tools, run it with <code>sudo</code>:</p>
+<pre><code data-lang="bash"># Interactive menu
+sudo eergn-recon-installer
+
+# Install every group without prompts
+sudo eergn-recon-installer --all -y
+
+# Install selected groups
+sudo eergn-recon-installer -t nmap -t dns -t tls
+
+# Preview commands without making changes
+eergn-recon-installer --all --dry-run</code></pre>
+<p>See the <a href="../reference/commands/">command reference</a> for every flag and <a href="../tools/">the tool catalog</a> for group membership.</p>
+
+<h2>Updating</h2>
+<h3>Installer installed from APT</h3>
+<pre><code data-lang="bash">sudo apt update
+sudo apt upgrade</code></pre>
+<h3>Standalone script</h3>
+<p>Download the newer script again and replace your local copy. The script has no self-update command.</p>
+<h3>External tools</h3>
+<p>Use the system package manager (for example <code>sudo apt upgrade</code> or <code>brew upgrade</code>). The installer does not provide an <code>--update</code> mode, and re-running it skips groups whose commands already exist unless you pass <code>--force</code>.</p>
+
+<h2>Uninstalling</h2>
+<pre><code data-lang="bash"># Remove the installer package
+sudo apt remove eergn-recon-installer
+
+# Remove the APT source and key if you no longer want updates
+sudo rm /etc/apt/sources.list.d/eergn.list
+sudo rm /usr/share/keyrings/eergn-archive-keyring.gpg
+sudo apt update</code></pre>
+<p>Removing the installer does not automatically remove the external tools it installed. Remove those explicitly with your package manager if desired. The <code>testssl.sh</code> Git fallback may live in <code>/opt/testssl.sh</code> with a symlink at <code>/usr/local/bin/testssl.sh</code>; the installer does not remove it.</p>
+
+<h2>Check the repository metadata</h2>
+<div class="table-scroll"><table><thead><tr><th>Field</th><th>Published value</th></tr></thead><tbody><tr><td>Origin / Label</td><td><code>Eergn</code> / <code>Eergn tools</code></td></tr><tr><td>Suite</td><td><code>./</code> (flat repository)</td></tr><tr><td>Package</td><td><code>eergn-recon-installer</code></td></tr><tr><td>Version</td><td><code>1.0.0</code></td></tr><tr><td>Architecture</td><td><code>all</code></td></tr><tr><td>Depends</td><td><code>bash</code></td></tr><tr><td>Key</td><td>Ed25519, fingerprint <code>900D437EB8F512053DA25632AEF17B55E71A8350</code></td></tr><tr><td>Repository URL</td><td><code>https://eergn.github.io/eergn-network-recon-installer</code></td></tr></tbody></table></div>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <div><span class="callout-title">Trust the key you fetch</span><p>Fetching a key over HTTPS and trusting it in the same step protects the transport, not the publisher. Compare the fingerprint with the one published in the repository before adding a third-party key. See <a href="../reference/security/">Security</a>.</p></div>
+</div>
+
+<h2>Troubleshooting installation</h2>
+<p>If APT reports a missing package, a signature error, a keyring error or an unreachable repository, see <a href="../guides/troubleshooting-installation/">Troubleshooting installation</a> and the general <a href="../reference/troubleshooting/">troubleshooting reference</a>.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../documentation/"><span>← Previous</span><strong>Documentation home</strong></a>
+          <a class="next" href="../getting-started/"><span>Next →</span><strong>Getting started</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../documentation/">Documentation</a></li>
+          <li><a href="../installation/">Installation</a></li>
+          <li><a href="../tools/">Supported tools</a></li>
+          <li><a href="../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../getting-started/">Getting started</a></li>
+          <li><a href="../guides/">Practical guides</a></li>
+          <li><a href="../reference/commands/">Command reference</a></li>
+          <li><a href="../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/js/search-index.js" defer></script>
+<script src="../assets/js/site.js" defer></script>
+
+</body>
+</html>

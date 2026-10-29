@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iperf3 · Eergn Network Recon Installer</title>
+<meta name="description" content="How iperf3 is installed and used with Eergn Network Recon Installer: server setup, TCP and UDP tests, reverse mode, parallel streams and interpretation.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/" class="is-active" aria-current="page">Tools</a>
+      <a href="../../documentation/">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/" class="is-active" aria-current="page">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Tool reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Tool reference</a><span class="sep">/</span><span>iperf3</span>
+    </nav>
+        <article class="prose">
+<div class="tool-hero">
+  <p class="eyebrow">Throughput · Tool 11 of 13</p>
+  <h1>iperf3</h1>
+  <p class="tool-tagline">Client/server throughput measurement for TCP and UDP, with reverse mode, parallel streams, bitrate targets and JSON output.</p>
+  <div class="tool-badges"><span class="badge badge-sage">iperf3 group</span><span class="badge badge">CLI</span><span class="badge badge-amber">Active (TCP/UDP)</span><span class="badge badge">Unprivileged</span></div>
+</div>
+<dl class="tool-meta">
+  <div><dt>Installer group</dt><dd><code>iperf3</code></dd></div>
+  <div><dt>Commands checked</dt><dd><code>iperf3</code></dd></div>
+  <div><dt>Access</dt><dd>Unprivileged for high ports; server needs an open port</dd></div>
+  <div><dt>Traffic</dt><dd>Active (TCP/UDP)</dd></div>
+  <div><dt>Upstream</dt><dd><a href="https://software.es.net/iperf/">software.es.net/iperf</a></dd></div>
+  <div><dt>Installed by</dt><dd>Group <code>iperf3</code></dd></div>
+</dl>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Authorized networks only</span><p>This tool sends traffic to the systems you point it at. Use it only on infrastructure you own or have explicit written permission to test. The examples use private documentation ranges and placeholder names.</p></div>
+</div>
+
+<h2>Overview</h2>
+<p>iperf3 measures achievable throughput between two endpoints. One side runs a server, the other a client; the client sends or receives a stream and both report bitrate, retransmissions and other counters. It is a controlled link and host performance test, not an internet speed test.</p>
+<p>The installer's <code>iperf3</code> group installs the distribution package and checks for the <code>iperf3</code> command. Throughput tests require a server you control on the other end and a port that is allowed through every firewall on the path.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Measure TCP throughput in either direction.</li>
+  <li>Send UDP streams at a specified bitrate and report loss and jitter.</li>
+  <li>Run multiple parallel streams.</li>
+  <li>Use a fixed duration, byte count or block count.</li>
+  <li>Produce JSON for automated comparison.</li>
+</ul>
+
+<div class="doc-category-grid">
+  <div class="doc-category"><h2>Good for</h2><ul>
+  <li>Verifying that a lab link meets an expected throughput target.</li>
+  <li>Comparing TCP and UDP behavior across a WAN or overlay.</li>
+  <li>Checking the effect of parallel streams on a path.</li>
+  <li>Producing repeatable before/after measurements.</li>
+</ul></div>
+  <div class="doc-category"><h2>Limits</h2><ul>
+  <li>It measures the path and the two hosts, not just the network.</li>
+  <li>CPU, disk, virtual NICs and offload can limit results.</li>
+  <li>A single TCP stream may not fill a high-bandwidth, high-latency path.</li>
+  <li>UDP results depend heavily on the configured bitrate.</li>
+  <li>Internet speed tests and iperf3 answer different questions.</li>
+</ul></div>
+</div>
+
+<h2>How the installer handles it</h2>
+<p>The <code>iperf3</code> group installs the distribution package and checks for <code>iperf3</code>. The openSUSE mapping requests the package named <code>iperf</code>; the group still checks for the <code>iperf3</code> command, so verify the command after installation.</p>
+<p>The installer's <code>iperf3</code> group is considered complete only when these commands exist: <code>iperf3</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Package manager</th><th>Package(s) the installer requests</th><th>Note</th></tr></thead><tbody><tr><td>Debian / Ubuntu</td><td><code>iperf3</code></td><td>Installed directly by the group.</td></tr><tr><td>Fedora / RHEL family</td><td><code>iperf3</code></td><td>Installed directly by the group.</td></tr><tr><td>Arch Linux</td><td><code>iperf3</code></td><td>Installed directly by the group.</td></tr><tr><td>openSUSE</td><td><code>iperf</code></td><td>The mapping uses <code>iperf</code>; verify that <code>iperf3</code> is the installed command.</td></tr><tr><td>Alpine</td><td><code>iperf3</code></td><td>Installed directly by the group.</td></tr><tr><td>macOS (Homebrew)</td><td><code>iperf3</code></td><td>Installed directly by the group.</td></tr></tbody></table></div>
+<h3>Install just this group</h3>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool iperf3</code></pre>
+<p>From a downloaded standalone script, use <code>sudo ./eergn-recon-installer.sh --tool iperf3</code>. To install every group without the menu, use <code>sudo eergn-recon-installer --all</code>.</p>
+
+<h2>Installation</h2>
+<h3>Install the group</h3>
+<p>Installs iperf3 and verifies the command.</p>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool iperf3</code></pre>
+<h3>Verify</h3>
+<pre><code data-lang="bash">iperf3 --version
+command -v iperf3
+eergn-recon-installer --check</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Verification is not a functional test</span><p>A version banner only proves the binary is on PATH. Run the smallest safe command against a lab endpoint to confirm the tool works in your environment.</p></div>
+</div>
+
+<h2>Basic usage</h2>
+<h3>Start a server</h3>
+<p>Runs on TCP port 5201 by default. Use <code>-1</code> to handle a single test and exit, or <code>-D</code> to daemonize.</p>
+<pre><code data-lang="bash">iperf3 -s</code></pre>
+<h3>Run a ten-second TCP test</h3>
+<p>The client sends to the server. Add <code>-R</code> to reverse the direction.</p>
+<pre><code data-lang="bash">iperf3 -c 192.168.1.20 -t 10</code></pre>
+<h3>Run UDP at a target bitrate</h3>
+<p>UDP reports loss and jitter. Without <code>-b</code>, the default UDP rate is low.</p>
+<pre><code data-lang="bash">iperf3 -c 192.168.1.20 -u -b 100M -t 10</code></pre>
+<h2>Command reference</h2>
+<p>These are the options most useful for the workflows in this documentation. Run <code>iperf3 --help</code> for the complete list supported by your installed version.</p>
+<div class="table-scroll"><table><thead><tr><th>Option</th><th>What it does</th></tr></thead><tbody><tr><td><code>-s, --server</code></td><td>Run in server mode.</td></tr><tr><td><code>-c, --client</code></td><td>Run in client mode and connect to a host.</td></tr><tr><td><code>-p, --port</code></td><td>Set the server or client port.</td></tr><tr><td><code>-t, --time</code></td><td>Set the test duration in seconds.</td></tr><tr><td><code>-u, --udp</code></td><td>Use UDP instead of TCP.</td></tr><tr><td><code>-b, --bitrate</code></td><td>Set the target bitrate for UDP or paced TCP.</td></tr><tr><td><code>-R, --reverse</code></td><td>Reverse the direction: server sends, client receives.</td></tr><tr><td><code>-P, --parallel</code></td><td>Use multiple parallel streams.</td></tr><tr><td><code>-J, --json</code></td><td>Output JSON.</td></tr><tr><td><code>-1, --one-off</code></td><td>Server handles one client and exits.</td></tr><tr><td><code>-D, --daemon</code></td><td>Run the server as a daemon.</td></tr><tr><td><code>-f, --format</code></td><td>Choose the bitrate unit format.</td></tr><tr><td><code>-i, --interval</code></td><td>Set the reporting interval.</td></tr></tbody></table></div>
+
+<h2>Examples for an authorized lab</h2>
+<h3>One-off server for a controlled test</h3>
+<p>Run a server that accepts one client and then exits.</p>
+<pre><code data-lang="bash">iperf3 -s -1 -p 5201</code></pre>
+<p>Coordinate the time window with the client side and close the port when finished.</p>
+<h3>Ten-second TCP test in both directions</h3>
+<p>Measure send and receive separately rather than assuming symmetry.</p>
+<pre><code data-lang="bash">iperf3 -c 192.168.1.20 -t 10
+iperf3 -c 192.168.1.20 -t 10 -R</code></pre>
+<p>Keep the duration and stream count constant when comparing results.</p>
+<h3>Four parallel streams with JSON</h3>
+<p>Check whether a single stream is the bottleneck.</p>
+<pre><code data-lang="bash">iperf3 -c 192.168.1.20 -t 15 -P 4 -J &gt; iperf3-p4.json</code></pre>
+<p>More streams can raise aggregate throughput but also CPU load on both ends.</p>
+<h2>Understanding the output</h2>
+<p>The client prints interval lines and a summary. The values below are illustrative.</p>
+<pre><code data-lang="text">[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-10.00  sec  1.10 GBytes   944 Mbits/sec    0   sender
+[  5]   0.00-10.00  sec  1.10 GBytes   943 Mbits/sec        receiver
+
+iperf Done.</code></pre>
+<ul>
+  <li><strong>Bitrate</strong> is the measured throughput for the interval or summary.</li>
+  <li><strong>Retr</strong> counts TCP retransmissions; a high count can indicate loss or congestion.</li>
+  <li>Compare sender and receiver values; a large gap can indicate loss or a bottleneck.</li>
+  <li>For UDP, read loss, jitter and the configured target rate, not just bitrate.</li>
+</ul>
+<h2>Advanced usage</h2>
+<p>Use <code>-P</code> to test whether one stream is limited by CPU or window size, <code>-R</code> to separate direction-specific behavior, and <code>-J</code> to keep structured results. Set a fixed duration and note the MTU, interface and offload settings. On virtualized hosts, check whether the hypervisor or virtual switch is the limiting factor before blaming the physical link.</p>
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to try</th></tr></thead><tbody><tr><td><code>Connection refused</code></td><td>No server is listening on that host and port.</td><td>Start <code>iperf3 -s</code> on the server and confirm the port.</td></tr><tr><td><code>No route to host</code></td><td>Routing or firewall problem between client and server.</td><td>Check the route and whether TCP 5201 (or the chosen port) is allowed.</td></tr><tr><td>Throughput is much lower than expected</td><td>CPU, disk, virtual NIC, offload, a single stream or congestion.</td><td>Try parallel streams, a different direction, and check host load.</td></tr><tr><td>UDP shows heavy loss</td><td>The target bitrate exceeds the path capacity or the receiver cannot keep up.</td><td>Lower <code>-b</code> until loss is acceptable, then increase gradually.</td></tr><tr><td>openSUSE install did not provide <code>iperf3</code></td><td>The mapping requests a package named <code>iperf</code>.</td><td>Verify <code>iperf3 --version</code>; install the iperf3 package if the command is missing.</td></tr></tbody></table></div>
+
+<h2>Security and etiquette</h2>
+<ul>
+  <li>Run the server only for the test window and restrict it with a firewall.</li>
+  <li>Do not expose an iperf3 server to the public internet.</li>
+  <li>Use only endpoints and paths in scope.</li>
+  <li>High-bitrate tests can consume capacity and affect other users.</li>
+  <li>Treat throughput results as sensitive performance data.</li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://software.es.net/iperf/">iperf3 project</a></li>
+  <li><a href="https://software.es.net/iperf/invoking.html">iperf3 documentation</a></li>
+  <li><a href="https://github.com/esnet/iperf">iperf3 source</a></li>
+</ul>
+<p>Related guides: <a href="../../guides/host-discovery/">host discovery</a>, <a href="../../guides/service-discovery/">service discovery</a>, <a href="../../guides/working-with-results/">working with results</a>. Return to the <a href="../">tool catalog</a>.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../testssl/"><span>← Previous</span><strong>testssl.sh</strong></a>
+          <a class="next" href="../iftop/"><span>Next →</span><strong>iftop</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

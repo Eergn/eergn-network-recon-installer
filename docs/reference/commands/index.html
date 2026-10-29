@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installer command reference · Eergn Network Recon Installer</title>
+<meta name="description" content="All options, modes, tool groups, package mappings, exit codes and environment variables implemented by the Eergn installer.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/">Tools</a>
+      <a href="../../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/" class="is-active" aria-current="page">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Reference</a><span class="sep">/</span><span>Installer commands</span>
+    </nav>
+        <article class="prose">
+<h1>Installer command reference</h1>
+<p class="page-lede">Every option implemented by <code>eergn-recon-installer.sh</code> version 1.0.0, with the behavior verified from the source rather than from a generic template.</p>
+
+<h2>Synopsis</h2>
+<pre><code data-lang="bash">eergn-recon-installer [options]
+eergn-recon-installer.sh [options]</code></pre>
+<p>The packaged command is <code>eergn-recon-installer</code>. The standalone script is usually named <code>eergn-recon-installer.sh</code>. Both run the same code.</p>
+
+<h2>Options</h2>
+<div class="table-scroll"><table><thead><tr><th>Option</th><th>Argument</th><th>Behavior</th><th>Notes</th></tr></thead><tbody><tr><td><code>-a</code>, <code>--all</code></td><td>none</td><td>Select every tool group and skip the menu</td><td>Main mode sets the selection to all nine IDs</td></tr><tr><td><code>-t</code>, <code>--tool</code></td><td><code>ID</code></td><td>Select one group; may be repeated</td><td>Unknown IDs fail with an error and point to <code>--list</code></td></tr><tr><td><code>-l</code>, <code>--list</code></td><td>none</td><td>Print the nine groups and exit</td><td>Does not detect a package manager or need root</td></tr><tr><td><code>-c</code>, <code>--check</code></td><td>none</td><td>Print installed/missing commands for all groups and exit</td><td>No root needed; exit 0 only if all commands exist</td></tr><tr><td><code>-y</code>, <code>--yes</code></td><td>none</td><td>Skip the confirmation prompt</td><td>Non-interactive runs also skip the prompt</td></tr><tr><td><code>-n</code>, <code>--dry-run</code></td><td>none</td><td>Print package-manager commands without executing them</td><td>Still prints simulated <code>ok</code> lines; verify separately</td></tr><tr><td><code>-f</code>, <code>--force</code></td><td>none</td><td>Reinstall even when a group's commands already exist</td><td>Does not bypass package-manager errors</td></tr><tr><td><code>--no-banner</code></td><td>none</td><td>Hide the EERGN logo</td><td>Useful for provisioning logs</td></tr><tr><td><code>-v</code>, <code>--version</code></td><td>none</td><td>Print name, version and author, then exit</td><td>Exits before package-manager detection</td></tr><tr><td><code>-h</code>, <code>--help</code></td><td>none</td><td>Show help and exit</td><td>Shows the banner unless <code>--no-banner</code> is also used</td></tr></tbody></table></div>
+<p>Options are parsed in order. The mode flags are <code>--all</code>, <code>--tool</code>, <code>--list</code> and <code>--check</code>. Avoid combining them; the last mode flag generally determines the selected mode, with <code>--all</code> overriding the accumulated selection when it is the final mode. Use one mode per invocation.</p>
+
+<h2>Modes</h2>
+<div class="table-scroll"><table><thead><tr><th>Invocation</th><th>What happens</th></tr></thead><tbody><tr><td>No options, interactive terminal</td><td>Shows the numbered menu and asks for a choice</td></tr><tr><td>No options, non-interactive shell</td><td>Installs all groups</td></tr><tr><td><code>--list</code></td><td>Prints the group table and exits</td></tr><tr><td><code>--check</code></td><td>Prints a status table for all groups and exits with 0 or 1</td></tr><tr><td><code>--all</code></td><td>Installs all nine groups</td></tr><tr><td><code>--tool ID</code></td><td>Installs only the selected group(s)</td></tr></tbody></table></div>
+<p>The interactive menu accepts space-separated numbers such as <code>1 3 5</code>, <code>a</code> for all, or <code>q</code> to quit. An empty choice is treated as all. Invalid non-numeric input exits with an error.</p>
+
+<h2>Installation examples</h2>
+<pre><code data-lang="bash"># Install everything without prompts
+sudo eergn-recon-installer --all -y
+
+# Install selected groups
+sudo eergn-recon-installer -t nmap -t tls
+
+# Preview a full install
+eergn-recon-installer --all --dry-run
+
+# Audit the machine without root
+eergn-recon-installer --check
+
+# Provisioning-friendly invocation
+sudo eergn-recon-installer --all -y --no-banner
+
+# Reinstall a group whose commands are present
+sudo eergn-recon-installer -t tls --force</code></pre>
+<p>These examples match the usage documented in the README and the options implemented in the script. The installer does not accept per-tool names such as <code>-t dig</code>; use the group ID <code>dns</code>.</p>
+
+<h2>Tool groups and package mapping</h2>
+<div class="table-scroll"><table><thead><tr><th>ID</th><th>Required commands</th><th>apt</th><th>dnf / yum</th><th>pacman</th><th>zypper</th><th>apk</th><th>brew</th></tr></thead><tbody><tr><td><code>nmap</code></td><td><code>nmap ncat</code></td><td><code>nmap</code></td><td><code>nmap nmap-ncat</code></td><td><code>nmap</code></td><td><code>nmap</code></td><td><code>nmap nmap-ncat</code></td><td><code>nmap</code></td></tr><tr><td><code>netcat</code></td><td><code>nc</code></td><td><code>netcat-openbsd</code></td><td><code>nmap-ncat</code></td><td><code>openbsd-netcat</code></td><td><code>netcat-openbsd</code></td><td><code>netcat-openbsd</code></td><td><code>netcat</code></td></tr><tr><td><code>arp-scan</code></td><td><code>arp-scan</code></td><td><code>arp-scan</code></td><td><code>arp-scan</code></td><td><code>arp-scan</code></td><td><code>arp-scan</code></td><td><code>arp-scan</code></td><td><code>arp-scan</code></td></tr><tr><td><code>fping</code></td><td><code>fping</code></td><td><code>fping</code></td><td><code>fping</code></td><td><code>fping</code></td><td><code>fping</code></td><td><code>fping</code></td><td><code>fping</code></td></tr><tr><td><code>mtr</code></td><td><code>mtr</code></td><td><code>mtr-tiny</code></td><td><code>mtr</code></td><td><code>mtr</code></td><td><code>mtr</code></td><td><code>mtr</code></td><td><code>mtr</code></td></tr><tr><td><code>dns</code></td><td><code>dig whois</code></td><td><code>dnsutils whois</code></td><td><code>bind-utils whois</code></td><td><code>bind whois</code></td><td><code>bind-utils whois</code></td><td><code>bind-tools whois</code></td><td><code>bind whois</code></td></tr><tr><td><code>tls</code></td><td><code>openssl testssl.sh</code></td><td><code>openssl</code></td><td><code>openssl</code></td><td><code>openssl</code></td><td><code>openssl</code></td><td><code>openssl</code></td><td><code>openssl@3</code></td></tr><tr><td><code>iperf3</code></td><td><code>iperf3</code></td><td><code>iperf3</code></td><td><code>iperf3</code></td><td><code>iperf3</code></td><td><code>iperf</code></td><td><code>iperf3</code></td><td><code>iperf3</code></td></tr><tr><td><code>bandwidth</code></td><td><code>iftop nethogs</code></td><td><code>iftop nethogs</code></td><td><code>iftop nethogs</code></td><td><code>iftop nethogs</code></td><td><code>iftop nethogs</code></td><td><code>iftop nethogs</code></td><td><code>iftop nethogs</code></td></tr></tbody></table></div>
+<p>The <code>tls</code> group also ensures <code>testssl.sh</code> after the listed packages. It tries a native package (<code>testssl.sh</code> on apt/pacman/apk, <code>testssl</code> on dnf/brew). If that is unavailable and the package manager is not Homebrew, it clones the upstream repository into <code>/opt/testssl.sh</code> and creates <code>/usr/local/bin/testssl.sh</code>.</p>
+
+<h2>Behavior details</h2>
+<h3>Package index refresh</h3>
+<p>The installer runs <code>apt-get update</code>, <code>zypper --non-interactive refresh</code> or <code>apk update</code> before installing. It does not refresh dnf, yum, pacman or Homebrew indexes explicitly.</p>
+<h3>Privilege handling</h3>
+<p>On Homebrew it refuses to run as root. On Linux it uses <code>sudo</code> when not already root, and exits if neither root nor <code>sudo</code> is available. Package manager commands are executed with non-interactive flags where the source sets them (for example <code>DEBIAN_FRONTEND=noninteractive</code> for apt).</p>
+<h3>Skip and force</h3>
+<p>Before installing a group, the installer checks whether every required command exists. If so, it skips the group. <code>--force</code> disables that check. <code>--dry-run</code> also disables the skip check so you can see the commands.</p>
+<h3>Failure handling</h3>
+<p>Packages are installed one at a time. A failure records the package name, prints <code>failed</code>, and continues with the next package and group. At the end, failed packages are listed with a hint about EPEL on the RHEL family, plus the installer log path.</p>
+
+<h2>Exit status</h2>
+<div class="table-scroll"><table><thead><tr><th>Code</th><th>Meaning</th></tr></thead><tbody><tr><td><code>0</code></td><td>All selected tools were present at the end, or a non-install mode completed successfully</td></tr><tr><td><code>1</code></td><td>At least one selected command is still missing, or an option/argument error occurred</td></tr><tr><td><code>0</code> from <code>--dry-run</code></td><td>The dry run finished; this does not mean tools are installed</td></tr><tr><td><code>0</code> from <code>--check</code></td><td>Every command in all nine groups exists</td></tr><tr><td><code>1</code> from <code>--check</code></td><td>At least one command is missing</td></tr><tr><td><code>0</code> from menu quit or abort</td><td>The user chose <code>q</code> or answered no to confirmation</td></tr></tbody></table></div>
+<h2>Environment variables affecting the installer</h2>
+<div class="table-scroll"><table><thead><tr><th>Variable</th><th>Effect</th><th>Source of truth</th></tr></thead><tbody><tr><td><code>NO_COLOR</code></td><td>Any non-empty value disables ANSI colors</td><td>Read at startup</td></tr><tr><td><code>PATH</code></td><td>Used to find package managers, commands and tools</td><td>Shell environment</td></tr><tr><td><code>TERM</code> / TTY state</td><td>Controls color and whether the menu is offered</td><td>Terminal detection via <code>[ -t ]</code></td></tr></tbody></table></div>
+<p>There is no configuration file and no environment variable for selecting a package manager, tool group, package name or log path. The package manager is detected automatically in this order: macOS/Homebrew, apt, dnf, yum, pacman, zypper, apk. See <a href="../configuration/">Configuration</a> for what is deliberately fixed.</p>
+
+<h2>Logging</h2>
+<p>The installer creates a temporary log at startup, normally via <code>mktemp -t Eergn-installer.XXXXXX</code>, with <code>/tmp/Eergn-installer.log</code> as a fallback. Package-manager stdout and stderr are redirected there. The path is printed at the start and again when packages fail.</p>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg>
+  <div><span class="callout-title">Not implemented</span><p>The source has no <code>--uninstall</code>, <code>--update</code>, install profiles, JSON output, shell completions, RPM package, Homebrew formula, Docker image or <code>--sysinfo</code> feature. Those appear only as roadmap ideas in the README and should not be documented as available.</p></div>
+</div>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../../guides/maintaining-installation/"><span>← Previous</span><strong>Maintaining installation</strong></a>
+          <a class="next" href="../architecture/"><span>Next →</span><strong>Architecture</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

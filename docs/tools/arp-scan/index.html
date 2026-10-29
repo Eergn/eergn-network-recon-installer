@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>arp-scan · Eergn Network Recon Installer</title>
+<meta name="description" content="How arp-scan is installed and used with Eergn Network Recon Installer for local network discovery, MAC vendor lookup and output formatting.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/" class="is-active" aria-current="page">Tools</a>
+      <a href="../../documentation/">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/" class="is-active" aria-current="page">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Tool reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Tool reference</a><span class="sep">/</span><span>arp-scan</span>
+    </nav>
+        <article class="prose">
+<div class="tool-hero">
+  <p class="eyebrow">Discovery · Tool 4 of 13</p>
+  <h1>arp-scan</h1>
+  <p class="tool-tagline">Layer-2 host discovery for the local broadcast domain, using ARP requests to map IPv4 addresses to MAC addresses and vendors.</p>
+  <div class="tool-badges"><span class="badge badge-sage">arp-scan group</span><span class="badge badge">CLI</span><span class="badge badge-amber">Active (Layer 2)</span><span class="badge badge">Raw sockets</span></div>
+</div>
+<dl class="tool-meta">
+  <div><dt>Installer group</dt><dd><code>arp-scan</code></dd></div>
+  <div><dt>Commands checked</dt><dd><code>arp-scan</code></dd></div>
+  <div><dt>Access</dt><dd>Root or CAP_NET_RAW for raw ARP packets</dd></div>
+  <div><dt>Traffic</dt><dd>Active (Layer 2)</dd></div>
+  <div><dt>Upstream</dt><dd><a href="https://github.com/royhills/arp-scan">github.com/royhills/arp-scan</a></dd></div>
+  <div><dt>Installed by</dt><dd>Group <code>arp-scan</code></dd></div>
+</dl>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Authorized networks only</span><p>This tool sends traffic to the systems you point it at. Use it only on infrastructure you own or have explicit written permission to test. The examples use private documentation ranges and placeholder names.</p></div>
+</div>
+
+<h2>Overview</h2>
+<p>arp-scan sends ARP requests to IPv4 addresses on the local link and records the replies. Because ARP is required for local IPv4 communication and is not routed, it often finds hosts that ignore ICMP or block higher-layer probes.</p>
+<p>The installer's <code>arp-scan</code> group installs the tool and checks for the <code>arp-scan</code> command. It is most useful as the first pass on a lab segment before ICMP or port-based discovery.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Discover hosts on the local broadcast domain with ARP.</li>
+  <li>Report IPv4 address, MAC address and, when the vendor database is available, the hardware vendor.</li>
+  <li>Accept CIDR, ranges, network:mask and host lists as targets.</li>
+  <li>Support custom output formats for parsing.</li>
+  <li>Read targets from a file or generate them from an interface's local network.</li>
+</ul>
+
+<div class="doc-category-grid">
+  <div class="doc-category"><h2>Good for</h2><ul>
+  <li>Inventorying a lab segment where ICMP is filtered.</li>
+  <li>Spotting unexpected devices by MAC vendor.</li>
+  <li>Confirming which interface and subnet a host is actually on.</li>
+  <li>Producing a simple IP-to-MAC table for asset reconciliation.</li>
+</ul></div>
+  <div class="doc-category"><h2>Limits</h2><ul>
+  <li>ARP does not cross routers; it only sees the local broadcast domain.</li>
+  <li>Wireless client isolation, bridge filtering and some virtual switches can suppress replies.</li>
+  <li>It discovers IPv4 hosts, not open ports or services.</li>
+  <li>A missing reply does not always mean the host is absent; the device may ignore or filter ARP.</li>
+  <li>Vendor lookup depends on the local MAC vendor database and can be incomplete or wrong.</li>
+</ul></div>
+</div>
+
+<h2>How the installer handles it</h2>
+<p>The <code>arp-scan</code> group installs the distribution package and checks for the <code>arp-scan</code> command. On the RHEL family, the installer warns that EPEL may be required.</p>
+<p>The tool uses raw sockets. On Linux it may be capability-aware, but the packaged binary and local permissions determine whether <code>sudo</code> is needed. The installer does not change capabilities or setuid bits.</p>
+<p>The installer's <code>arp-scan</code> group is considered complete only when these commands exist: <code>arp-scan</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Package manager</th><th>Package(s) the installer requests</th><th>Note</th></tr></thead><tbody><tr><td>Debian / Ubuntu</td><td><code>arp-scan</code></td><td>Installed directly by the group.</td></tr><tr><td>Fedora / RHEL family</td><td><code>arp-scan</code></td><td>May require EPEL; the installer prints a warning.</td></tr><tr><td>Arch Linux</td><td><code>arp-scan</code></td><td>Installed directly by the group.</td></tr><tr><td>openSUSE</td><td><code>arp-scan</code></td><td>Installed directly by the group.</td></tr><tr><td>Alpine</td><td><code>arp-scan</code></td><td>Installed directly by the group.</td></tr><tr><td>macOS (Homebrew)</td><td><code>arp-scan</code></td><td>Installed directly by the group.</td></tr></tbody></table></div>
+<h3>Install just this group</h3>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool arp-scan</code></pre>
+<p>From a downloaded standalone script, use <code>sudo ./eergn-recon-installer.sh --tool arp-scan</code>. To install every group without the menu, use <code>sudo eergn-recon-installer --all</code>.</p>
+
+<h2>Installation</h2>
+<h3>Install the group</h3>
+<p>Installs arp-scan. Run the tool itself with enough privilege for raw sockets.</p>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool arp-scan</code></pre>
+<h3>Verify</h3>
+<pre><code data-lang="bash">arp-scan --version
+arp-scan --help | head
+eergn-recon-installer --check</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Verification is not a functional test</span><p>A version banner only proves the binary is on PATH. Run the smallest safe command against a lab endpoint to confirm the tool works in your environment.</p></div>
+</div>
+
+<h2>Basic usage</h2>
+<h3>Scan the local network on an interface</h3>
+<p>Replace <code>eth0</code> with the lab interface. <code>--localnet</code> derives targets from that interface's address and netmask.</p>
+<pre><code data-lang="bash">sudo arp-scan --interface=eth0 --localnet</code></pre>
+<h3>Scan an explicit subnet</h3>
+<p>Use a CIDR inside the local broadcast domain. Routed subnets will not receive ARP requests.</p>
+<pre><code data-lang="bash">sudo arp-scan --interface=eth0 192.168.1.0/24</code></pre>
+<h3>Produce a parseable table</h3>
+<p>Useful for logs and comparison. MAC vendor data still depends on the local database.</p>
+<pre><code data-lang="bash">sudo arp-scan --interface=eth0 --localnet --plain --ignoredups</code></pre>
+<h2>Command reference</h2>
+<p>These are the options most useful for the workflows in this documentation. Run <code>arp-scan --help</code> for the complete list supported by your installed version.</p>
+<div class="table-scroll"><table><thead><tr><th>Option</th><th>What it does</th></tr></thead><tbody><tr><td><code>-I, --interface</code></td><td>Choose the interface used for the scan.</td></tr><tr><td><code>-l, --localnet</code></td><td>Generate targets from the interface address and netmask.</td></tr><tr><td><code>-f, --file</code></td><td>Read targets from a file, one per line.</td></tr><tr><td><code>-q, --quiet</code></td><td>Print minimal output for responding hosts.</td></tr><tr><td><code>-x, --plain</code></td><td>Suppress header and footer text.</td></tr><tr><td><code>-g, --ignoredups</code></td><td>Do not print duplicate responses.</td></tr><tr><td><code>-d, --resolve</code></td><td>Resolve responding addresses to hostnames.</td></tr><tr><td><code>-F, --format</code></td><td>Custom output format with fields such as IP, MAC and vendor.</td></tr><tr><td><code>-r, --retry</code></td><td>Set the number of attempts per host.</td></tr><tr><td><code>-t, --timeout</code></td><td>Set the initial per-host timeout in milliseconds.</td></tr><tr><td><code>-B, --bandwidth</code></td><td>Limit outbound bandwidth.</td></tr><tr><td><code>-v</code></td><td>Increase verbosity; may be repeated.</td></tr></tbody></table></div>
+
+<h2>Examples for an authorized lab</h2>
+<h3>Find devices and vendors</h3>
+<p>Scan the lab segment and keep a plain, duplicate-free table.</p>
+<pre><code data-lang="bash">sudo arp-scan -I eth0 -l -x -g 2&gt;/dev/null | tee arp-scan-$(date +%F).txt</code></pre>
+<p>The header is suppressed by <code>-x</code>; record the interface and time separately if you need provenance.</p>
+<h3>Target a small range</h3>
+<p>Limit the scan to a specific address range inside the local link.</p>
+<pre><code data-lang="bash">sudo arp-scan -I eth0 192.168.1.10-192.168.1.40</code></pre>
+<p>Ranges are inclusive. Always confirm the range is in scope.</p>
+<h3>Resolve hostnames</h3>
+<p>Add reverse DNS for responding addresses when a resolver is available.</p>
+<pre><code data-lang="bash">sudo arp-scan -I eth0 -l -d</code></pre>
+<p>Reverse DNS can be slow and may leak the scan to internal resolvers.</p>
+<h2>Understanding the output</h2>
+<p>The default output is a table with interface information, responding hosts and a summary. Addresses and vendors below are illustrative.</p>
+<pre><code data-lang="text">Interface: eth0, type: EN10MB, MAC: 02:00:00:00:00:01, IPv4: 192.168.1.10
+Starting arp-scan 1.10.0 with 256 hosts (https://github.com/royhills/arp-scan)
+192.168.1.1     02:00:00:00:00:02       Example Networks
+192.168.1.20    02:00:00:00:00:14       Example Devices
+
+2 packets received by filter, 0 packets dropped by kernel
+Ending arp-scan 1.10.0: 256 hosts scanned in 2.015 seconds (127.05 hosts/sec). 2 responded</code></pre>
+<ul>
+  <li>Only hosts that answered ARP appear. Absence is not proof that a host is offline.</li>
+  <li>The MAC vendor column comes from the local vendor database and can be blank or inaccurate.</li>
+  <li>The summary shows scan rate and response count; record it with the output.</li>
+  <li>Use <code>--plain</code> and <code>--ignoredups</code> when the output will be parsed.</li>
+</ul>
+<h2>Advanced usage</h2>
+<p>For repeatable inventories, pin the interface, disable name resolution unless it is needed, and store the exact command with the output. A custom format such as <code>--format='${ip}\t${mac}\t${vendor}'</code> is easier to compare than the decorated default. If a managed switch or wireless controller has client isolation enabled, coordinate with its owner before concluding that hosts are absent.</p>
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to try</th></tr></thead><tbody><tr><td><code>Could not open a raw socket</code></td><td>The process lacks raw-socket privilege.</td><td>Run with <code>sudo</code>, or grant the appropriate capability according to local policy.</td></tr><tr><td>No hosts respond</td><td>Wrong interface, wrong subnet, client isolation or a virtual network that does not pass ARP.</td><td>Confirm the interface address with <code>ip addr</code> and test from another host on the same segment.</td></tr><tr><td>Vendor column is blank</td><td>The MAC vendor database is missing or the prefix is unregistered.</td><td>Update the package's vendor data if available; do not treat a blank vendor as an error.</td></tr><tr><td>Scan is very slow</td><td>Large range, retries or a high timeout.</td><td>Reduce the range, lower retries/timeouts, or use <code>--bandwidth</code> on constrained links.</td></tr></tbody></table></div>
+
+<h2>Security and etiquette</h2>
+<ul>
+  <li>ARP scanning only reaches the local broadcast domain; keep it inside the authorized segment.</li>
+  <li>Do not run it on networks where you lack permission, even if the range is private.</li>
+  <li>Wireless and virtual segments may carry other users' traffic; coordinate with the network owner.</li>
+  <li>MAC and vendor data can identify personal devices; handle it as sensitive inventory data.</li>
+  <li>Rate-limit large scans to avoid disrupting fragile lab equipment.</li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://github.com/royhills/arp-scan">arp-scan project</a></li>
+  <li><a href="https://manpages.debian.org/stable/arp-scan/arp-scan.1.en.html">arp-scan manual page</a></li>
+  <li><a href="https://standards-oui.ieee.org/">IEEE OUI registry</a></li>
+</ul>
+<p>Related guides: <a href="../../guides/host-discovery/">host discovery</a>, <a href="../../guides/service-discovery/">service discovery</a>, <a href="../../guides/working-with-results/">working with results</a>. Return to the <a href="../">tool catalog</a>.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../netcat/"><span>← Previous</span><strong>Netcat</strong></a>
+          <a class="next" href="../fping/"><span>Next →</span><strong>fping</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentation · Eergn Network Recon Installer</title>
+<meta name="description" content="Field manual for the Eergn Network Recon Installer, its 13 supported tools, installers and practical workflows.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-base="../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../">Home</a>
+      <a href="../index.html#features">Features</a>
+      <a href="../tools/">Tools</a>
+      <a href="../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../documentation/" class="is-active" aria-current="page">Documentation home</a>
+      <a href="../getting-started/">Getting started</a>
+      <a href="../installation/">Installation</a>
+      <a href="../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../guides/">Guide index</a>
+      <a href="../guides/host-discovery/">Host discovery</a>
+      <a href="../guides/service-discovery/">Service discovery</a>
+      <a href="../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../guides/tls-inspection/">TLS inspection</a>
+      <a href="../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../guides/working-with-results/">Working with results</a>
+      <a href="../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../tools/nmap/">Nmap</a>
+      <a href="../tools/ncat/">Ncat</a>
+      <a href="../tools/netcat/">Netcat</a>
+      <a href="../tools/arp-scan/">arp-scan</a>
+      <a href="../tools/fping/">fping</a>
+      <a href="../tools/mtr/">MTR</a>
+      <a href="../tools/dig/">dig</a>
+      <a href="../tools/whois/">whois</a>
+      <a href="../tools/openssl/">OpenSSL s_client</a>
+      <a href="../tools/testssl/">testssl.sh</a>
+      <a href="../tools/iperf3/">iperf3</a>
+      <a href="../tools/iftop/">iftop</a>
+      <a href="../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../reference/commands/">Installer commands</a>
+      <a href="../reference/architecture/">Architecture</a>
+      <a href="../reference/configuration/">Configuration</a>
+      <a href="../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../reference/security/">Security</a>
+      <a href="../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Introduction</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../documentation/">Introduction</a><span class="sep">/</span><span>Documentation home</span>
+    </nav>
+        <article class="prose">
+<h1>Documentation</h1>
+<p class="page-lede">A practical field manual for the Eergn Network Recon Installer and the thirteen external tools it installs. Start with installation, then follow a guide or open a tool reference.</p>
+
+<div class="doc-category-grid">
+  <a class="doc-category" href="../installation/"><h2>Installation</h2><p>APT repository, package file, standalone script and verification.</p><span>Set up the installer →</span></a>
+  <a class="doc-category" href="../getting-started/"><h2>Getting started</h2><p>From a fresh install to a first authorized lab check.</p><span>Take the guided path →</span></a>
+  <a class="doc-category" href="../tools/"><h2>Supported tools</h2><p>Search all thirteen tools by category, purpose and installer group.</p><span>Open the catalog →</span></a>
+  <a class="doc-category" href="../reference/commands/"><h2>Command reference</h2><p>Every installer flag, mode, exit status and environment variable.</p><span>Read the reference →</span></a>
+</div>
+
+<h2>What this project is</h2>
+<p>Eergn Network Recon Installer is a single-file Bash CLI. It detects the host's package manager and installs a curated set of network discovery and diagnostic utilities. It does not implement scanning itself, does not run scans for you, and does not grant permission to test a system.</p>
+<p>The installer supports nine tool groups:</p>
+<div class="table-scroll"><table><thead><tr><th>Group ID</th><th>External tools</th><th>Purpose</th></tr></thead><tbody><tr><td><code>nmap</code></td><td>Nmap, Ncat</td><td>Host discovery, port scanning and service inspection</td></tr><tr><td><code>netcat</code></td><td>OpenBSD Netcat (<code>nc</code>)</td><td>TCP/UDP reachability and simple connections</td></tr><tr><td><code>arp-scan</code></td><td>arp-scan</td><td>Local IPv4 discovery over ARP</td></tr><tr><td><code>fping</code></td><td>fping</td><td>Fast ICMP reachability checks</td></tr><tr><td><code>mtr</code></td><td>MTR</td><td>Route and latency troubleshooting</td></tr><tr><td><code>dns</code></td><td>dig, whois</td><td>DNS records and registration information</td></tr><tr><td><code>tls</code></td><td>OpenSSL, testssl.sh</td><td>TLS handshake and configuration inspection</td></tr><tr><td><code>iperf3</code></td><td>iperf3</td><td>Client/server throughput testing</td></tr><tr><td><code>bandwidth</code></td><td>iftop, nethogs</td><td>Live bandwidth by connection or process</td></tr></tbody></table></div>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg>
+  <div><span class="callout-title">Verified baseline</span><p>This documentation was written against installer <strong>1.0.0</strong> and the exact source in the repository. The APT package metadata in <code>docs/Packages</code> reports version <code>1.0.0</code> and dependency <code>bash</code>. Upstream tools change over time; check their own manuals for version-specific behavior.</p></div>
+</div>
+
+<h2>What the documentation covers</h2>
+<p>Each tool page follows a consistent structure: what the tool does, how the installer handles it, installation and verification, basic and advanced usage, verified options, output interpretation, troubleshooting, security notes and official references.</p>
+<ul>
+  <li><a href="../installation/">Installation</a> — all four supported installation routes.</li>
+  <li><a href="../getting-started/">Getting started</a> — a beginner-friendly path with a safe lab workflow.</li>
+  <li><a href="../guides/">Practical guides</a> — host discovery, service discovery, DNS, TLS, throughput, results, maintenance.</li>
+  <li><a href="../tools/">Tool catalog</a> — all individual tool references.</li>
+  <li><a href="../reference/commands/">Installer reference</a> — commands, architecture, configuration, troubleshooting, security, contributing.</li>
+</ul>
+
+<h2>How to read the examples</h2>
+<p>Examples use private, documentation-reserved address ranges such as <code>192.168.1.0/24</code> and hostnames such as <code>lab.example.internal</code>. Replace them with systems you own or have explicit written permission to assess. Active tools send traffic to the target; their examples are not passive observations.</p>
+<p>Commands are shown for the current user. Where a tool requires elevated privileges, the example says so explicitly. Avoid running entire workflows as root when a single tool needs raw socket access.</p>
+
+<h2>Verified versus unverified</h2>
+<p>The repository has no automated test suite. Claims marked as verified come from reading the installer source, running the installer's non-destructive modes, inspecting the shipped package metadata, or reading installed help output and official upstream documentation. Anything version-dependent or environment-dependent is described as such. Where a behavior could not be confirmed from those sources, this documentation says so rather than guessing.</p>
+
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <div><span class="callout-title">Authorized use only</span><p>Network reconnaissance can look like scanning or intrusion to monitoring systems. Use these tools only on networks and systems you own or have documented permission to assess, and follow the rules of engagement for the environment.</p></div>
+</div>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../"><span>← Previous</span><strong>Home</strong></a>
+          <a class="next" href="../installation/"><span>Next →</span><strong>Installation</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../documentation/">Documentation</a></li>
+          <li><a href="../installation/">Installation</a></li>
+          <li><a href="../tools/">Supported tools</a></li>
+          <li><a href="../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../getting-started/">Getting started</a></li>
+          <li><a href="../guides/">Practical guides</a></li>
+          <li><a href="../reference/commands/">Command reference</a></li>
+          <li><a href="../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/js/search-index.js" defer></script>
+<script src="../assets/js/site.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contributing · Eergn Network Recon Installer</title>
+<meta name="description" content="Add tool groups and package managers, update versions, build packages and maintain the static documentation site.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/">Tools</a>
+      <a href="../../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/" class="is-active" aria-current="page">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Reference</a><span class="sep">/</span><span>Contributing</span>
+    </nav>
+        <article class="prose">
+<h1>Contributing</h1>
+<p class="page-lede">How to change the installer, add a tool group, update the package or improve the documentation without breaking the APT repository or the static site.</p>
+
+<h2>Before you start</h2>
+<p>Inspect the current source and open an issue describing the change. The repository has no <code>CONTRIBUTING.md</code>, test suite or CI configuration in the audited tree, so these conventions are derived from the actual scripts and README rather than from a formal policy.</p>
+<pre><code data-lang="bash">git clone https://github.com/Eergn/eergn-network-recon-installer.git
+cd eergn-network-recon-installer
+bash -n eergn-recon-installer.sh
+./eergn-recon-installer.sh --list</code></pre>
+
+<h2>Add a tool group</h2>
+<p>A group is defined by four functions in <code>eergn-recon-installer.sh</code>. Update all of them together:</p>
+<ol>
+  <li><code>ALL_IDS</code> — add the new ID in the menu order.</li>
+  <li><code>tool_desc</code> — add the human-readable label.</li>
+  <li><code>tool_cmds</code> — list every command that must exist for the group to count as installed.</li>
+  <li><code>pkgs_for</code> — add the package name for each supported package manager key: <code>apt</code>, <code>dnf</code>, <code>pacman</code>, <code>zypper</code>, <code>apk</code> and <code>brew</code>.</li>
+</ol>
+<p>If the tool needs special handling, follow the <code>tls</code> pattern: install the normal packages, then call a dedicated function such as <code>ensure_testssl</code>. Add fallback logic only when you can explain its failure behavior and security implications.</p>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <div><span class="callout-title">Package names are platform-specific</span><p>Do not add a package that does not exist for a supported manager. If a tool is unavailable on one platform, decide explicitly whether the group should fail there and document it. The README already notes that <code>nethogs</code> is Linux-focused.</p></div>
+</div>
+
+<h2>Add or change a package manager</h2>
+<p>Update <code>detect_pm</code> for detection, <code>pm_install</code> for the install command, <code>pkgs_for</code> for every group mapping, and <code>refresh_index</code> if the manager needs an explicit refresh. Also update the README platform table and <a href="../commands/">the command reference</a>.</p>
+
+<h2>Update the version</h2>
+<p>The version is read from <code>VERSION="..."</code> in the installer by <code>scripts/build-deb.sh</code>. When changing it, also update the man page generation if necessary, the README examples that mention <code>1.0.0</code>, the published <code>.deb</code>, <code>docs/Packages</code>, <code>Release</code> and signatures. Do not hand-edit repository indexes; rebuild them with the script.</p>
+
+<h2>Build and verify</h2>
+<pre><code data-lang="bash"># Syntax and non-destructive checks
+bash -n eergn-recon-installer.sh
+./eergn-recon-installer.sh --list
+./eergn-recon-installer.sh --check
+./eergn-recon-installer.sh --all --dry-run --no-banner
+
+# Package build (requires dpkg-deb from dpkg-dev)
+./scripts/build-deb.sh
+dpkg-deb -I dist/eergn-recon-installer_1.0.0_all.deb
+
+# APT repository refresh (maintainer machine, requires gnupg and dpkg-dev)
+./scripts/make-apt-repo.sh</code></pre>
+<p>These checks were run while preparing this documentation where the required tools were available; they are not a substitute for testing on each supported distribution. Do not claim a platform works unless you have actually exercised it. If you add a tool, test the dry run and the real installation on at least one package manager.</p>
+
+<h2>Documentation conventions</h2>
+<ul>
+  <li>Pages are static HTML under <code>docs/</code> with relative links so the GitHub Pages project subpath keeps working.</li>
+  <li>Each docs page contains its own header, sidebar and footer. When adding a page, copy an existing page at the same depth, update the title, description, breadcrumbs, active sidebar link and previous/next navigation in the neighboring pages.</li>
+  <li>Add the page to <code>docs/assets/js/search-index.js</code> with a title, path relative to <code>docs/</code>, category, description and keywords.</li>
+  <li>Use the existing CSS components: <code>.callout</code>, <code>.table-scroll</code>, <code>.tool-meta</code> and standard <code>.prose</code> elements. Avoid adding a framework for a small interaction.</li>
+  <li>Verify commands against official upstream documentation or installed help output. Label environment-specific or unverified behavior clearly.</li>
+  <li>Do not publish real scan results, internal addresses, personal registration data or credentials.</li>
+</ul>
+
+<h2>Links and attribution</h2>
+<p>Prefer official upstream sites and repositories over third-party tutorials. Do not imply that an upstream project endorses this installer. Preserve license and copyright notices when redistributing tool output or documentation.</p>
+
+<h2>Security-related contributions</h2>
+<p>Be cautious with changes that affect privilege handling, repository signing, downloaded code or the testssl.sh fallback. Explain the threat model and failure mode in the pull request. Do not weaken signature verification or add broad permission changes to work around a local problem.</p>
+
+<h2>What not to commit</h2>
+<ul>
+  <li>Build output in <code>dist/</code> or root-level <code>.deb</code> files; they are ignored.</li>
+  <li>Private signing keys, passphrases or tokens.</li>
+  <li>Real assessment data, internal hostnames or customer information.</li>
+  <li>Generated temporary logs or editor backup files.</li>
+</ul>
+
+<h2>Pull request checklist</h2>
+<ul>
+  <li>Installer syntax passes <code>bash -n</code>.</li>
+  <li><code>--list</code>, <code>--check</code> and <code>--all --dry-run</code> behave as expected.</li>
+  <li>Every new group has mappings for every supported package manager, or an explicit documented limitation.</li>
+  <li>README, command reference and tool catalog are updated.</li>
+  <li>Internal links and assets work at the project subpath.</li>
+  <li>No secrets, personal data or unverified claims are included.</li>
+</ul>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../security/"><span>← Previous</span><strong>Security</strong></a>
+          <a class="next" href="../../documentation/"><span>Next →</span><strong>Documentation home</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

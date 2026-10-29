@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DNS reconnaissance · Eergn Network Recon Installer</title>
+<meta name="description" content="Read DNS records and registration data with dig and whois, including reverse lookups and delegation tracing.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/">Tools</a>
+      <a href="../../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/" class="is-active" aria-current="page">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Guides</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Guides</a><span class="sep">/</span><span>DNS reconnaissance</span>
+    </nav>
+        <article class="prose">
+<h1>DNS reconnaissance</h1>
+<p class="page-lede">Read the records a domain publishes, inspect reverse DNS, trace delegation and collect registration data. DNS queries are generally lightweight, but they are still traffic to third-party infrastructure.</p>
+
+<h2>Purpose</h2>
+<p>Collect the public DNS and registration facts for a domain you are authorized to assess. This is usually a low-impact starting point, but it can reveal internal naming, mail providers, third-party services and ownership clues.</p>
+
+<h2>Prerequisites</h2>
+<ul>
+  <li>Installed group <code>dns</code> (<code>dig</code> and <code>whois</code>).</li>
+  <li>Authorization to query the domain and its authoritative servers. Public DNS is public, but bulk enumeration is not automatically acceptable.</li>
+  <li>A resolver you trust, or the authoritative server address when you need an authoritative answer.</li>
+</ul>
+
+<h2>Step 1 — basic records with dig</h2>
+<pre><code data-lang="bash">dig example.com
+dig +short A example.com
+dig +short AAAA example.com
+dig +short MX example.com
+dig +short NS example.com
+dig +short TXT example.com
+dig +short SOA example.com</code></pre>
+<p>The default <code>dig example.com</code> queries an A record and prints the full response: status, flags, question, answer, authority and additional sections. <code>+short</code> reduces the answer to the record data, which is useful in scripts but hides status and authority information.</p>
+
+<h2>Step 2 — ask a specific server</h2>
+<pre><code data-lang="bash"># Query a specific recursive resolver
+dig @1.1.1.1 example.com A
+
+# Query an authoritative name server directly
+dig @ns1.example.com example.com A +norecurse</code></pre>
+<p><code>@server</code> sends the query to that server. <code>+norecurse</code> asks the server not to recurse, which is appropriate when querying an authoritative server. Do not use a public resolver for queries you are not authorized to make at volume.</p>
+
+<h2>Step 3 — reverse lookups</h2>
+<pre><code data-lang="bash">dig +short -x 192.0.2.10
+dig +short PTR 10.2.0.192.in-addr.arpa</code></pre>
+<p><code>-x</code> builds the reverse <code>in-addr.arpa</code> or <code>ip6.arpa</code> name for you. Reverse records are often missing or generic; a PTR does not prove ownership or identity.</p>
+
+<h2>Step 4 — inspect delegation</h2>
+<pre><code data-lang="bash">dig +trace example.com NS</code></pre>
+<p><code>+trace</code> starts at the root and follows referrals to the authoritative servers. It is useful for understanding delegation problems, but it sends queries to multiple public servers and can be slower than a normal lookup.</p>
+
+<h2>Step 5 — registration data with whois</h2>
+<pre><code data-lang="bash">whois example.com
+whois 192.0.2.10
+
+# Query IANA and follow the referral chain explicitly
+whois -I example.com</code></pre>
+<p><code>whois</code> queries the registry or registrar responsible for the object. Output formats vary widely by registry. <code>-I</code> first queries <code>whois.iana.org</code> and follows its referral. Privacy services often replace registrant details; that is a normal result, not a failure.</p>
+
+<h2>What to record</h2>
+<div class="table-scroll"><table><thead><tr><th>Record</th><th>Question it helps answer</th><th>Caution</th></tr></thead><tbody><tr><td>A / AAAA</td><td>Which addresses does the name resolve to?</td><td>CDNs and load balancers return changing or shared addresses</td></tr><tr><td>MX</td><td>Where does mail for the domain go?</td><td>Third-party mail providers may be present</td></tr><tr><td>NS</td><td>Which servers are authoritative?</td><td>Delegation can differ from parent records during transitions</td></tr><tr><td>TXT</td><td>What verification or policy records exist?</td><td>TXT is often used for SPF, DKIM, DMARC and ownership proofs</td></tr><tr><td>SOA</td><td>Who is the primary authority and what are the timers?</td><td>Serial numbers are not a security indicator</td></tr><tr><td>PTR</td><td>What name is associated with an address?</td><td>Frequently generic or stale</td></tr><tr><td>whois</td><td>Who is responsible for the registration or address block?</td><td>Privacy redaction is common; dates and status matter</td></tr></tbody></table></div>
+<h2>Limitations and interpretation</h2>
+<ul>
+  <li>DNS answers can be cached. Use <code>+noall +answer</code> or query authoritative servers when freshness matters.</li>
+  <li>CDN addresses do not identify the origin server. Do not treat a shared address as dedicated infrastructure.</li>
+  <li>Wildcard DNS can make random subdomains appear to exist. Check whether a nonexistent name returns the same records.</li>
+  <li>Zone transfers (<code>AXFR</code>) are rarely allowed and usually require explicit authorization. Do not attempt them outside a scoped test.</li>
+  <li>WHOIS output is not a vulnerability finding. Registration data can be outdated or redacted.</li>
+</ul>
+
+<h2>Structured output</h2>
+<pre><code data-lang="bash"># Answer-only records for a report
+dig +noall +answer example.com A
+dig +noall +answer example.com MX
+dig +noall +answer example.com TXT
+
+# Save raw output
+dig example.com ANY &gt; ~/engagements/lab-2026-10-29/raw/dig-any.txt
+whois example.com &gt; ~/engagements/lab-2026-10-29/raw/whois-example.com.txt</code></pre>
+<p>Some resolvers refuse or minimize <code>ANY</code> queries. Prefer specific record types. See <a href="../working-with-results/">Working with results</a>.</p>
+
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to check</th></tr></thead><tbody><tr><td><code>status: NXDOMAIN</code></td><td>Name does not exist in that zone</td><td>Check spelling, search domain and the authoritative server</td></tr><tr><td><code>status: SERVFAIL</code></td><td>Resolver or authoritative failure</td><td>Try another resolver, then query the authoritative NS directly</td></tr><tr><td>No answer section</td><td>Record type absent, refused, or minimized</td><td>Try a different type and inspect the full response</td></tr><tr><td><code>dig: command not found</code></td><td>DNS group not installed</td><td>Run <code>eergn-recon-installer -t dns</code></td></tr><tr><td>whois returns no match</td><td>Wrong registry, redaction or unsupported object</td><td>Try <code>whois -I</code> and the correct registry for the TLD</td></tr></tbody></table></div>
+<h2>Security considerations</h2>
+<ul>
+  <li>DNS queries reveal your resolver and can be logged. Use infrastructure appropriate to the engagement.</li>
+  <li>Subdomain brute force and high-volume enumeration are not covered here and require explicit scope and rate limits.</li>
+  <li>WHOIS data may contain personal information. Handle and retain it according to your engagement rules and privacy obligations.</li>
+</ul>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../service-discovery/"><span>← Previous</span><strong>Service discovery</strong></a>
+          <a class="next" href="../tls-inspection/"><span>Next →</span><strong>TLS inspection</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

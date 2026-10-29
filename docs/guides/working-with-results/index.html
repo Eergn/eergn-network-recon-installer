@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Working with results · Eergn Network Recon Installer</title>
+<meta name="description" content="Save, organize, compare and protect reconnaissance output from the installed tools.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/">Tools</a>
+      <a href="../../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/" class="is-active" aria-current="page">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Guides</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Guides</a><span class="sep">/</span><span>Working with results</span>
+    </nav>
+        <article class="prose">
+<h1>Working with results</h1>
+<p class="page-lede">Reconnaissance output is evidence. Save it consistently, record the context, compare runs, and protect it like any other sensitive assessment artifact.</p>
+
+<h2>Purpose</h2>
+<p>Make results reproducible and reviewable. The installer does not provide a reporting engine, database or dashboard. This guide uses the output features of the upstream tools plus ordinary files, directories and shell tools.</p>
+
+<h2>Prerequisites</h2>
+<ul>
+  <li>Installed tools relevant to the data you are collecting.</li>
+  <li>A directory convention you can explain to a reviewer.</li>
+  <li>An agreed retention and handling policy for sensitive data.</li>
+</ul>
+
+<h2>Suggested directory layout</h2>
+<pre><code data-lang="bash">~/engagements/
+  lab-2026-10-29/
+    scope.txt
+    notes.md
+    raw/
+      arp-scan.txt
+      fping-alive.txt
+      nmap-ping.nmap
+      nmap-ping.xml
+      services-192.168.1.10.nmap
+      tls-lab.json
+      iperf3-tcp.json
+    processed/
+    reports/</code></pre>
+<p>Keep raw output immutable. Write summaries and derived files elsewhere so you can always return to the original. Put the scope, authorization reference and time window in <code>scope.txt</code>.</p>
+
+<h2>Saving output by tool</h2>
+<div class="table-scroll"><table><thead><tr><th>Tool</th><th>Useful output option</th><th>Notes</th></tr></thead><tbody><tr><td>Nmap</td><td><code>-oN</code>, <code>-oX</code>, <code>-oG</code>, <code>-oA &lt;base&gt;</code></td><td><code>-oA</code> writes normal, XML and grepable formats together</td></tr><tr><td>dig</td><td><code>&gt; file</code> or <code>+noall +answer</code></td><td>Shell redirection captures the full response; <code>+short</code> is for scripts</td></tr><tr><td>testssl.sh</td><td><code>--jsonfile</code>, <code>--htmlfile</code>, <code>--logfile</code></td><td>JSON/HTML are additional outputs; check the version's schema</td></tr><tr><td>iperf3</td><td><code>-J</code></td><td>JSON schema is version-dependent; record the iperf3 version</td></tr><tr><td>mtr</td><td><code>-r</code>, <code>-w</code>, <code>-j</code></td><td>Report mode is better for records than the live curses view</td></tr><tr><td>arp-scan</td><td><code>--plain</code>, <code>--format</code></td><td>Plain output is easier to parse; fields are documented in arp-scan's help</td></tr><tr><td>installer</td><td>Log path printed at start</td><td>Temporary log; copy it into the engagement directory if needed</td></tr></tbody></table></div>
+<h2>Record context with the result</h2>
+<p>A result without context is hard to defend later. Capture at least:</p>
+<ul>
+  <li>Date, start and end time, and timezone.</li>
+  <li>Source host, interface and source address.</li>
+  <li>Target scope and excluded addresses.</li>
+  <li>Exact command line, including options and tool version.</li>
+  <li>Authorization reference or change ticket.</li>
+  <li>Unexpected conditions: rate limiting, outages, maintenance windows.</li>
+</ul>
+<pre><code data-lang="bash">{
+  echo &quot;date: $(date -Is)&quot;
+  echo &quot;host: $(hostname)&quot;
+  echo &quot;command: nmap -sV -T3 --open -p 22,80,443 192.168.1.10&quot;
+  nmap --version | head -n 1
+} &gt; ~/engagements/lab-2026-10-29/raw/services-192.168.1.10.meta</code></pre>
+<p>Storing the command and version alongside the output prevents the classic "which flags produced this file?" problem.</p>
+
+<h2>Comparing runs</h2>
+<pre><code data-lang="bash">diff -u raw/services-192.168.1.10.nmap raw/services-192.168.1.10.after.nmap
+diff -u raw/fping-alive.txt raw/fping-alive.after.txt</code></pre>
+<p><code>diff -u</code> is usually enough for text reports. For XML, parse with a tool you already trust rather than comparing lines. Keep the baseline and the new run so the difference is explainable.</p>
+
+<h2>Filtering without destroying the source</h2>
+<pre><code data-lang="bash"># Show only open-port lines from a normal Nmap report
+grep -E &quot;open|filtered&quot; raw/services-192.168.1.10.nmap
+
+# Answer records only
+dig +noall +answer example.com A &gt; processed/dns-a.txt</code></pre>
+<p>Write filters to new files. Do not edit the raw evidence in place. If a filter is part of the methodology, record the filter in your notes.</p>
+
+<h2>Protecting sensitive output</h2>
+<ul>
+  <li>Host inventories, service banners and certificate details can expose internal architecture.</li>
+  <li>WHOIS records may contain personal data; handle them according to privacy and engagement rules.</li>
+  <li>Use restrictive directory permissions and your organization's approved encryption for data at rest.</li>
+  <li>Do not paste raw results into public issues, chat or documentation without scrubbing addresses, names and certificates.</li>
+</ul>
+<pre><code data-lang="bash">chmod 700 ~/engagements/lab-2026-10-29
+chmod 600 ~/engagements/lab-2026-10-29/raw/*</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg>
+  <div><span class="callout-title">No built-in reporting</span><p>The installer and its supported tools do not provide a case-management, database or report-generation feature. Any automation you build around them is your own; do not assume the project stores or transmits results.</p></div>
+</div>
+
+<h2>Retention and disposal</h2>
+<p>Follow the engagement's retention policy. When data is no longer needed, remove it in a way that matches its sensitivity and your organization's requirements. Do not leave raw scan output in world-readable temporary directories.</p>
+
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Problem</th><th>What to check</th></tr></thead><tbody><tr><td>File is empty</td><td>Command failed before writing; check stderr and the exit status</td></tr><tr><td>Output looks truncated</td><td>Resource limits, interrupted scan or a full disk; check the tool's log</td></tr><tr><td>Timestamps are confusing</td><td>Record timezone explicitly; use <code>date -Is</code></td></tr><tr><td>Sensitive file was shared</td><td>Follow the incident process; rotate anything exposed and review the content</td></tr></tbody></table></div>
+<h2>Security considerations</h2>
+<p>Results are often more sensitive than the scan itself. A host inventory can be more useful to an attacker than a list of open ports. Protect the data, limit access and retain only what the engagement requires.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../throughput-and-bandwidth/"><span>← Previous</span><strong>Throughput & bandwidth</strong></a>
+          <a class="next" href="../troubleshooting-installation/"><span>Next →</span><strong>Troubleshooting installation</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practical guides · Eergn Network Recon Installer</title>
+<meta name="description" content="End-to-end reconnaissance and diagnostics workflows using the tools installed by Eergn.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-base="../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../">Home</a>
+      <a href="../index.html#features">Features</a>
+      <a href="../tools/">Tools</a>
+      <a href="../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../documentation/">Documentation home</a>
+      <a href="../getting-started/">Getting started</a>
+      <a href="../installation/">Installation</a>
+      <a href="../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../guides/" class="is-active" aria-current="page">Guide index</a>
+      <a href="../guides/host-discovery/">Host discovery</a>
+      <a href="../guides/service-discovery/">Service discovery</a>
+      <a href="../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../guides/tls-inspection/">TLS inspection</a>
+      <a href="../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../guides/working-with-results/">Working with results</a>
+      <a href="../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../tools/nmap/">Nmap</a>
+      <a href="../tools/ncat/">Ncat</a>
+      <a href="../tools/netcat/">Netcat</a>
+      <a href="../tools/arp-scan/">arp-scan</a>
+      <a href="../tools/fping/">fping</a>
+      <a href="../tools/mtr/">MTR</a>
+      <a href="../tools/dig/">dig</a>
+      <a href="../tools/whois/">whois</a>
+      <a href="../tools/openssl/">OpenSSL s_client</a>
+      <a href="../tools/testssl/">testssl.sh</a>
+      <a href="../tools/iperf3/">iperf3</a>
+      <a href="../tools/iftop/">iftop</a>
+      <a href="../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../reference/commands/">Installer commands</a>
+      <a href="../reference/architecture/">Architecture</a>
+      <a href="../reference/configuration/">Configuration</a>
+      <a href="../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../reference/security/">Security</a>
+      <a href="../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Guides</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../documentation/">Guides</a><span class="sep">/</span><span>Guide index</span>
+    </nav>
+        <article class="prose">
+<h1>Practical guides</h1>
+<p class="page-lede">Workflows that connect the installed tools. Every guide assumes an authorized lab or private network and links to the individual tool references for exact options.</p>
+
+<div class="doc-category-grid">
+  <a class="doc-category" href="host-discovery/"><h2>Host discovery</h2><p>Inventory a lab network with arp-scan, fping and Nmap, and understand what each view misses.</p><span>Read guide →</span></a>
+  <a class="doc-category" href="service-discovery/"><h2>Service discovery</h2><p>Move from "a host is up" to "these services are exposed" with Nmap and Netcat.</p><span>Read guide →</span></a>
+  <a class="doc-category" href="dns-reconnaissance/"><h2>DNS reconnaissance</h2><p>Read common DNS records with dig and registration data with whois.</p><span>Read guide →</span></a>
+  <a class="doc-category" href="tls-inspection/"><h2>TLS inspection</h2><p>Inspect a single handshake with OpenSSL, then assess configuration with testssl.sh.</p><span>Read guide →</span></a>
+  <a class="doc-category" href="throughput-and-bandwidth/"><h2>Throughput & bandwidth</h2><p>Measure client/server throughput with iperf3 and attribute live traffic.</p><span>Read guide →</span></a>
+  <a class="doc-category" href="working-with-results/"><h2>Working with results</h2><p>Save, organize, compare and protect reconnaissance output.</p><span>Read guide →</span></a>
+  <a class="doc-category" href="troubleshooting-installation/"><h2>Troubleshooting installation</h2><p>Diagnose APT repository, keyring, dependency and PATH problems.</p><span>Read guide →</span></a>
+  <a class="doc-category" href="maintaining-installation/"><h2>Maintaining installation</h2><p>Update packages, audit tool versions and remove components cleanly.</p><span>Read guide →</span></a>
+</div>
+
+<h2>Which guide should I use?</h2>
+<div class="table-scroll"><table><thead><tr><th>Question</th><th>Start with</th></tr></thead><tbody><tr><td>What is on my lab network?</td><td><a href="host-discovery/">Host discovery</a></td></tr><tr><td>Which ports and services are exposed?</td><td><a href="service-discovery/">Service discovery</a></td></tr><tr><td>What does a domain publish in DNS?</td><td><a href="dns-reconnaissance/">DNS reconnaissance</a></td></tr><tr><td>Why does a TLS endpoint fail or look weak?</td><td><a href="tls-inspection/">TLS inspection</a></td></tr><tr><td>Is a link delivering the expected throughput?</td><td><a href="throughput-and-bandwidth/">Throughput and bandwidth</a></td></tr><tr><td>How do I keep evidence from multiple runs?</td><td><a href="working-with-results/">Working with results</a></td></tr><tr><td>Why did installation fail?</td><td><a href="troubleshooting-installation/">Troubleshooting installation</a></td></tr><tr><td>How do I update or remove the toolkit?</td><td><a href="maintaining-installation/">Maintaining the installation</a></td></tr></tbody></table></div>
+<h2>Before any active workflow</h2>
+<ul>
+  <li>Write down the scope: hosts, ranges, ports and time window.</li>
+  <li>Confirm that you own the systems or have explicit permission from the responsible owner.</li>
+  <li>Check whether the environment has IDS/IPS, rate limits or change freezes.</li>
+  <li>Prefer the smallest probe that answers your question.</li>
+  <li>Store results somewhere appropriate for potentially sensitive data.</li>
+</ul>
+<p>See <a href="../reference/security/">Security and responsible use</a> for repository trust, privilege handling, data sensitivity and rate limits.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../tools/"><span>← Previous</span><strong>Tool catalog</strong></a>
+          <a class="next" href="host-discovery/"><span>Next →</span><strong>Host discovery</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../documentation/">Documentation</a></li>
+          <li><a href="../installation/">Installation</a></li>
+          <li><a href="../tools/">Supported tools</a></li>
+          <li><a href="../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../getting-started/">Getting started</a></li>
+          <li><a href="../guides/">Practical guides</a></li>
+          <li><a href="../reference/commands/">Command reference</a></li>
+          <li><a href="../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/js/search-index.js" defer></script>
+<script src="../assets/js/site.js" defer></script>
+
+</body>
+</html>

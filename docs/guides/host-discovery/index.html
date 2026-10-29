@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Host discovery in an authorized lab · Eergn Network Recon Installer</title>
+<meta name="description" content="Inventory hosts on a network you own with arp-scan, fping and Nmap, and interpret the differences.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/">Tools</a>
+      <a href="../../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/" class="is-active" aria-current="page">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Guides</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Guides</a><span class="sep">/</span><span>Host discovery</span>
+    </nav>
+        <article class="prose">
+<h1>Host discovery in an authorized lab</h1>
+<p class="page-lede">Build a defensible inventory of hosts on a network you own. The guide combines Layer-2 ARP discovery, ICMP reachability and Nmap host discovery, and explains why the three views disagree.</p>
+
+<h2>Purpose</h2>
+<p>Answer a narrow question: <em>which hosts are present on this authorized segment or range?</em> Host discovery is not service discovery. It does not tell you which ports are open, what software is running, or whether a host is vulnerable.</p>
+
+<h2>Prerequisites</h2>
+<ul>
+  <li>Written scope covering the exact interface, subnet and time window.</li>
+  <li>Root or <code>sudo</code> for <code>arp-scan</code> (raw sockets) and usually for Nmap's default SYN-based discovery.</li>
+  <li>Installed groups <code>arp-scan</code>, <code>fping</code> and <code>nmap</code>.</li>
+  <li>A private lab network. The examples use <code>192.168.1.0/24</code>; replace it with your authorized scope.</li>
+</ul>
+
+<h2>Required tools</h2>
+<p><a href="../../tools/arp-scan/">arp-scan</a>, <a href="../../tools/fping/">fping</a> and <a href="../../tools/nmap/">Nmap</a>. Install them with:</p>
+<pre><code data-lang="bash">sudo eergn-recon-installer -t arp-scan -t fping -t nmap -y</code></pre>
+
+<h2>Step 1 — confirm the interface and route</h2>
+<pre><code data-lang="bash">ip -brief address
+ip route</code></pre>
+<p>Write down the interface connected to the lab and its prefix. Do not assume the default route points at the lab. If you have multiple interfaces, select the correct one explicitly in the next steps.</p>
+
+<h2>Step 2 — discover local IPv4 neighbors with ARP</h2>
+<p><code>arp-scan</code> sends ARP requests on the local Layer-2 segment. It is normally the most reliable way to find hosts on the same broadcast domain because ARP is not usually filtered the way ICMP is.</p>
+<pre><code data-lang="bash"># Use the interface that faces the lab
+sudo arp-scan --interface=eth0 --localnet</code></pre>
+<p><code>--localnet</code> derives the target range from the interface address and netmask. <code>--interface</code> prevents arp-scan from silently choosing a different interface. If you omit it, arp-scan chooses the lowest-numbered configured up interface, which may not be the one you intend.</p>
+<p>For a script-friendly list of IP and MAC addresses:</p>
+<pre><code data-lang="bash">sudo arp-scan --interface=eth0 --localnet --plain --format=&#x27;${ip}\t${mac}\t${vendor}&#x27;</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg>
+  <div><span class="callout-title">Layer-2 boundary</span><p>ARP does not cross routers. If the lab spans multiple VLANs or subnets, <code>arp-scan --localnet</code> only sees the local broadcast domain. Use a reachability tool for routed ranges.</p></div>
+</div>
+
+<h2>Step 3 — check routed reachability with fping</h2>
+<p><code>fping</code> sends ICMP echo requests quickly and can enumerate a CIDR range. It shows only hosts that answer ICMP, so a host that blocks ICMP can still be up.</p>
+<pre><code data-lang="bash"># Show hosts that respond
+fping -a -g 192.168.1.0/24 2&gt;/dev/null
+
+# Send three probes per host and include statistics
+fping -c 3 -s -g 192.168.1.0/24 2&gt;/dev/null</code></pre>
+<p><code>-a</code> prints alive targets only. <code>-g</code> generates the target list from the CIDR range. Redirecting stderr hides the per-probe "unreachable" noise, which is useful for a clean list but means you should re-run without it when debugging.</p>
+
+<h2>Step 4 — cross-check with Nmap host discovery</h2>
+<p>Nmap's ping scan <code>-sn</code> performs host discovery without a port scan. It may use several probe types depending on privilege and target.</p>
+<pre><code data-lang="bash">nmap -sn 192.168.1.0/24
+
+# Save a grepable and normal report for later comparison
+nmap -sn -oN lab-ping.nmap -oG lab-ping.gnmap 192.168.1.0/24</code></pre>
+<p>On a local Ethernet, Nmap may use ARP for hosts on the same subnet. For routed targets it uses ICMP, TCP and other probes depending on options and privileges. Use <code>--reason</code> to see why a host was considered up:</p>
+<pre><code data-lang="bash">nmap -sn --reason 192.168.1.0/24</code></pre>
+
+<h2>Step 5 — compare the three views</h2>
+<div class="table-scroll"><table><thead><tr><th>Tool</th><th>What it sees</th><th>Typical blind spot</th></tr></thead><tbody><tr><td>arp-scan</td><td>Hosts that answer ARP on the local Layer-2 segment</td><td>Anything behind a router; hosts with unusual ARP filtering</td></tr><tr><td>fping</td><td>Hosts that answer ICMP echo requests</td><td>Hosts or firewalls that drop ICMP</td></tr><tr><td>Nmap <code>-sn</code></td><td>Hosts that answer Nmap's discovery probes, including ARP on local subnets</td><td>Silently filtered hosts without <code>-Pn</code>; <code>-Pn</code> then skips discovery entirely</td></tr></tbody></table></div>
+<p>Do not "fix" a missing host by blindly adding <code>-Pn</code>. <code>-Pn</code> treats every target as online and skips discovery, which is appropriate when you have a known target list but not when you are trying to inventory a range. If a host is missing from all three views, verify link, VLAN, firewall and local ARP behavior before assuming it is absent.</p>
+
+<h2>Step 6 — record the result</h2>
+<pre><code data-lang="bash">mkdir -p ~/engagements/lab-2026-10-29/raw
+sudo arp-scan --interface=eth0 --localnet --plain &gt; ~/engagements/lab-2026-10-29/raw/arp-scan.txt
+fping -a -g 192.168.1.0/24 2&gt;/dev/null | tee ~/engagements/lab-2026-10-29/raw/fping-alive.txt
+nmap -sn -oA ~/engagements/lab-2026-10-29/raw/nmap-ping 192.168.1.0/24</code></pre>
+<p><code>-oA</code> writes normal, XML and grepable output with one basename. See <a href="../working-with-results/">Working with results</a> for storage and comparison practices.</p>
+
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to check</th></tr></thead><tbody><tr><td><code>arp-scan: command not found</code></td><td>The group is not installed</td><td>Run <code>eergn-recon-installer --check</code>, then install <code>-t arp-scan</code></td></tr><tr><td><code>arp-scan: Permission denied</code> or no responses</td><td>Raw socket privileges missing or wrong interface</td><td>Use <code>sudo</code>, confirm <code>--interface</code>, and verify the link is up</td></tr><tr><td>fping reports every host unreachable</td><td>ICMP blocked, wrong range or no route</td><td>Try a known host, check <code>ip route</code>, and inspect the unfiltered fping output</td></tr><tr><td>Nmap misses a host that ARP sees</td><td>Nmap discovery probe filtered or target behind a router</td><td>Use <code>--reason</code>; for a known host, <code>-Pn</code> is appropriate</td></tr><tr><td>ARP shows duplicate addresses</td><td>Duplicate IP, proxy ARP or a moving VM</td><td>Investigate the MAC and switch port; do not treat it as a scan error</td></tr></tbody></table></div>
+<h2>Security and scope</h2>
+<ul>
+  <li>ARP requests reveal your interface and MAC to the local segment. This is normal local traffic, not stealthy reconnaissance.</li>
+  <li>ICMP and Nmap probes can trigger IDS/IPS or network monitoring alerts.</li>
+  <li>Do not run <code>--localnet</code> on a segment outside your authorization because it enumerates whatever the interface can reach at Layer 2.</li>
+  <li>Host inventories can expose device names, MAC vendors and internal addressing. Store them as sensitive assessment data.</li>
+</ul>
+<p>Continue with <a href="../service-discovery/">Service discovery</a> once the host inventory is understood.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../"><span>← Previous</span><strong>Guide index</strong></a>
+          <a class="next" href="../service-discovery/"><span>Next →</span><strong>Service discovery</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troubleshooting · Eergn Network Recon Installer</title>
+<meta name="description" content="Diagnose installer, APT repository and tool runtime failures with evidence-based steps.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/">Tools</a>
+      <a href="../../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/" class="is-active" aria-current="page">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Reference</a><span class="sep">/</span><span>Troubleshooting</span>
+    </nav>
+        <article class="prose">
+<h1>Troubleshooting</h1>
+<p class="page-lede">A general index of failure modes across the installer, APT repository and installed tools, with the evidence to collect before changing anything.</p>
+
+<h2>Start with evidence</h2>
+<pre><code data-lang="bash">eergn-recon-installer --version
+eergn-recon-installer --check
+cat /etc/os-release
+command -v apt-get dnf yum pacman zypper apk brew
+id
+command -v sudo</code></pre>
+<p>Also locate the installer log path printed at the start of the run. The most useful error is usually the package manager's own line near the end of that log, not the installer's summary.</p>
+
+<h2>Installer failures</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>Next step</th></tr></thead><tbody><tr><td><code>Unknown option</code></td><td>Unsupported flag or typo</td><td>Compare with <a href="../commands/">the command reference</a></td></tr><tr><td><code>Unknown tool ID</code></td><td>Used a tool name instead of a group ID</td><td>Run <code>--list</code>; use <code>dns</code>, not <code>dig</code></td></tr><tr><td><code>No supported package manager found</code></td><td>Unsupported distribution or minimal container</td><td>Use a supported base image or install a supported manager</td></tr><tr><td><code>Root privileges required</code></td><td>No root and no <code>sudo</code></td><td>Run as root or make sudo available; do not broaden permissions carelessly</td></tr><tr><td><code>Homebrew must not be run as root</code></td><td>macOS run with sudo</td><td>Run without <code>sudo</code></td></tr><tr><td>A package prints <code>failed</code></td><td>Package unavailable, repository missing, network or dependency issue</td><td>Read the log, check the package name for your distribution, then retry</td></tr><tr><td>Status table shows <code>-</code></td><td>Command is genuinely absent or not on PATH</td><td>Check <code>command -v</code>, PATH and the package that provides it</td></tr></tbody></table></div>
+<h2>APT repository failures</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>Next step</th></tr></thead><tbody><tr><td>Package not found</td><td>Source not configured or metadata stale</td><td>Check <code>/etc/apt/sources.list.d/eergn.list</code> and run <code>sudo apt update</code></td></tr><tr><td>Signature/keyring error</td><td>Key missing, wrong path or key changed</td><td>Verify the keyring file and fingerprint; do not disable signature checks</td></tr><tr><td>404 from the repository URL</td><td>Site not deployed, wrong URL or removed file</td><td>Fetch <code>Release</code> with curl and compare the base URL</td></tr><tr><td>Release date invalid</td><td>Clock skew</td><td>Correct the system time</td></tr><tr><td>Hash mismatch</td><td>Proxy/cache corruption or inconsistent publish</td><td>Clean APT caches and retry; investigate if it repeats</td></tr></tbody></table></div>
+<p>Detailed APT diagnostics are in <a href="../../guides/troubleshooting-installation/">Troubleshooting installation</a>.</p>
+
+<h2>Tool runtime failures</h2>
+<div class="table-scroll"><table><thead><tr><th>Tool</th><th>Common issue</th><th>Where to look</th></tr></thead><tbody><tr><td>Nmap</td><td>Raw socket permission; scan blocked; wrong target</td><td><a href="../../tools/nmap/">Nmap reference</a></td></tr><tr><td>Ncat / Netcat</td><td>Connection timeout; listener never receives; UDP assumptions</td><td><a href="../../tools/ncat/">Ncat</a> / <a href="../../tools/netcat/">Netcat</a></td></tr><tr><td>arp-scan</td><td>Permission denied; wrong interface; routed targets invisible</td><td><a href="../../tools/arp-scan/">arp-scan reference</a></td></tr><tr><td>fping</td><td>ICMP filtered; wrong range; no route</td><td><a href="../../tools/fping/">fping reference</a></td></tr><tr><td>MTR</td><td>ICMP blocked; report mode flags; DNS lookups slow</td><td><a href="../../tools/mtr/">MTR reference</a></td></tr><tr><td>dig / whois</td><td>NXDOMAIN, SERVFAIL, resolver differences, redacted data</td><td><a href="../../tools/dig/">dig</a> / <a href="../../tools/whois/">whois</a></td></tr><tr><td>OpenSSL / testssl.sh</td><td>Wrong SNI, missing intermediate, STARTTLS required, slow scan</td><td><a href="../../tools/openssl/">OpenSSL</a> / <a href="../../tools/testssl/">testssl.sh</a></td></tr><tr><td>iperf3</td><td>Server busy, port blocked, one direction shaped</td><td><a href="../../tools/iperf3/">iperf3 reference</a></td></tr><tr><td>iftop / nethogs</td><td>Wrong interface, permissions, process attribution gaps</td><td><a href="../../tools/iftop/">iftop</a> / <a href="../../tools/nethogs/">nethogs</a></td></tr></tbody></table></div>
+<h2>False alarms to avoid</h2>
+<ul>
+  <li><strong>Dry-run success is not installation.</strong> The dry run prints simulated commands and <code>ok</code> lines.</li>
+  <li><strong>A skipped group is not necessarily broken.</strong> The installer skips groups whose commands already exist.</li>
+  <li><strong>A non-zero <code>--check</code> can be intentional.</strong> It checks all nine groups, even if you installed three.</li>
+  <li><strong>A filtered port is not closed.</strong> A firewall may be dropping probes.</li>
+  <li><strong>A scanner finding is not automatically a vulnerability.</strong> Confirm the version and configuration in context.</li>
+</ul>
+
+<h2>What not to do</h2>
+<ul>
+  <li>Do not disable GPG signature verification to bypass an APT error.</li>
+  <li>Do not recursively <code>chmod</code> or <code>chown</code> system directories.</li>
+  <li>Do not run every tool as root when only raw-socket operations need it.</li>
+  <li>Do not paste internal addresses, hostnames or certificates into a public issue.</li>
+</ul>
+
+<h2>Reporting a problem</h2>
+<p>Include the distribution and version, installer version, exact command, whether it was root or sudo, the relevant log tail, and the output of <code>eergn-recon-installer --check</code>. Remove secrets, internal addresses and personal data first. The repository has issue tracking, but no dedicated security policy or contact was found in the source; do not invent one.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../configuration/"><span>← Previous</span><strong>Configuration</strong></a>
+          <a class="next" href="../security/"><span>Next →</span><strong>Security</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

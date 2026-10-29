@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maintaining the installation · Eergn Network Recon Installer</title>
+<meta name="description" content="Update the installer and tools, audit versions, verify the repository and remove components cleanly.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/">Tools</a>
+      <a href="../../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/" class="is-active" aria-current="page">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Guides</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Guides</a><span class="sep">/</span><span>Maintaining install</span>
+    </nav>
+        <article class="prose">
+<h1>Maintaining the installation</h1>
+<p class="page-lede">Keep the installer and external tools current, audit what changed, and remove components without leaving a broken repository behind.</p>
+
+<h2>Purpose</h2>
+<p>Maintenance is deliberately simple: use the system package manager for packages, replace the standalone script when needed, and verify with the installer's own <code>--check</code>. The project does not currently provide <code>--update</code> or <code>--uninstall</code> commands.</p>
+
+<h2>Updating the APT package</h2>
+<pre><code data-lang="bash">sudo apt update
+sudo apt upgrade
+eergn-recon-installer --version
+eergn-recon-installer --check</code></pre>
+<p><code>apt upgrade</code> upgrades installed packages with available updates. If you want to see what would change first, use <code>sudo apt list --upgradable</code>. The repository metadata is refreshed by <code>apt update</code>.</p>
+
+<h2>Updating external tools</h2>
+<pre><code data-lang="bash"># Debian-based systems
+sudo apt update
+sudo apt upgrade
+
+# Fedora / RHEL family
+sudo dnf upgrade
+
+# Arch
+sudo pacman -Syu
+
+# openSUSE
+sudo zypper update
+
+# Alpine
+sudo apk upgrade
+
+# macOS (Homebrew)
+brew update
+brew upgrade</code></pre>
+<p>Package availability and versions are controlled by your distribution. The installer only installs groups and checks for command presence; it does not pin versions.</p>
+
+<h2>Auditing versions</h2>
+<pre><code data-lang="bash">nmap --version | head -n 1
+nc -h 2&gt;&amp;1 | head -n 1
+arp-scan --version
+fping -v
+mtr --version
+dig -v
+whois --version
+openssl version
+testssl.sh --version 2&gt;/dev/null || testssl --version
+iperf3 --version
+iftop -h 2&gt;&amp;1 | head -n 1
+nethogs -V</code></pre>
+<p>These commands are also a quick way to discover whether a tool has been replaced or removed after a system upgrade. Record the versions with your assessment results when output interpretation depends on them.</p>
+
+<h2>Updating the standalone script</h2>
+<p>The script has no self-update command. Download the newer copy, inspect the change, and replace your local file:</p>
+<pre><code data-lang="bash">curl -LO https://github.com/Eergn/eergn-network-recon-installer/releases/latest/download/eergn-recon-installer.sh
+chmod +x eergn-recon-installer.sh
+./eergn-recon-installer.sh --version</code></pre>
+<p>If you installed from APT, prefer APT updates so the packaged man page and metadata stay in sync.</p>
+
+<h2>Removing the installer</h2>
+<pre><code data-lang="bash">sudo apt remove eergn-recon-installer
+
+# Optional: remove the repository source and key
+sudo rm /etc/apt/sources.list.d/eergn.list
+sudo rm /usr/share/keyrings/eergn-archive-keyring.gpg
+sudo apt update</code></pre>
+<p>Removing the package leaves the external tools installed. Remove only the tools you no longer need, using your package manager. Removing <code>testssl.sh</code>'s Git fallback is a manual step if it was used:</p>
+<pre><code data-lang="bash"># Check before removing anything
+ls -ld /opt/testssl.sh /usr/local/bin/testssl.sh 2&gt;/dev/null
+# If and only if you no longer need the Git fallback:
+# sudo rm -rf /opt/testssl.sh
+# sudo rm /usr/local/bin/testssl.sh</code></pre>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <div><span class="callout-title">Do not remove shared packages casually</span><p>Some tools may already be installed for other purposes. Review the package list before removing anything, and do not delete a shared system package just because the installer group also uses it.</p></div>
+</div>
+
+<h2>Verifying after an upgrade</h2>
+<pre><code data-lang="bash">eergn-recon-installer --check
+# Exit code 0 means every command in all nine groups is present.</code></pre>
+<p>On a machine where you intentionally installed only some groups, a non-zero <code>--check</code> is expected. Read the table rather than treating the exit code as an installation failure.</p>
+
+<h2>Repository health</h2>
+<p>Maintainers can verify the repository metadata after publishing:</p>
+<pre><code data-lang="bash">curl -fsSL https://eergn.github.io/eergn-network-recon-installer/Release | sed -n &#x27;1,20p&#x27;
+curl -fsSL https://eergn.github.io/eergn-network-recon-installer/Packages | sed -n &#x27;1,25p&#x27;</code></pre>
+<p>The <code>Release</code> file lists the SHA-256 hashes of <code>Packages</code> and <code>Packages.gz</code>. The <code>InRelease</code> and <code>Release.gpg</code> signatures cover the same metadata. See <a href="../../reference/architecture/">Architecture</a> for the build and signing flow.</p>
+
+<h2>Compatibility notes</h2>
+<ul>
+  <li>Bash 3.2 or newer is required; the macOS system Bash should work.</li>
+  <li>The APT package is architecture <code>all</code> and depends only on <code>bash</code>; external tools come from your distribution.</li>
+  <li>On the RHEL family, EPEL may be needed for <code>arp-scan</code>, <code>iftop</code> and <code>nethogs</code>.</li>
+  <li><code>nethogs</code> is Linux-focused and may not work on macOS.</li>
+</ul>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../troubleshooting-installation/"><span>← Previous</span><strong>Troubleshooting install</strong></a>
+          <a class="next" href="../../reference/commands/"><span>Next →</span><strong>Installer commands</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

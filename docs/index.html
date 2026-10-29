@@ -3,20 +3,395 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Eergn APT repository</title>
-<style>
-  body { font-family: system-ui, sans-serif; max-width: 46rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
-  pre { background: #f2f2f2; padding: 1rem; overflow-x: auto; border-radius: 6px; }
-  @media (prefers-color-scheme: dark) { body { background: #111; color: #eee; } pre { background: #222; } a { color: #7ab7ff; } }
-</style>
+<title>Eergn Network Recon Installer — your reconnaissance toolkit, ready when you are</title>
+<meta name="description" content="A single-file Bash installer for 13 network reconnaissance and diagnostic tools on Debian, Ubuntu, Kali, Fedora, Arch, openSUSE, Alpine and macOS. Signed APT repository, dry-run mode and full tool documentation.">
+<meta name="theme-color" content="#171916">
+<meta property="og:title" content="Eergn Network Recon Installer">
+<meta property="og:description" content="Your reconnaissance toolkit, ready when you are. Install 13 network discovery and diagnostic tools with one command.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body>
-<h1>Eergn APT repository</h1>
-<p>Packages: <strong>eergn-recon-installer</strong> &mdash; installer for network reconnaissance and diagnostic tools.</p>
-<pre>curl -fsSL https://eergn.github.io/eergn-network-recon-installer/eergn-archive-keyring.gpg | sudo tee /usr/share/keyrings/eergn-archive-keyring.gpg &gt;/dev/null
-echo "deb [signed-by=/usr/share/keyrings/eergn-archive-keyring.gpg] https://eergn.github.io/eergn-network-recon-installer ./" | sudo tee /etc/apt/sources.list.d/eergn.list
+<body data-base="">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="./" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="./" class="is-active" aria-current="page">Home</a>
+      <a href="#features">Features</a>
+      <a href="tools/">Tools</a>
+      <a href="documentation/">Documentation</a>
+      <a href="installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Open source · GPL-3.0 · v1.0.0</p>
+        <h1>Your reconnaissance toolkit, <em>ready when you are.</em></h1>
+        <p class="hero-lede">
+          One Bash installer for <strong>13 network discovery, DNS, TLS and diagnostic tools</strong>.
+          Works across Debian, Ubuntu, Kali, Fedora, Arch, openSUSE, Alpine and macOS — with a signed
+          APT repository, a dry-run mode and a status check that tells you exactly what is present.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="installation/">
+            Install the toolkit
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/Eergn/eergn-network-recon-installer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .7A11.3 11.3 0 0 0 .7 12a11.3 11.3 0 0 0 7.7 10.7c.6.1.8-.2.8-.5v-2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.4.1-3 0 0 .9-.3 3.1 1.2a10.8 10.8 0 0 1 5.6 0c2.2-1.5 3.1-1.2 3.1-1.2.6 1.6.2 2.7.1 3 .7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.2-5.1 5.5.4.4.8 1.1.8 2.2v3.2c0 .3.2.6.8.5A11.3 11.3 0 0 0 23.3 12 11.3 11.3 0 0 0 12 .7Z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+        <div class="hero-meta">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg> No framework to install</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg> Signed APT repository</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg> Authorized use only</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="Illustration of the installer terminal and a network topology">
+        <svg class="topology" viewBox="0 0 520 480" fill="none" aria-hidden="true">
+          <g stroke="currentColor" stroke-width="1" opacity=".32">
+            <path d="M80 120 210 68l128 52 72 118-74 128-142 30-104-92-10-184Z"/>
+            <path d="M80 120 300 190l-104 206M210 68l90 122 110-70M338 238l-70 158M300 190l38 48"/>
+            <path d="M40 250 80 120M472 360l-60 30M80 120l220 70M210 68l-90 52"/>
+          </g>
+          <g fill="currentColor">
+            <circle cx="80" cy="120" r="4.5"/><circle cx="210" cy="68" r="3.5" opacity=".7"/>
+            <circle cx="338" cy="120" r="3" opacity=".55"/><circle cx="410" cy="238" r="4.5"/>
+            <circle cx="336" cy="366" r="3" opacity=".7"/><circle cx="194" cy="396" r="4"/>
+            <circle cx="90" cy="304" r="3" opacity=".6"/><circle cx="300" cy="190" r="5"/>
+            <circle cx="40" cy="250" r="3" opacity=".45"/><circle cx="472" cy="360" r="3" opacity=".45"/>
+            <circle cx="90" cy="410" r="2.5" opacity=".3"/>
+          </g>
+          <g stroke="currentColor" stroke-width="1" opacity=".2">
+            <circle cx="300" cy="190" r="34"/><circle cx="300" cy="190" r="62"/>
+            <circle cx="300" cy="190" r="92"/><circle cx="300" cy="190" r="124"/>
+          </g>
+        </svg>
+
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="terminal-title">eergn@lab — installer preview</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="terminal-prompt">eergn-recon-installer --check</span></div>
+            <div class="terminal-line terminal-muted">&nbsp;</div>
+            <div class="terminal-line">  Tool status</div>
+            <div class="terminal-line terminal-rule">  ────────────────────────────────────────</div>
+            <div class="terminal-line">  nmap       <span class="terminal-ok">+</span>nmap <span class="terminal-ok">+</span>ncat</div>
+            <div class="terminal-line">  netcat     <span class="terminal-ok">+</span>nc</div>
+            <div class="terminal-line">  arp-scan   <span class="terminal-ok">+</span>arp-scan</div>
+            <div class="terminal-line">  fping      <span class="terminal-ok">+</span>fping</div>
+            <div class="terminal-line">  mtr        <span class="terminal-ok">+</span>mtr</div>
+            <div class="terminal-line">  dns        <span class="terminal-ok">+</span>dig <span class="terminal-ok">+</span>whois</div>
+            <div class="terminal-line">  tls        <span class="terminal-ok">+</span>openssl <span class="terminal-ok">+</span>testssl.sh</div>
+            <div class="terminal-line">  iperf3     <span class="terminal-ok">+</span>iperf3</div>
+            <div class="terminal-line">  bandwidth  <span class="terminal-warn">+</span>iftop <span class="terminal-warn">+</span>nethogs</div>
+            <div class="terminal-line terminal-rule">  ────────────────────────────────────────</div>
+            <div class="terminal-line terminal-ok">  All selected tools are ready.</div>
+            <div class="terminal-note">Illustrative installer output, not a live scan or a promise of your machine's state.</div>
+          </div>
+        </div>
+
+        <div class="hero-sticker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+          <div><strong>Lab-first</strong><span>Scope before scans</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="platform-strip">
+    <div class="wrap strip-inner">
+      <span class="strip-label">Package managers handled</span>
+      <ul class="strip-platforms">
+        <li>apt</li><li class="strip-divider" aria-hidden="true"></li>
+        <li>dnf / yum</li><li class="strip-divider" aria-hidden="true"></li>
+        <li>pacman</li><li class="strip-divider" aria-hidden="true"></li>
+        <li>zypper</li><li class="strip-divider" aria-hidden="true"></li>
+        <li>apk</li><li class="strip-divider" aria-hidden="true"></li>
+        <li>Homebrew</li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">What the installer does</p>
+          <h2>A calm front door to a serious toolkit.</h2>
+          <p>The installer handles the boring parts — package manager detection, privilege boundaries, retries, logs and verification — so you can spend your time understanding the network.</p>
+        </div>
+        <a class="section-link" href="documentation/">Read the documentation <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3M13 15h4"/></svg></div>
+          <h3>One command, nine groups</h3>
+          <p>Install every group with <code>--all</code>, pick individual groups with <code>--tool</code>, or use the interactive terminal menu.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/><circle cx="12" cy="12" r="2.5"/></svg></div>
+          <h3>Built for many systems</h3>
+          <p>Detects apt, dnf, yum, pacman, zypper, apk or Homebrew and uses the right package names for each one.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h3>See before you change</h3>
+          <p><code>--dry-run</code> prints the exact package-manager commands without touching the system. <code>--check</code> audits what is already present.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/><path d="M20 12v7H4V5h11"/></svg></div>
+          <h3>Resilient by design</h3>
+          <p>Packages install one at a time, so a single unavailable dependency does not abort the whole run. Failures are logged and reported.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v6c0 5 3.5 8 9 9 5.5-1 9-4 9-9V7l-9-5Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h3>Signed APT repository</h3>
+          <p>Debian-based systems can install and update a signed package, with the repository keyring fetched from this site.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17h16M4 12h10M4 7h16"/><circle cx="18" cy="12" r="2"/></svg></div>
+          <h3>Transparent status and logs</h3>
+          <p>Every run prints a per-command status table, writes installer output to a temporary log, and exits non-zero when tools are missing.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Supported tools</p>
+          <h2>Thirteen tools, thoughtfully grouped.</h2>
+          <p>The installer ships external, well-established utilities. Each tool has its own documentation page covering purpose, installer handling, commands, output and troubleshooting.</p>
+        </div>
+        <a class="section-link" href="tools/">Explore all tools <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="tool-groups">
+        <article class="tool-group">
+          <div class="tool-group-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg><h3>Discovery</h3></div>
+          <ul class="tool-list">
+            <li><a href="tools/nmap/"><span>Nmap</span><span class="arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="tools/arp-scan/"><span>arp-scan</span><span class="arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="tools/fping/"><span>fping</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          </ul>
+        </article>
+        <article class="tool-group">
+          <div class="tool-group-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 12h8M12 8v8"/><circle cx="12" cy="12" r="9"/></svg><h3>Connections &amp; diagnostics</h3></div>
+          <ul class="tool-list">
+            <li><a href="tools/netcat/"><span>Netcat</span><span class="arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="tools/ncat/"><span>Ncat</span><span class="arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="tools/mtr/"><span>MTR</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          </ul>
+        </article>
+        <article class="tool-group">
+          <div class="tool-group-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="12" r="2"/><circle cx="15" cy="18" r="2"/></svg><h3>DNS &amp; registration</h3></div>
+          <ul class="tool-list">
+            <li><a href="tools/dig/"><span>dig</span><span class="arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="tools/whois/"><span>whois</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          </ul>
+        </article>
+        <article class="tool-group">
+          <div class="tool-group-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v2"/></svg><h3>TLS inspection</h3></div>
+          <ul class="tool-list">
+            <li><a href="tools/openssl/"><span>OpenSSL s_client</span><span class="arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="tools/testssl/"><span>testssl.sh</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          </ul>
+        </article>
+        <article class="tool-group">
+          <div class="tool-group-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 8-9"/><path d="M15 6h5v5"/></svg><h3>Throughput</h3></div>
+          <ul class="tool-list">
+            <li><a href="tools/iperf3/"><span>iperf3</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          </ul>
+        </article>
+        <article class="tool-group">
+          <div class="tool-group-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19v-4"/></svg><h3>Bandwidth visibility</h3></div>
+          <ul class="tool-list">
+            <li><a href="tools/iftop/"><span>iftop</span><span class="arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="tools/nethogs/"><span>nethogs</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="install">
+    <div class="wrap install-layout">
+      <div class="install-copy">
+        <p class="kicker">Installation</p>
+        <h2>Three commands, one signed repository.</h2>
+        <p>On Debian, Ubuntu, Kali and Linux Mint, the recommended route is the signed APT repository. It keeps the installer updated like any other package.</p>
+
+        <ol class="install-steps">
+          <li>
+            <h3>Trust the repository key</h3>
+            <p>Fetch <code>eergn-archive-keyring.gpg</code> and store it under <code>/usr/share/keyrings</code>.</p>
+          </li>
+          <li>
+            <h3>Add the source</h3>
+            <p>Point APT at this GitHub Pages repository, restricted to the downloaded key.</p>
+          </li>
+          <li>
+            <h3>Update and install</h3>
+            <p>Refresh metadata, install <code>eergn-recon-installer</code>, then run it with <code>sudo</code>.</p>
+          </li>
+        </ol>
+
+        <div class="install-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span>Use these tools only on systems and networks you own or have explicit permission to assess. The installer does not grant authorization.</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="install-panel">
+          <div class="install-panel-head">
+            <span>Signed APT setup</span>
+            <span class="badge badge-sage">Recommended</span>
+          </div>
+<pre><code><span class="c-comment"># 1. Add the repository signing key</span>
+curl -fsSL https://eergn.github.io/eergn-network-recon-installer/eergn-archive-keyring.gpg \
+  | sudo tee /usr/share/keyrings/eergn-archive-keyring.gpg >/dev/null
+
+<span class="c-comment"># 2. Add the signed repository</span>
+echo "deb [signed-by=/usr/share/keyrings/eergn-archive-keyring.gpg] \
+https://eergn.github.io/eergn-network-recon-installer ./" \
+  | sudo tee /etc/apt/sources.list.d/eergn.list
+
+<span class="c-comment"># 3. Refresh metadata and install</span>
 sudo apt update
-sudo apt install eergn-recon-installer</pre>
-<p>Source: <a href="https://github.com/Eergn/eergn-network-recon-installer">github.com/Eergn/eergn-network-recon-installer</a></p>
+sudo apt install eergn-recon-installer
+
+<span class="c-comment"># 4. Launch the interactive installer</span>
+sudo eergn-recon-installer</code></pre>
+          <div class="install-panel-foot">
+            <span>Package: <strong>eergn-recon-installer 1.0.0</strong> · all architectures</span>
+            <a href="installation/">All install methods →</a>
+          </div>
+        </div>
+
+        <div class="install-alts">
+          <a class="install-alt" href="installation/#debian-package"><strong>.deb package</strong><span>Download and install locally</span></a>
+          <a class="install-alt" href="installation/#script"><strong>Standalone script</strong><span>Any supported system</span></a>
+          <a class="install-alt" href="installation/#clone"><strong>Clone the repo</strong><span>For contributors</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="documentation">
+    <div class="wrap docs-preview">
+      <div class="docs-preview-copy">
+        <p class="kicker">Documentation</p>
+        <h2>More than an installer. A field manual.</h2>
+        <p>Every supported tool has a reference page: what it does, how this installer handles it, verified commands, safe lab examples, output interpretation and troubleshooting.</p>
+        <p>Start with the guided path from installation to your first authorized check.</p>
+        <div class="doc-links">
+          <a class="doc-link" href="getting-started/">Getting started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+          <a class="doc-link" href="installation/">Installation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+          <a class="doc-link" href="reference/commands/">Command reference <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+          <a class="doc-link" href="reference/troubleshooting/">Troubleshooting <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+          <a class="doc-link" href="reference/security/">Security &amp; responsible use <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+          <a class="doc-link" href="guides/">Practical guides <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="doc-stack">
+        <a class="doc-feature" href="guides/host-discovery/">
+          <span class="doc-feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
+          <span><h3>Host discovery in an authorized lab</h3><p>arp-scan, fping and Nmap on a network you own.</p></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+        <a class="doc-feature" href="guides/dns-reconnaissance/">
+          <span class="doc-feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="12" r="2"/></svg></span>
+          <span><h3>DNS reconnaissance</h3><p>Read records with dig and registration data with whois.</p></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+        <a class="doc-feature" href="guides/tls-inspection/">
+          <span class="doc-feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+          <span><h3>TLS inspection</h3><p>Inspect one endpoint, then assess its configuration.</p></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+        <a class="doc-feature" href="tools/">
+          <span class="doc-feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m14.7 6.3 3-3a4.2 4.2 0 0 1-5.4 5.4l-7 7a2.1 2.1 0 0 1-3-3l7-7a4.2 4.2 0 0 1 5.4-5.4l-3 3"/></svg></span>
+          <span><h3>Complete tool catalog</h3><p>Search and filter all 13 tools by category and purpose.</p></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="./" aria-label="Eergn Network Recon Installer home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+          </span>
+          <span class="brand-text">Eergn <span>Recon Installer</span></span>
+        </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="documentation/">Documentation</a></li>
+          <li><a href="installation/">Installation</a></li>
+          <li><a href="tools/">Supported tools</a></li>
+          <li><a href="reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="getting-started/">Getting started</a></li>
+          <li><a href="guides/">Practical guides</a></li>
+          <li><a href="reference/commands/">Command reference</a></li>
+          <li><a href="reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supported tools · Eergn Network Recon Installer</title>
+<meta name="description" content="Reference for the thirteen network discovery, DNS, TLS, throughput and bandwidth tools installed by Eergn.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-base="../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../">Home</a>
+      <a href="../index.html#features">Features</a>
+      <a href="../tools/" class="is-active" aria-current="page">Tools</a>
+      <a href="../documentation/">Documentation</a>
+      <a href="../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../documentation/">Documentation home</a>
+      <a href="../getting-started/">Getting started</a>
+      <a href="../installation/">Installation</a>
+      <a href="../tools/" class="is-active" aria-current="page">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../guides/">Guide index</a>
+      <a href="../guides/host-discovery/">Host discovery</a>
+      <a href="../guides/service-discovery/">Service discovery</a>
+      <a href="../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../guides/tls-inspection/">TLS inspection</a>
+      <a href="../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../guides/working-with-results/">Working with results</a>
+      <a href="../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../tools/nmap/">Nmap</a>
+      <a href="../tools/ncat/">Ncat</a>
+      <a href="../tools/netcat/">Netcat</a>
+      <a href="../tools/arp-scan/">arp-scan</a>
+      <a href="../tools/fping/">fping</a>
+      <a href="../tools/mtr/">MTR</a>
+      <a href="../tools/dig/">dig</a>
+      <a href="../tools/whois/">whois</a>
+      <a href="../tools/openssl/">OpenSSL s_client</a>
+      <a href="../tools/testssl/">testssl.sh</a>
+      <a href="../tools/iperf3/">iperf3</a>
+      <a href="../tools/iftop/">iftop</a>
+      <a href="../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../reference/commands/">Installer commands</a>
+      <a href="../reference/architecture/">Architecture</a>
+      <a href="../reference/configuration/">Configuration</a>
+      <a href="../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../reference/security/">Security</a>
+      <a href="../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Tool reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">/</span>
+      <a href="../documentation/">Documentation</a><span class="sep">/</span>
+      <span>Tool reference</span><span class="sep">/</span><span>Supported tools</span>
+    </nav>
+        <article class="prose">
+<div class="catalog-head">
+  <p class="eyebrow">Reference · 13 tools</p>
+  <h1>Supported tools</h1>
+  <p class="page-lede">The installer deploys thirteen external tools across nine groups. Each reference explains upstream behavior, the exact installer mapping, verified package names, safe lab examples, output interpretation, troubleshooting and security notes.</p>
+</div>
+<div class="catalog-controls">
+  <div class="catalog-search">
+    <label class="visually-hidden" for="tool-search">Search tools</label>
+    <input id="tool-search" type="search" placeholder="Search by name, category or purpose…" autocomplete="off" data-tool-search>
+  </div>
+  <div class="filter-group" role="group" aria-label="Filter by category"><button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button><button class="filter-btn" type="button" data-filter="Discovery" aria-pressed="false">Discovery</button><button class="filter-btn" type="button" data-filter="Diagnostics" aria-pressed="false">Diagnostics</button><button class="filter-btn" type="button" data-filter="DNS" aria-pressed="false">DNS</button><button class="filter-btn" type="button" data-filter="TLS" aria-pressed="false">TLS</button><button class="filter-btn" type="button" data-filter="Throughput" aria-pressed="false">Throughput</button><button class="filter-btn" type="button" data-filter="Visibility" aria-pressed="false">Visibility</button><button class="filter-btn" type="button" data-filter="Utility" aria-pressed="false">Utility</button></div>
+</div>
+<p class="catalog-count" data-tool-count>13 of 13 tools</p>
+<div class="tool-cards">
+<article class="tool-card" data-tool-card data-category="Discovery" data-keywords="Nmap Discovery The reference network mapper: host discovery, port scanning, service and version detection, operating-system hints and the NSE scripting engine.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">Discovery</span><h2><a href="nmap/">Nmap</a></h2></div>
+    <span class="badge badge-sage">nmap group</span>
+  </div>
+  <p>Host discovery, port scanning, service/version detection, OS hints and NSE scripting for authorized inventories.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active</span>
+    <a href="nmap/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="Utility" data-keywords="Ncat Utility The Nmap project's modern Netcat: TCP, UDP and SCTP connections, listeners, TLS, proxies and controlled command execution.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">Utility</span><h2><a href="ncat/">Ncat</a></h2></div>
+    <span class="badge badge-sage">nmap group</span>
+  </div>
+  <p>Modern Netcat with TLS, proxy support, listeners and access controls; required by the Nmap group.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active</span>
+    <a href="ncat/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="Utility" data-keywords="Netcat Utility The traditional TCP/IP Swiss Army knife, installed as OpenBSD netcat on Debian and Ubuntu for simple connections, listeners and port checks.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">Utility</span><h2><a href="netcat/">Netcat</a></h2></div>
+    <span class="badge badge-sage">netcat group</span>
+  </div>
+  <p>Traditional TCP/IP Swiss Army knife for simple connections, listeners and port checks.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active</span>
+    <a href="netcat/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="Discovery" data-keywords="arp-scan Discovery Layer-2 host discovery for the local broadcast domain, using ARP requests to map IPv4 addresses to MAC addresses and vendors.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">Discovery</span><h2><a href="arp-scan/">arp-scan</a></h2></div>
+    <span class="badge badge-sage">arp-scan group</span>
+  </div>
+  <p>Layer-2 host discovery on the local broadcast domain with MAC and vendor reporting.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active (Layer 2)</span>
+    <a href="arp-scan/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="Discovery" data-keywords="fping Discovery Fast ICMP reachability testing for many hosts at once, with generated ranges, file input, loop mode and script-friendly output.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">Discovery</span><h2><a href="fping/">fping</a></h2></div>
+    <span class="badge badge-sage">fping group</span>
+  </div>
+  <p>Fast ICMP reachability checks across ranges or target files, with script-friendly output.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active (ICMP)</span>
+    <a href="fping/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="Diagnostics" data-keywords="MTR Diagnostics Combined traceroute and ping: follow a path hop by hop while measuring loss and latency, with report, JSON, XML and CSV output.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">Diagnostics</span><h2><a href="mtr/">MTR</a></h2></div>
+    <span class="badge badge-sage">mtr group</span>
+  </div>
+  <p>Traceroute plus ping for hop-by-hop loss, latency and path diagnosis.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active (ICMP, TCP or UDP)</span>
+    <a href="mtr/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="DNS" data-keywords="dig DNS The BIND DNS lookup utility: query specific record types, servers and flags, trace delegations and produce script-friendly answers.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">DNS</span><h2><a href="dig/">dig</a></h2></div>
+    <span class="badge badge-sage">dns group</span>
+  </div>
+  <p>Precise DNS queries for record types, specific resolvers, delegation tracing and script output.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active (DNS)</span>
+    <a href="dig/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="DNS" data-keywords="whois DNS Query domain, IP and AS registration data from registry and registrar WHOIS services, with recursion and referral controls.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">DNS</span><h2><a href="whois/">whois</a></h2></div>
+    <span class="badge badge-sage">dns group</span>
+  </div>
+  <p>Domain, IP and AS registration lookups with referral and server controls.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active (registry queries)</span>
+    <a href="whois/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="TLS" data-keywords="OpenSSL s_client TLS A precise TLS client for one handshake at a time: certificate chains, protocol versions, SNI, STARTTLS and verification results.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">TLS</span><h2><a href="openssl/">OpenSSL s_client</a></h2></div>
+    <span class="badge badge-sage">tls group</span>
+  </div>
+  <p>Low-level TLS handshakes with full control over SNI, protocol version, trust and STARTTLS.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active (TLS)</span>
+    <a href="openssl/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="TLS" data-keywords="testssl.sh TLS A comprehensive TLS configuration checker: protocols, ciphers, certificate issues, headers and selected vulnerabilities, with machine-readable output.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">TLS</span><h2><a href="testssl/">testssl.sh</a></h2></div>
+    <span class="badge badge-sage">tls group</span>
+  </div>
+  <p>Broad TLS configuration checks for protocols, ciphers, certificates, headers and known issues.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active (TLS)</span>
+    <a href="testssl/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="Throughput" data-keywords="iperf3 Throughput Client/server throughput measurement for TCP and UDP, with reverse mode, parallel streams, bitrate targets and JSON output.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">Throughput</span><h2><a href="iperf3/">iperf3</a></h2></div>
+    <span class="badge badge-sage">iperf3 group</span>
+  </div>
+  <p>Controlled TCP and UDP throughput tests between two endpoints you manage.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Active (TCP/UDP)</span>
+    <a href="iperf3/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="Visibility" data-keywords="iftop Visibility Real-time bandwidth by host pair and flow, with sorting, filters and a text mode suitable for short captures.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">Visibility</span><h2><a href="iftop/">iftop</a></h2></div>
+    <span class="badge badge-sage">bandwidth group</span>
+  </div>
+  <p>Live bandwidth by host pair and flow, with filters, sorting and text-mode snapshots.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Passive capture</span>
+    <a href="iftop/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article><article class="tool-card" data-tool-card data-category="Visibility" data-keywords="nethogs Visibility Per-process network bandwidth on Linux, grouping live traffic by the program responsible rather than by host pair.">
+  <div class="tool-card-top">
+    <div><span class="eyebrow">Visibility</span><h2><a href="nethogs/">nethogs</a></h2></div>
+    <span class="badge badge-sage">bandwidth group</span>
+  </div>
+  <p>Per-process network bandwidth attribution on Linux, complementing iftop's flow view.</p>
+  <div class="tool-card-foot">
+    <span class="badge">Passive capture</span>
+    <a href="nethogs/">Reference <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+  <div class="empty-state" data-tool-empty hidden>
+    <h2>No matching tools</h2>
+    <p>Try a different name or category.</p>
+  </div>
+</div>
+<h2>Groups at a glance</h2>
+<div class="table-scroll"><table><thead><tr><th>Group ID</th><th>Tools</th><th>What it covers</th></tr></thead><tbody><tr><td><code>nmap</code></td><td>Nmap, Ncat</td><td>Discovery, port scanning, service inspection and a modern Netcat.</td></tr><tr><td><code>netcat</code></td><td>Netcat (<code>nc</code>)</td><td>Traditional connection troubleshooting.</td></tr><tr><td><code>arp-scan</code></td><td>arp-scan</td><td>Layer-2 discovery on the local broadcast domain.</td></tr><tr><td><code>fping</code></td><td>fping</td><td>Fast ICMP reachability checks.</td></tr><tr><td><code>mtr</code></td><td>MTR</td><td>Path, loss and latency diagnosis.</td></tr><tr><td><code>dns</code></td><td>dig, whois</td><td>DNS records and registration data.</td></tr><tr><td><code>tls</code></td><td>OpenSSL, testssl.sh</td><td>Targeted handshakes and TLS configuration checks.</td></tr><tr><td><code>iperf3</code></td><td>iperf3</td><td>Controlled TCP and UDP throughput tests.</td></tr><tr><td><code>bandwidth</code></td><td>iftop, nethogs</td><td>Live flow and per-process bandwidth visibility.</td></tr></tbody></table></div>
+<p>Use <code>eergn-recon-installer --list</code> to print the groups, <code>--check</code> to see which commands are present, and <code>--dry-run</code> to preview an installation. The <a href="../guides/">guides</a> connect the tools into workflows.</p>
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../guides/"><span>← Previous</span><strong>Practical guides</strong></a>
+          <a class="next" href="nmap/"><span>Next →</span><strong>Nmap</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../documentation/">Documentation</a></li>
+          <li><a href="../installation/">Installation</a></li>
+          <li><a href="../tools/">Supported tools</a></li>
+          <li><a href="../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../getting-started/">Getting started</a></li>
+          <li><a href="../guides/">Practical guides</a></li>
+          <li><a href="../reference/commands/">Command reference</a></li>
+          <li><a href="../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/js/search-index.js" defer></script>
+<script src="../assets/js/site.js" defer></script>
+
+</body>
+</html>

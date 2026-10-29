@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>testssl.sh · Eergn Network Recon Installer</title>
+<meta name="description" content="How testssl.sh is installed and used with Eergn Network Recon Installer: protocol and cipher checks, certificates, headers, JSON output and safety.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/" class="is-active" aria-current="page">Tools</a>
+      <a href="../../documentation/">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/" class="is-active" aria-current="page">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Tool reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Tool reference</a><span class="sep">/</span><span>testssl.sh</span>
+    </nav>
+        <article class="prose">
+<div class="tool-hero">
+  <p class="eyebrow">TLS · Tool 10 of 13</p>
+  <h1>testssl.sh</h1>
+  <p class="tool-tagline">A comprehensive TLS configuration checker: protocols, ciphers, certificate issues, headers and selected vulnerabilities, with machine-readable output.</p>
+  <div class="tool-badges"><span class="badge badge-sage">tls group</span><span class="badge badge">CLI</span><span class="badge badge-amber">Active (TLS)</span><span class="badge badge">Unprivileged</span></div>
+</div>
+<dl class="tool-meta">
+  <div><dt>Installer group</dt><dd><code>tls</code></dd></div>
+  <div><dt>Commands checked</dt><dd><code>openssl</code>, <code>testssl.sh</code></dd></div>
+  <div><dt>Access</dt><dd>Unprivileged</dd></div>
+  <div><dt>Traffic</dt><dd>Active (TLS)</dd></div>
+  <div><dt>Upstream</dt><dd><a href="https://testssl.sh/">testssl.sh</a></dd></div>
+  <div><dt>Installed by</dt><dd>Group <code>tls</code></dd></div>
+</dl>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Authorized networks only</span><p>This tool sends traffic to the systems you point it at. Use it only on infrastructure you own or have explicit written permission to test. The examples use private documentation ranges and placeholder names.</p></div>
+</div>
+
+<h2>Overview</h2>
+<p>testssl.sh is a command-line TLS assessment script. It checks supported protocols, cipher suites, certificate details, forward secrecy, HTTP security headers and a selection of known TLS vulnerabilities. It is broader than a single OpenSSL handshake and produces human-readable or machine-readable reports.</p>
+<p>The installer's <code>tls</code> group installs OpenSSL and ensures <code>testssl.sh</code> is available. It prefers a native package when the distribution has one and falls back to a shallow clone of the upstream Git repository at <code>/opt/testssl.sh</code>, linked as <code>/usr/local/bin/testssl.sh</code>.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Enumerate supported TLS and SSL protocol versions.</li>
+  <li>List cipher suites by protocol and strength.</li>
+  <li>Inspect certificate chain, validity, names and key details.</li>
+  <li>Check forward secrecy, HSTS and selected HTTP headers.</li>
+  <li>Test for known TLS issues such as Heartbleed, CCS injection and ROBOT.</li>
+  <li>Produce plain text, JSON, CSV or HTML output.</li>
+</ul>
+
+<div class="doc-category-grid">
+  <div class="doc-category"><h2>Good for</h2><ul>
+  <li>A repeatable TLS configuration baseline for a lab endpoint.</li>
+  <li>Finding obsolete protocol versions or weak ciphers.</li>
+  <li>Checking certificate names, dates and chain issues.</li>
+  <li>Producing a report to compare before and after a configuration change.</li>
+</ul></div>
+  <div class="doc-category"><h2>Limits</h2><ul>
+  <li>It is active and can be slow; a full run sends many probes.</li>
+  <li>Results depend on the version and its test definitions; TLS best practice changes.</li>
+  <li>It does not replace a full application or vulnerability assessment.</li>
+  <li>Some checks depend on HTTP behavior and may not apply to non-HTTP services.</li>
+  <li>A poor rating is a prompt to investigate, not proof of exploitability.</li>
+</ul></div>
+</div>
+
+<h2>How the installer handles it</h2>
+<p>The <code>tls</code> group installs OpenSSL, then calls the testssl.sh handler. The handler first tries the native package (<code>testssl.sh</code> on apt/pacman/apk, <code>testssl</code> on dnf/brew). If the command is still missing, it clones the upstream repository and creates a symlink.</p>
+<p>On the audited Ubuntu 26.04 system, the native <code>testssl.sh</code> package was installed (version 3.2.2) and the command was available as <code>testssl</code>. The installer's check accepts either <code>testssl.sh</code> or <code>testssl</code>.</p>
+<p>The installer's <code>tls</code> group is considered complete only when these commands exist: <code>openssl</code>, <code>testssl.sh</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Package manager</th><th>Package(s) the installer requests</th><th>Note</th></tr></thead><tbody><tr><td>Debian / Ubuntu</td><td><code>testssl.sh</code></td><td>Native package when available; Git fallback otherwise.</td></tr><tr><td>Fedora / RHEL family</td><td><code>testssl</code></td><td>Native package name used by the installer; Git fallback otherwise.</td></tr><tr><td>Arch Linux</td><td><code>testssl.sh</code></td><td>Native package name used by the installer.</td></tr><tr><td>openSUSE</td><td>No native mapping</td><td>The installer falls back to the Git clone.</td></tr><tr><td>Alpine</td><td><code>testssl.sh</code></td><td>Native package when available; Git fallback otherwise.</td></tr><tr><td>macOS (Homebrew)</td><td><code>testssl</code></td><td>Native formula when available; Git fallback otherwise.</td></tr></tbody></table></div>
+<h3>Install just this group</h3>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool tls</code></pre>
+<p>From a downloaded standalone script, use <code>sudo ./eergn-recon-installer.sh --tool tls</code>. To install every group without the menu, use <code>sudo eergn-recon-installer --all</code>.</p>
+
+<h2>Installation</h2>
+<h3>Install the TLS group</h3>
+<p>Installs OpenSSL and ensures testssl.sh is available through a package or the Git fallback.</p>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool tls</code></pre>
+<h3>Manual Git fallback</h3>
+<p>Use this only if the installer's fallback did not run or you need to repair it.</p>
+<pre><code data-lang="bash">sudo git clone --depth 1 https://github.com/testssl/testssl.sh.git /opt/testssl.sh
+sudo ln -sf /opt/testssl.sh/testssl.sh /usr/local/bin/testssl.sh</code></pre>
+<h3>Verify</h3>
+<pre><code data-lang="bash">testssl.sh --version
+testssl --version
+openssl version
+eergn-recon-installer --check</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Verification is not a functional test</span><p>A version banner only proves the binary is on PATH. Run the smallest safe command against a lab endpoint to confirm the tool works in your environment.</p></div>
+</div>
+
+<h2>Basic usage</h2>
+<h3>Run the standard checks</h3>
+<p>The quiet flag reduces progress output. A full run can take a minute or more.</p>
+<pre><code data-lang="bash">testssl --quiet lab.example.internal:443</code></pre>
+<h3>Check protocols only</h3>
+<p>A focused check is faster and easier to compare.</p>
+<pre><code data-lang="bash">testssl --protocols lab.example.internal:443</code></pre>
+<h3>Check certificate and headers</h3>
+<p>Useful for a quick certificate and HTTP security-header review.</p>
+<pre><code data-lang="bash">testssl --server-defaults --headers lab.example.internal:443</code></pre>
+<h2>Command reference</h2>
+<p>These are the options most useful for the workflows in this documentation. Run <code>testssl --help</code> for the complete list supported by your installed version.</p>
+<div class="table-scroll"><table><thead><tr><th>Option</th><th>What it does</th></tr></thead><tbody><tr><td><code>-p, --protocols</code></td><td>Check supported protocol versions.</td></tr><tr><td><code>-s, --std</code></td><td>Check standard cipher categories.</td></tr><tr><td><code>-f, --fs</code></td><td>Check forward secrecy.</td></tr><tr><td><code>-S, --server-defaults</code></td><td>Show the server's default protocol and cipher choices.</td></tr><tr><td><code>-P, --server-preference</code></td><td>Show the server's cipher preference.</td></tr><tr><td><code>-h, --headers</code></td><td>Check HSTS, HPKP, cookies and other HTTP headers.</td></tr><tr><td><code>-U, --vulnerable</code></td><td>Run the vulnerability checks.</td></tr><tr><td><code>-c, --client-simulation</code></td><td>Simulate selected clients.</td></tr><tr><td><code>-t, --starttls</code></td><td>Test a STARTTLS-enabled protocol.</td></tr><tr><td><code>--jsonfile</code></td><td>Write JSON output to a file.</td></tr><tr><td><code>--csvfile</code></td><td>Write CSV output to a file.</td></tr><tr><td><code>--quiet</code></td><td>Reduce progress output.</td></tr><tr><td><code>--connect-timeout</code></td><td>Bound the TCP connect time.</td></tr></tbody></table></div>
+
+<h2>Examples for an authorized lab</h2>
+<h3>Baseline a lab endpoint</h3>
+<p>Run the standard checks and keep both text and JSON output.</p>
+<pre><code data-lang="bash">testssl --quiet --jsonfile tls-baseline.json lab.example.internal:443 | tee tls-baseline.txt</code></pre>
+<p>Record the testssl version with the result; ratings and checks change between releases.</p>
+<h3>Check only protocols</h3>
+<p>Compare supported protocol versions before and after a change.</p>
+<pre><code data-lang="bash">testssl --quiet --protocols lab.example.internal:443</code></pre>
+<p>This is much faster than a full run and still shows obsolete protocol support.</p>
+<h3>Test a STARTTLS service</h3>
+<p>Assess SMTP, IMAP, POP3 or another upgrade-capable service.</p>
+<pre><code data-lang="bash">testssl --quiet --starttls smtp lab-mail.example.internal:25</code></pre>
+<p>Use only a service in scope and confirm the port actually supports STARTTLS.</p>
+<h2>Understanding the output</h2>
+<p>A full run prints one line per finding group. The excerpt below is illustrative; ratings and findings depend on the endpoint and testssl version.</p>
+<pre><code data-lang="text">Testing protocols via sockets
+ SSLv2      not offered
+ SSLv3      not offered
+ TLS 1.2    offered (OK)
+ TLS 1.3    offered (OK)
+ Testing cipher categories
+ NULL ciphers             not offered
+ Forward Secrecy          offered (OK)
+ Testing server defaults
+ Certificate               matches supplied hostname
+ Common Name (CN)          lab.example.internal
+ Issuer                    Lab Internal CA
+ Valid until               2027-01-01
+ Overall Grade             A</code></pre>
+<ul>
+  <li>The overall grade summarizes many checks; read the individual findings before acting.</li>
+  <li>A certificate that does not match the name is a configuration problem even if the grade is high.</li>
+  <li>Some checks are informational rather than failures.</li>
+  <li>Store the testssl version, target, port and date with every report.</li>
+</ul>
+<h2>Advanced usage</h2>
+<p>For repeatable baselines, pin the testssl version, use the same option set, and store JSON. Use <code>--starttls</code> for non-HTTP services and <code>--headers</code> only for HTTP endpoints. Mass-testing options can scan many hosts, but they multiply traffic; keep them inside the authorized scope and a defined time window.</p>
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to try</th></tr></thead><tbody><tr><td><code>testssl.sh: command not found</code></td><td>The group is incomplete or the symlink was not created.</td><td>Check <code>/opt/testssl.sh</code>, rerun the group, or create the symlink manually.</td></tr><tr><td>The run is very slow</td><td>A full scan performs many sequential probes.</td><td>Use focused options such as <code>--protocols</code> or increase the connect timeout.</td></tr><tr><td>Certificate name mismatch</td><td>The endpoint serves a certificate for another name or SNI is missing.</td><td>Use the correct hostname and compare with OpenSSL s_client.</td></tr><tr><td>STARTTLS check fails</td><td>The service does not support STARTTLS on that port.</td><td>Confirm with the service's own documentation; do not assume TLS is required.</td></tr><tr><td>Inconsistent results between runs</td><td>Load balancers, different backends or changed configuration.</td><td>Record the time and compare multiple runs; check whether the endpoint is load-balanced.</td></tr></tbody></table></div>
+
+<h2>Security and etiquette</h2>
+<ul>
+  <li>Use only against endpoints in scope; a full run is noisy and slow.</li>
+  <li>Do not run mass-testing modes outside a defined window and target list.</li>
+  <li>Do not treat a grade as a complete security assessment.</li>
+  <li>Protect reports; they can reveal internal names, certificates and configuration.</li>
+  <li>Keep testssl and OpenSSL current, because checks and defaults change.</li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://testssl.sh/">testssl.sh project</a></li>
+  <li><a href="https://github.com/testssl/testssl.sh">testssl.sh source</a></li>
+  <li><a href="https://testssl.sh/doc/">testssl.sh documentation</a></li>
+</ul>
+<p>Related guides: <a href="../../guides/host-discovery/">host discovery</a>, <a href="../../guides/service-discovery/">service discovery</a>, <a href="../../guides/working-with-results/">working with results</a>. Return to the <a href="../">tool catalog</a>.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../openssl/"><span>← Previous</span><strong>OpenSSL s_client</strong></a>
+          <a class="next" href="../iperf3/"><span>Next →</span><strong>iperf3</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

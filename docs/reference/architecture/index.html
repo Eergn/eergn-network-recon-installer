@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture · Eergn Network Recon Installer</title>
+<meta name="description" content="Repository layout, installer internals, Debian package build, signed APT repository and static documentation site.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/">Tools</a>
+      <a href="../../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/" class="is-active" aria-current="page">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Reference</a><span class="sep">/</span><span>Architecture</span>
+    </nav>
+        <article class="prose">
+<h1>Architecture</h1>
+<p class="page-lede">How a single Bash script, a Debian package, a signed APT repository and a static documentation site fit together.</p>
+
+<h2>Repository layout</h2>
+<pre><code data-lang="bash">.
+├── eergn-recon-installer.sh      # the installer (single source of behavior)
+├── README.md                     # project overview and quick reference
+├── LICENSE                       # GPL-3.0
+├── scripts/
+│   ├── build-deb.sh              # builds dist/eergn-recon-installer_&lt;version&gt;_all.deb
+│   └── make-apt-repo.sh          # builds and signs the repository in docs/
+├── dist/                         # ignored build output (.deb)
+└── docs/                         # GitHub Pages site root and APT repository
+    ├── index.html                # landing page
+    ├── assets/                   # CSS, JavaScript, images
+    ├── documentation/            # documentation hub and guides
+    ├── installation/             # installation guide
+    ├── tools/                    # catalog and 13 tool pages
+    ├── reference/                # installer references
+    ├── eergn-recon-installer_1.0.0_all.deb
+    ├── Packages, Packages.gz
+    ├── Release, Release.gpg, InRelease
+    ├── eergn-archive-keyring.gpg
+    ├── eergn-archive-keyring.asc
+    └── .nojekyll</code></pre>
+<p>GitHub Pages serves the <code>docs/</code> directory because the repository is configured as a project site with the <code>/docs</code> folder as its source. The <code>.nojekyll</code> file prevents Jekyll processing, which keeps files such as <code>Packages</code> and the keyring available as-is.</p>
+
+<h2>The installer script</h2>
+<p><code>eergn-recon-installer.sh</code> is a self-contained Bash program. It does not source repository files at runtime. Its main sections are:</p>
+<div class="table-scroll"><table><thead><tr><th>Section</th><th>Responsibility</th></tr></thead><tbody><tr><td>State and constants</td><td><code>VERSION</code>, <code>ALL_IDS</code>, mode flags, package-manager key, log path</td></tr><tr><td>Output helpers</td><td>Banner, info/warn/error, step headings, status table</td></tr><tr><td>Tool definitions</td><td><code>tool_desc</code>, <code>tool_cmds</code>, <code>pkgs_for</code>, <code>testssl_pkg</code></td></tr><tr><td>Detection</td><td>Command presence, package-manager detection, privilege setup</td></tr><tr><td>Execution</td><td><code>run</code>, index refresh, package install, testssl.sh fallback</td></tr><tr><td>Reporting</td><td><code>print_status</code>, failed package list, final exit code</td></tr><tr><td>Menu and arguments</td><td>Interactive selection, confirmation, option parsing</td></tr></tbody></table></div>
+<p>The critical data model is the intersection of four functions:</p>
+<ul>
+  <li><code>ALL_IDS</code> defines the valid group IDs and menu order.</li>
+  <li><code>tool_cmds</code> defines the commands that must exist for a group to count as installed.</li>
+  <li><code>pkgs_for</code> maps each group to package names per package manager.</li>
+  <li><code>tool_desc</code> provides human-readable labels.</li>
+</ul>
+<p>Adding a group means updating all four, plus any special handling such as the testssl.sh fallback. See <a href="../contributing/">Contributing</a>.</p>
+
+<h2>Installation flow</h2>
+<pre><code data-lang="bash">parse arguments
+  -&gt; banner unless --no-banner
+  -&gt; list / check / all / menu / non-interactive-all
+  -&gt; detect package manager
+  -&gt; set up sudo (or refuse root on Homebrew)
+  -&gt; print package manager and log path
+  -&gt; confirm unless --yes / non-interactive
+  -&gt; refresh index where supported
+  -&gt; for each selected group:
+       -&gt; skip if all commands present and not --force/--dry-run
+       -&gt; install each mapped package one at a time
+       -&gt; ensure testssl.sh for the tls group
+  -&gt; print status table for selected groups
+  -&gt; print failed packages and log path if needed
+  -&gt; exit 0 only if every selected command is present</code></pre>
+<h2>Package build</h2>
+<p><code>scripts/build-deb.sh</code> reads <code>VERSION="..."</code> from the installer, stages a Debian package tree, installs the script to <code>/usr/bin/eergn-recon-installer</code>, and generates:</p>
+<ul>
+  <li><code>DEBIAN/control</code> with package, version, architecture, dependency and homepage fields.</li>
+  <li><code>/usr/share/doc/eergn-recon-installer/README.md</code>, <code>copyright</code> and a gzipped changelog.</li>
+  <li>A gzipped man page at <code>/usr/share/man/man1/eergn-recon-installer.1.gz</code>.</li>
+</ul>
+<p>It requires <code>dpkg-deb</code> from <code>dpkg-dev</code>. Output goes to <code>dist/</code>, which is ignored by Git except for the copies under <code>docs/</code>.</p>
+
+<h2>APT repository build</h2>
+<p><code>scripts/make-apt-repo.sh</code> is a maintainer tool. It:</p>
+<ol>
+  <li>Finds or generates an Ed25519 signing key named <code>Eergn APT Repository</code>.</li>
+  <li>Runs <code>build-deb.sh</code> and copies the <code>.deb</code> into <code>docs/</code>.</li>
+  <li>Runs <code>dpkg-scanpackages</code> to produce <code>Packages</code> and <code>Packages.gz</code>.</li>
+  <li>Writes a <code>Release</code> file with SHA-256 hashes.</li>
+  <li>Creates <code>InRelease</code> (clearsigned) and <code>Release.gpg</code>.</li>
+  <li>Exports the public key as <code>eergn-archive-keyring.gpg</code> and <code>.asc</code>.</li>
+</ol>
+<p>The generated key defaults to no expiry and no passphrase when the script has to create one. The published key in this repository is Ed25519 with fingerprint <code>900D437EB8F512053DA25632AEF17B55E71A8350</code>. Key custody and passphrase policy are operational concerns for the maintainer, not properties an APT client can verify from the key alone.</p>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <div><span class="callout-title">Site preservation</span><p>The APT repository script used to rewrite <code>docs/index.html</code> with a minimal landing page. The current script preserves an existing <code>docs/index.html</code> so publishing repository metadata does not destroy the documentation site. If no landing page exists, it writes a minimal fallback.</p></div>
+</div>
+
+<h2>Documentation site</h2>
+<p>The site is static HTML, CSS and JavaScript. There is no build step, static-site generator or frontend framework. Key details:</p>
+<ul>
+  <li>All internal links are relative, so the site works under the GitHub Pages project subpath <code>/eergn-network-recon-installer/</code>.</li>
+  <li><code>assets/css/site.css</code> contains the design system and responsive rules.</li>
+  <li><code>assets/js/site.js</code> implements mobile navigation, the docs sidebar, copy buttons, the client-side documentation search, the table of contents and the tool catalog filter.</li>
+  <li><code>assets/js/search-index.js</code> is the search data source; it must be updated when pages are added.</li>
+  <li>Documentation pages are self-contained HTML with their own header, sidebar and footer. Relative asset paths depend on directory depth.</li>
+</ul>
+<p>The site does not require JavaScript to read content or follow navigation. Search, copy buttons, the mobile menu and catalog filtering are enhancements.</p>
+
+<h2>Versioning and metadata</h2>
+<p>The installer version appears in the script constant, the Debian control file generated at build time, the man page, the filenames in <code>docs/</code>, and <code>docs/Packages</code>. When releasing, all of these must stay consistent. The package version currently published is <code>1.0.0</code>.</p>
+
+<h2>Known architectural limitations</h2>
+<ul>
+  <li>No automated test suite or CI configuration was found in the repository.</li>
+  <li>The installer is not idempotent for package contents beyond the command-existence skip; it relies on the package manager.</li>
+  <li>The testssl.sh Git fallback clones the default branch shallowly and does not pin a commit.</li>
+  <li>There is no uninstall, update, profile or JSON output feature in the installer.</li>
+  <li>Documentation navigation is repeated in each page, so adding a page requires updating links in multiple files.</li>
+</ul>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../commands/"><span>← Previous</span><strong>Installer commands</strong></a>
+          <a class="next" href="../configuration/"><span>Next →</span><strong>Configuration</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

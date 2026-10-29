@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ncat · Eergn Network Recon Installer</title>
+<meta name="description" content="How Ncat is installed and used with Eergn Network Recon Installer: listeners, port checks, TLS, access control and safe lab patterns.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/" class="is-active" aria-current="page">Tools</a>
+      <a href="../../documentation/">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/" class="is-active" aria-current="page">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Tool reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Tool reference</a><span class="sep">/</span><span>Ncat</span>
+    </nav>
+        <article class="prose">
+<div class="tool-hero">
+  <p class="eyebrow">Utility · Tool 2 of 13</p>
+  <h1>Ncat</h1>
+  <p class="tool-tagline">The Nmap project's modern Netcat: TCP, UDP and SCTP connections, listeners, TLS, proxies and controlled command execution.</p>
+  <div class="tool-badges"><span class="badge badge-sage">nmap group</span><span class="badge badge">CLI</span><span class="badge badge-amber">Active</span><span class="badge badge">Usually unprivileged</span></div>
+</div>
+<dl class="tool-meta">
+  <div><dt>Installer group</dt><dd><code>nmap</code></dd></div>
+  <div><dt>Commands checked</dt><dd><code>nmap</code>, <code>ncat</code></dd></div>
+  <div><dt>Access</dt><dd>Unprivileged for high ports; root or capability for privileged ports</dd></div>
+  <div><dt>Traffic</dt><dd>Active</dd></div>
+  <div><dt>Upstream</dt><dd><a href="https://nmap.org/ncat/">nmap.org/ncat</a></dd></div>
+  <div><dt>Installed by</dt><dd>Group <code>nmap</code></dd></div>
+</dl>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Authorized networks only</span><p>This tool sends traffic to the systems you point it at. Use it only on infrastructure you own or have explicit written permission to test. The examples use private documentation ranges and placeholder names.</p></div>
+</div>
+
+<h2>Overview</h2>
+<p>Ncat is a general-purpose network connector and listener maintained by the Nmap project. It reads and writes data across TCP, UDP, SCTP and Unix sockets, and adds features that traditional Netcat implementations lack: TLS, proxy support, connection limits, access control and connection brokering.</p>
+<p>Ncat is part of the installer's <code>nmap</code> group. It is useful for confirming that a port accepts a connection, building a temporary lab listener, and moving small amounts of data between systems you control.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Open outbound TCP, UDP or SCTP connections and bridge them to standard input and output.</li>
+  <li>Listen for inbound connections, optionally accepting multiple clients.</li>
+  <li>Wrap a connection in TLS, with certificate and hostname verification options.</li>
+  <li>Proxy connections through HTTP, SOCKS4 or SOCKS5 proxies.</li>
+  <li>Restrict listeners by source address, connection count and idle timeout.</li>
+  <li>Optionally execute a command for a connection, which is powerful and dangerous.</li>
+</ul>
+
+<div class="doc-category-grid">
+  <div class="doc-category"><h2>Good for</h2><ul>
+  <li>Checking whether a lab port accepts a TCP connection.</li>
+  <li>Creating a short-lived listener for a controlled test.</li>
+  <li>Testing TLS by hand when a browser or client library is inconvenient.</li>
+  <li>Moving a small file between two lab hosts over an encrypted channel.</li>
+</ul></div>
+  <div class="doc-category"><h2>Limits</h2><ul>
+  <li>It is a transport tool, not a service scanner; it does not enumerate ports by itself.</li>
+  <li>The default connection is plaintext. Use <code>--ssl</code> when confidentiality matters.</li>
+  <li><code>-e</code> and <code>-c</code> can expose a shell. They should not be used casually or on untrusted networks.</li>
+  <li>Option availability and behavior vary slightly between Ncat versions and distributions.</li>
+  <li>A successful TCP connection does not prove that the application protocol works.</li>
+</ul></div>
+</div>
+
+<h2>How the installer handles it</h2>
+<p>Ncat has no separate installer group. It is required by the <code>nmap</code> group, and the group check fails if <code>ncat</code> is absent.</p>
+<p>On the audited Ubuntu 26.04 system, the apt mapping installed <code>nmap</code> but not <code>ncat</code>; <code>ncat</code> was available as a separate package. Fedora-family and Alpine mappings request <code>nmap-ncat</code>. If your distribution splits the tools, install the Ncat package explicitly.</p>
+<p>The installer's <code>nmap</code> group is considered complete only when these commands exist: <code>nmap</code>, <code>ncat</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Package manager</th><th>Package(s) the installer requests</th><th>Note</th></tr></thead><tbody><tr><td>Debian / Ubuntu</td><td>Not named by the mapping</td><td>Observed as a separate <code>ncat</code> package. Install <code>sudo apt install ncat</code> if missing.</td></tr><tr><td>Fedora / RHEL family</td><td><code>nmap-ncat</code></td><td>Requested by the <code>nmap</code> group.</td></tr><tr><td>Arch Linux</td><td>Not named by the mapping</td><td>Check whether your Nmap package provides <code>ncat</code>.</td></tr><tr><td>openSUSE</td><td>Not named by the mapping</td><td>Check whether your Nmap package provides <code>ncat</code>.</td></tr><tr><td>Alpine</td><td><code>nmap-ncat</code></td><td>Requested by the <code>nmap</code> group.</td></tr><tr><td>macOS (Homebrew)</td><td>Not named by the mapping</td><td>Check the installed Nmap formula for <code>ncat</code>.</td></tr></tbody></table></div>
+<h3>Install just this group</h3>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool nmap</code></pre>
+<p>From a downloaded standalone script, use <code>sudo ./eergn-recon-installer.sh --tool nmap</code>. To install every group without the menu, use <code>sudo eergn-recon-installer --all</code>.</p>
+
+<h2>Installation</h2>
+<h3>Install the Nmap group</h3>
+<p>This is the only group that pulls in Ncat. The installer then checks for both commands.</p>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool nmap</code></pre>
+<h3>Install Ncat directly if the group check fails</h3>
+<p>Debian/Ubuntu example. Use the equivalent package for your distribution if it splits Ncat from Nmap.</p>
+<pre><code data-lang="bash">sudo apt install ncat</code></pre>
+<h3>Verify</h3>
+<pre><code data-lang="bash">ncat --version
+command -v ncat
+eergn-recon-installer --check</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Verification is not a functional test</span><p>A version banner only proves the binary is on PATH. Run the smallest safe command against a lab endpoint to confirm the tool works in your environment.</p></div>
+</div>
+
+<h2>Basic usage</h2>
+<h3>Check a TCP port</h3>
+<p>Zero-I/O mode reports whether the connection succeeds. Add <code>-w 3</code> to bound the wait.</p>
+<pre><code data-lang="bash">ncat -zv 192.168.1.10 22</code></pre>
+<h3>Open a temporary listener</h3>
+<p>Listens on all interfaces by default. Bind to a lab address with <code>-s</code> or restrict access with <code>--allow</code>.</p>
+<pre><code data-lang="bash">ncat -l 8080</code></pre>
+<h3>Accept multiple clients in a lab</h3>
+<p>Keep-open mode is convenient but should be time-limited and bound to a controlled address.</p>
+<pre><code data-lang="bash">ncat -lk 127.0.0.1 8080</code></pre>
+<h2>Command reference</h2>
+<p>These are the options most useful for the workflows in this documentation. Run <code>ncat --help</code> for the complete list supported by your installed version.</p>
+<div class="table-scroll"><table><thead><tr><th>Option</th><th>What it does</th></tr></thead><tbody><tr><td><code>-l</code></td><td>Listen for inbound connections instead of connecting out.</td></tr><tr><td><code>-k</code></td><td>Keep the listener open for multiple connections.</td></tr><tr><td><code>-u</code></td><td>Use UDP instead of TCP.</td></tr><tr><td><code>-z</code></td><td>Zero-I/O mode; report connection status only.</td></tr><tr><td><code>-v</code></td><td>Increase verbosity.</td></tr><tr><td><code>-w</code></td><td>Set a connect or wait timeout.</td></tr><tr><td><code>-p</code></td><td>Choose a source port.</td></tr><tr><td><code>-s</code></td><td>Choose a source address.</td></tr><tr><td><code>-m</code></td><td>Limit simultaneous connections.</td></tr><tr><td><code>--allow / --deny</code></td><td>Restrict which source hosts may connect.</td></tr><tr><td><code>--ssl</code></td><td>Use TLS for the connection or listener.</td></tr><tr><td><code>--ssl-verify</code></td><td>Verify the peer certificate and hostname.</td></tr><tr><td><code>--ssl-cert / --ssl-key</code></td><td>Present a certificate and key as a listener.</td></tr><tr><td><code>-o</code></td><td>Write session data to a file.</td></tr><tr><td><code>-e / -c</code></td><td>Execute a command for the connection. Dangerous; avoid outside an isolated lab.</td></tr></tbody></table></div>
+
+<h2>Examples for an authorized lab</h2>
+<h3>Port check with a timeout</h3>
+<p>Confirm that a lab service accepts TCP connections without sending application data.</p>
+<pre><code data-lang="bash">ncat -zv -w 3 192.168.1.10 443</code></pre>
+<p>A timeout or refusal is evidence about reachability, not proof that the service is healthy.</p>
+<h3>Local TLS handshake</h3>
+<p>Use Ncat as a TLS client when you only need to confirm that a handshake completes.</p>
+<pre><code data-lang="bash">ncat --ssl --ssl-verify lab.example.internal 443 &lt; /dev/null</code></pre>
+<p>Certificate verification requires a trust store that knows the issuing CA. For detailed certificate inspection use OpenSSL.</p>
+<h3>Restricted temporary listener</h3>
+<p>Bind a listener to loopback and allow only the local host.</p>
+<pre><code data-lang="bash">ncat -l -k --allow 127.0.0.1 -s 127.0.0.1 9000</code></pre>
+<p>Stop the listener when the test ends. Do not expose it beyond the lab.</p>
+<h2>Understanding the output</h2>
+<p>Zero-I/O mode prints a short connection result. Exact wording differs between versions.</p>
+<pre><code data-lang="text">Ncat: Version 7.98 ( https://nmap.org/ncat )
+Ncat: Connected to 192.168.1.10:22.
+Ncat: 0 bytes sent, 0 bytes received in 0.01 seconds.</code></pre>
+<ul>
+  <li><strong>Connected</strong> means the TCP handshake completed.</li>
+  <li>A refusal usually means the host is reachable but nothing is listening on that port.</li>
+  <li>A timeout can mean filtering, routing problems or a host that is down.</li>
+  <li>Ncat does not identify the service; use Nmap version detection or the application's own client for that.</li>
+</ul>
+<h2>Advanced usage</h2>
+<p>Ncat can broker connections and host a simple chat server (<code>--broker</code>, <code>--chat</code>). These modes are useful in isolated exercises but should not be exposed to untrusted networks. TLS listeners need a certificate and key; keep private keys out of shared lab directories.</p>
+<p>The <code>-e</code> and <code>-c</code> options turn a listener into a remote command service. Even with <code>--allow</code>, this is a high-risk pattern. Prefer SSH or a purpose-built service for remote administration.</p>
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to try</th></tr></thead><tbody><tr><td><code>ncat: command not found</code></td><td>Ncat is packaged separately from Nmap on this distribution.</td><td>Install the Ncat package, then rerun <code>eergn-recon-installer --check</code>.</td></tr><tr><td>Connection refused</td><td>The host is reachable but no process is listening on that port.</td><td>Confirm the port and service state on the target; refusal is not usually a firewall drop.</td></tr><tr><td>Connection times out</td><td>A firewall is dropping packets, the route is wrong, or the host is down.</td><td>Check routing and scope, and compare with a host-discovery result.</td></tr><tr><td>TLS verification fails</td><td>The certificate is self-signed, expired, for another name, or the CA is not trusted.</td><td>Inspect the chain with OpenSSL; do not disable verification just to make the test pass.</td></tr><tr><td>Listener is reachable from unexpected hosts</td><td>It bound to all interfaces without access control.</td><td>Bind to a specific address and use <code>--allow</code>; stop the listener after the test.</td></tr></tbody></table></div>
+
+<h2>Security and etiquette</h2>
+<ul>
+  <li>Avoid <code>-e</code> and <code>-c</code> unless the exercise explicitly requires them.</li>
+  <li>Bind listeners to loopback or a lab address, not every interface.</li>
+  <li>Use TLS and certificate verification when data crosses an untrusted segment.</li>
+  <li>Stop temporary listeners and remove any files they created.</li>
+  <li>Do not use Ncat to bypass authentication or access controls.</li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://nmap.org/book/ncat-man.html">Ncat reference guide</a></li>
+  <li><a href="https://nmap.org/ncat/">Ncat project page</a></li>
+  <li><a href="https://nmap.org/book/">Nmap book</a></li>
+</ul>
+<p>Related guides: <a href="../../guides/host-discovery/">host discovery</a>, <a href="../../guides/service-discovery/">service discovery</a>, <a href="../../guides/working-with-results/">working with results</a>. Return to the <a href="../">tool catalog</a>.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../nmap/"><span>← Previous</span><strong>Nmap</strong></a>
+          <a class="next" href="../netcat/"><span>Next →</span><strong>Netcat</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

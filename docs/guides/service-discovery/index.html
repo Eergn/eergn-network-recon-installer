@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Service discovery · Eergn Network Recon Installer</title>
+<meta name="description" content="Identify exposed services with Nmap and confirm reachability with Netcat on authorized hosts.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/">Tools</a>
+      <a href="../../documentation/" class="is-active" aria-current="page">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/" class="is-active" aria-current="page">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Guides</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Guides</a><span class="sep">/</span><span>Service discovery</span>
+    </nav>
+        <article class="prose">
+<h1>Service discovery</h1>
+<p class="page-lede">Move from "this host is up" to "these TCP or UDP services are exposed". The guide uses Nmap for structured discovery and Netcat for a small, targeted reachability check.</p>
+
+<h2>Purpose</h2>
+<p>Identify listening services on authorized hosts, capture the evidence, and decide what needs a closer, human review. A version banner is not proof of a vulnerability. It is a clue that needs confirmation against the actual service and version.</p>
+
+<h2>Prerequisites</h2>
+<ul>
+  <li>A confirmed host list and explicit authorization for the ports and time window.</li>
+  <li>Installed groups <code>nmap</code> and <code>netcat</code>.</li>
+  <li>An agreement on scan intensity. Start small and increase only if the scope allows it.</li>
+</ul>
+
+<h2>Step 1 — start with a bounded scan</h2>
+<pre><code data-lang="bash"># Scan the 100 most common TCP ports on one authorized host
+nmap -sV -T3 --top-ports 100 192.168.1.10
+
+# Or a specific list of ports
+nmap -sV -T3 -p 22,25,53,80,443,8080 192.168.1.10</code></pre>
+<p><code>-sV</code> probes open ports to identify service and version. <code>-T3</code> is Nmap's normal timing template. <code>--top-ports 100</code> limits the port set, which keeps the first pass small. The default SYN scan requires raw-socket privileges; without them, Nmap may fall back or you can request a TCP connect scan explicitly with <code>-sT</code>.</p>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <div><span class="callout-title">Port scans are active</span><p>Every probe reaches the target and can be logged, rate-limited or blocked. Do not scan public systems or ranges outside your scope. Avoid aggressive timing (<code>-T4</code>/<code>-T5</code>) unless the scope explicitly allows it and the target can tolerate it.</p></div>
+</div>
+
+<h2>Step 2 — separate open ports from the noise</h2>
+<pre><code data-lang="bash">nmap -sV -T3 --open -p 1-1024 --reason 192.168.1.10</code></pre>
+<p><code>--open</code> shows only open, open|filtered and unfiltered ports. <code>--reason</code> explains why Nmap assigned each state. A state of <code>filtered</code> usually means a firewall or packet filter dropped the probe; it does not prove the port is closed.</p>
+
+<h2>Step 3 — confirm a single reachable service with Netcat</h2>
+<p>Netcat is useful for a narrow check: "can I establish a TCP connection to this host and port?" It is not a substitute for a port scan.</p>
+<pre><code data-lang="bash"># Zero-I/O TCP check with a short timeout
+nc -zv -w 3 192.168.1.10 443</code></pre>
+<p><code>-z</code> sends no application data, <code>-v</code> prints a result and <code>-w 3</code> bounds the connection attempt. A successful TCP handshake does not guarantee the application is healthy; it only confirms that something accepted the connection.</p>
+
+<h2>Step 4 — inspect a service banner carefully</h2>
+<p>If the scope allows interaction with a service, a simple banner or HTTP response can confirm what is listening:</p>
+<pre><code data-lang="bash"># Read an HTTP response header without downloading a full page
+curl -sS -I --max-time 5 http://192.168.1.10/
+
+# Read an SMTP greeting, then close the connection
+nc -w 3 192.168.1.10 25</code></pre>
+<p>These commands send application data and may appear in service logs. Use them only on services you are authorized to interact with. Do not use banner grabbing on third-party systems.</p>
+
+<h2>Step 5 — save the evidence</h2>
+<pre><code data-lang="bash">mkdir -p ~/engagements/lab-2026-10-29/raw
+nmap -sV -T3 --open -p 22,80,443,8080 -oA ~/engagements/lab-2026-10-29/raw/services-192.168.1.10 192.168.1.10</code></pre>
+<p><code>-oA</code> writes normal, XML and grepable formats. The XML is useful for later parsing; the normal report is readable. Treat both as sensitive.</p>
+
+<h2>Reading Nmap port states</h2>
+<div class="table-scroll"><table><thead><tr><th>State</th><th>Meaning</th><th>Practical interpretation</th></tr></thead><tbody><tr><td><code>open</code></td><td>A service accepted the probe</td><td>Investigate the service and its version</td></tr><tr><td><code>closed</code></td><td>The host responded but no service is listening</td><td>Port is reachable at the network layer</td></tr><tr><td><code>filtered</code></td><td>No response, or a filter dropped the probe</td><td>Firewall or packet filter; do not assume closed</td></tr><tr><td><code>unfiltered</code></td><td>Port is reachable but state is undetermined</td><td>Often used with ACK scans</td></tr><tr><td><code>open|filtered</code></td><td>Cannot distinguish open from filtered</td><td>Common for UDP scans; needs a different probe</td></tr></tbody></table></div>
+<h2>Interpreting version detection</h2>
+<ul>
+  <li><code>-sV</code> matches probes against service fingerprints. It can be wrong or approximate, especially behind proxies, load balancers or custom daemons.</li>
+  <li>A version string is not a vulnerability assessment. Verify the actual software version through an authorized management interface before drawing conclusions.</li>
+  <li>Services can share ports: HTTP on 8080, TLS on 8443, SSH on nonstandard ports. Do not assume a service from the port number alone.</li>
+  <li>UDP services need <code>-sU</code> and are slower and less reliable. Add UDP only for explicitly scoped ports.</li>
+</ul>
+
+<h2>Advanced: controlled default scripts</h2>
+<p>Nmap's default scripts can add useful service detail, but they are active and may be intrusive. Use them only when the scope allows script scanning:</p>
+<pre><code data-lang="bash">nmap -sV -sC -T3 -p 22,80,443 192.168.1.10</code></pre>
+<p><code>-sC</code> is equivalent to <code>--script=default</code>. Review the Nmap script documentation before running categories against production or fragile services.</p>
+
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>What to check</th></tr></thead><tbody><tr><td>All ports filtered</td><td>Host firewall, network ACL, wrong host, or scan blocked; test a known open port and check routing</td></tr><tr><td><code>-sV</code> shows <code>tcpwrapped</code></td><td>ACL or service wrapper accepted and immediately closed; confirm with the service owner</td></tr><tr><td>Nmap says it needs root</td><td>Use <code>sudo</code> for SYN scanning or choose <code>-sT</code> for a connect scan</td></tr><tr><td>Netcat hangs</td><td>Add <code>-w</code>; the service may not speak first, or a firewall is silently dropping traffic</td></tr><tr><td>Results differ between runs</td><td>Load balancing, dynamic firewalls, rate limiting or service restarts; record timing</td></tr></tbody></table></div>
+<h2>Security considerations</h2>
+<ul>
+  <li>Scanning creates logs and can trigger defenses. Confirm monitoring expectations before a production assessment.</li>
+  <li>Rate-limit when possible. Nmap's timing templates affect probe volume; <code>-T3</code> is a conservative default.</li>
+  <li>Do not use stealth or evasion options to bypass controls you are not authorized to test.</li>
+  <li>Service banners may contain internal hostnames, software versions or other sensitive information. Protect the output.</li>
+</ul>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../host-discovery/"><span>← Previous</span><strong>Host discovery</strong></a>
+          <a class="next" href="../dns-reconnaissance/"><span>Next →</span><strong>DNS reconnaissance</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>

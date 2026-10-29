@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenSSL s_client · Eergn Network Recon Installer</title>
+<meta name="description" content="How OpenSSL s_client is used with Eergn Network Recon Installer: handshakes, certificate chains, SNI, STARTTLS, protocol tests and verification.">
+<meta name="theme-color" content="#171916">
+<link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/site.css">
+</head>
+<body data-base="../../">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+      <span></span><span class="visually-hidden">Open navigation</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="../../">Home</a>
+      <a href="../../index.html#features">Features</a>
+      <a href="../../tools/" class="is-active" aria-current="page">Tools</a>
+      <a href="../../documentation/">Documentation</a>
+      <a href="../../installation/">Install</a>
+      <a class="nav-cta" href="https://github.com/Eergn/eergn-network-recon-installer">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap docs-page">
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar">
+    <div class="docs-search">
+      <label for="docs-search-input">Search documentation</label>
+      <input id="docs-search-input" type="search" placeholder="Search docs…" autocomplete="off" data-docs-search>
+      <div class="search-results" data-search-results hidden></div>
+    </div>
+    <nav class="docs-nav" aria-label="Documentation">
+      <p class="nav-label">Introduction</p>
+      <a href="../../documentation/">Documentation home</a>
+      <a href="../../getting-started/">Getting started</a>
+      <a href="../../installation/">Installation</a>
+      <a href="../../tools/">Supported tools</a>
+      <p class="nav-label">Guides</p>
+      <a href="../../guides/">Guide index</a>
+      <a href="../../guides/host-discovery/">Host discovery</a>
+      <a href="../../guides/service-discovery/">Service discovery</a>
+      <a href="../../guides/dns-reconnaissance/">DNS reconnaissance</a>
+      <a href="../../guides/tls-inspection/">TLS inspection</a>
+      <a href="../../guides/throughput-and-bandwidth/">Throughput & bandwidth</a>
+      <a href="../../guides/working-with-results/">Working with results</a>
+      <a href="../../guides/troubleshooting-installation/">Troubleshooting install</a>
+      <a href="../../guides/maintaining-installation/">Maintaining install</a>
+      <p class="nav-label">Tool reference</p>
+      <a href="../../tools/nmap/">Nmap</a>
+      <a href="../../tools/ncat/">Ncat</a>
+      <a href="../../tools/netcat/">Netcat</a>
+      <a href="../../tools/arp-scan/">arp-scan</a>
+      <a href="../../tools/fping/">fping</a>
+      <a href="../../tools/mtr/">MTR</a>
+      <a href="../../tools/dig/">dig</a>
+      <a href="../../tools/whois/">whois</a>
+      <a href="../../tools/openssl/" class="is-active" aria-current="page">OpenSSL s_client</a>
+      <a href="../../tools/testssl/">testssl.sh</a>
+      <a href="../../tools/iperf3/">iperf3</a>
+      <a href="../../tools/iftop/">iftop</a>
+      <a href="../../tools/nethogs/">nethogs</a>
+      <p class="nav-label">Reference</p>
+      <a href="../../reference/commands/">Installer commands</a>
+      <a href="../../reference/architecture/">Architecture</a>
+      <a href="../../reference/configuration/">Configuration</a>
+      <a href="../../reference/troubleshooting/">Troubleshooting</a>
+      <a href="../../reference/security/">Security</a>
+      <a href="../../reference/contributing/">Contributing</a>
+    </nav>
+  </aside>
+      <div class="docs-main">
+        <div class="docs-toolbar">
+          <button type="button" data-sidebar-toggle aria-expanded="false" aria-controls="docs-sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            Docs menu
+          </button>
+          <span>Tool reference</span>
+        </div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">/</span>
+      <a href="../../documentation/">Documentation</a><span class="sep">/</span>
+      <a href="../">Tool reference</a><span class="sep">/</span><span>OpenSSL s_client</span>
+    </nav>
+        <article class="prose">
+<div class="tool-hero">
+  <p class="eyebrow">TLS · Tool 9 of 13</p>
+  <h1>OpenSSL s_client</h1>
+  <p class="tool-tagline">A precise TLS client for one handshake at a time: certificate chains, protocol versions, SNI, STARTTLS and verification results.</p>
+  <div class="tool-badges"><span class="badge badge-sage">tls group</span><span class="badge badge">CLI</span><span class="badge badge-amber">Active (TLS)</span><span class="badge badge">Unprivileged</span></div>
+</div>
+<dl class="tool-meta">
+  <div><dt>Installer group</dt><dd><code>tls</code></dd></div>
+  <div><dt>Commands checked</dt><dd><code>openssl</code>, <code>testssl.sh</code></dd></div>
+  <div><dt>Access</dt><dd>Unprivileged</dd></div>
+  <div><dt>Traffic</dt><dd>Active (TLS)</dd></div>
+  <div><dt>Upstream</dt><dd><a href="https://docs.openssl.org/3.5/man1/openssl-s_client/">OpenSSL s_client manual</a></dd></div>
+  <div><dt>Installed by</dt><dd>Group <code>tls</code></dd></div>
+</dl>
+<div class="callout warning">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Authorized networks only</span><p>This tool sends traffic to the systems you point it at. Use it only on infrastructure you own or have explicit written permission to test. The examples use private documentation ranges and placeholder names.</p></div>
+</div>
+
+<h2>Overview</h2>
+<p>OpenSSL is a cryptography toolkit. The <code>s_client</code> command opens a TLS connection and prints handshake and certificate details. It is the low-level counterpart to testssl.sh: one endpoint, one handshake, full control over SNI, protocol version, CA trust and STARTTLS.</p>
+<p>OpenSSL is part of the installer's <code>tls</code> group. The group also requires <code>testssl.sh</code>, which is installed through a native package when available or cloned from upstream as a fallback.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Open a TLS connection to a host and port.</li>
+  <li>Print the peer certificate chain and verification result.</li>
+  <li>Set SNI explicitly with <code>-servername</code>.</li>
+  <li>Select a specific TLS protocol version for testing.</li>
+  <li>Use STARTTLS for mail, LDAP and other upgrade protocols.</li>
+  <li>Print a brief handshake summary or detailed state.</li>
+</ul>
+
+<div class="doc-category-grid">
+  <div class="doc-category"><h2>Good for</h2><ul>
+  <li>Inspecting the certificate a server presents for a specific name.</li>
+  <li>Checking whether a server supports TLS 1.2 or TLS 1.3.</li>
+  <li>Testing STARTTLS on a mail or directory service.</li>
+  <li>Capturing a certificate for offline inspection.</li>
+</ul></div>
+  <div class="doc-category"><h2>Limits</h2><ul>
+  <li>It tests one connection with the options you choose; it is not a configuration scanner.</li>
+  <li>A successful handshake does not mean the application behind it is healthy.</li>
+  <li>Verification depends on the trust store and the name you pass.</li>
+  <li>Protocol-specific failures can be caused by the client's own cipher or provider configuration.</li>
+  <li>It does not test every cipher, vulnerability or client compatibility profile.</li>
+</ul></div>
+</div>
+
+<h2>How the installer handles it</h2>
+<p>The <code>tls</code> group installs OpenSSL, ensures <code>testssl.sh</code> is available, and checks for both <code>openssl</code> and <code>testssl.sh</code>. On macOS the mapping requests <code>openssl@3</code>; the system LibreSSL binary may take precedence depending on PATH.</p>
+<p>testssl.sh is handled separately: the installer uses a native package if one exists, otherwise it clones the upstream repository to <code>/opt/testssl.sh</code> and links <code>/usr/local/bin/testssl.sh</code>.</p>
+<p>The installer's <code>tls</code> group is considered complete only when these commands exist: <code>openssl</code>, <code>testssl.sh</code>.</p>
+<div class="table-scroll"><table><thead><tr><th>Package manager</th><th>Package(s) the installer requests</th><th>Note</th></tr></thead><tbody><tr><td>Debian / Ubuntu</td><td><code>openssl</code></td><td>Installed directly by the group.</td></tr><tr><td>Fedora / RHEL family</td><td><code>openssl</code></td><td>Installed directly by the group.</td></tr><tr><td>Arch Linux</td><td><code>openssl</code></td><td>Installed directly by the group.</td></tr><tr><td>openSUSE</td><td><code>openssl</code></td><td>Installed directly by the group.</td></tr><tr><td>Alpine</td><td><code>openssl</code></td><td>Installed directly by the group.</td></tr><tr><td>macOS (Homebrew)</td><td><code>openssl@3</code></td><td>Verify that the Homebrew binary is the one on PATH.</td></tr></tbody></table></div>
+<h3>Install just this group</h3>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool tls</code></pre>
+<p>From a downloaded standalone script, use <code>sudo ./eergn-recon-installer.sh --tool tls</code>. To install every group without the menu, use <code>sudo eergn-recon-installer --all</code>.</p>
+
+<h2>Installation</h2>
+<h3>Install the TLS group</h3>
+<p>Installs OpenSSL and ensures testssl.sh is available.</p>
+<pre><code data-lang="bash">sudo eergn-recon-installer --tool tls</code></pre>
+<h3>Verify</h3>
+<pre><code data-lang="bash">openssl version
+testssl.sh --version
+eergn-recon-installer --check</code></pre>
+<div class="callout note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+  <div><span class="callout-title">Verification is not a functional test</span><p>A version banner only proves the binary is on PATH. Run the smallest safe command against a lab endpoint to confirm the tool works in your environment.</p></div>
+</div>
+
+<h2>Basic usage</h2>
+<h3>Inspect the default certificate</h3>
+<p>Always set SNI when testing a virtual host. Redirecting stdin prevents s_client from waiting for input.</p>
+<pre><code data-lang="bash">openssl s_client -connect lab.example.internal:443 -servername lab.example.internal &lt; /dev/null</code></pre>
+<h3>Print a brief summary</h3>
+<p>The brief form reduces output but still requires a readable connection.</p>
+<pre><code data-lang="bash">openssl s_client -connect lab.example.internal:443 -servername lab.example.internal -brief &lt; /dev/null</code></pre>
+<h3>Verify the chain and name</h3>
+<p>A failure here means the presented chain or name did not validate against the local trust store.</p>
+<pre><code data-lang="bash">openssl s_client -connect lab.example.internal:443 -servername lab.example.internal -verify_return_error -verify_hostname lab.example.internal &lt; /dev/null</code></pre>
+<h2>Command reference</h2>
+<p>These are the options most useful for the workflows in this documentation. Run <code>openssl s_client -help</code> for the complete list supported by your installed version.</p>
+<div class="table-scroll"><table><thead><tr><th>Option</th><th>What it does</th></tr></thead><tbody><tr><td><code>-connect HOST:PORT</code></td><td>Set the target address and port.</td></tr><tr><td><code>-servername NAME</code></td><td>Send the TLS SNI extension.</td></tr><tr><td><code>-showcerts</code></td><td>Print every certificate in the chain.</td></tr><tr><td><code>-brief</code></td><td>Print a short connection summary.</td></tr><tr><td><code>-verify_return_error</code></td><td>Abort on certificate verification failure.</td></tr><tr><td><code>-verify_hostname NAME</code></td><td>Check the certificate for a specific hostname.</td></tr><tr><td><code>-CAfile FILE</code></td><td>Use a specific CA bundle for verification.</td></tr><tr><td><code>-starttls PROTO</code></td><td>Upgrade an SMTP, IMAP, POP3, FTP, XMPP or other connection to TLS.</td></tr><tr><td><code>-tls1_2 / -tls1_3</code></td><td>Restrict the handshake to a specific protocol version.</td></tr><tr><td><code>-status</code></td><td>Request certificate status (OCSP stapling).</td></tr><tr><td><code>-state</code></td><td>Print TLS protocol state transitions.</td></tr><tr><td><code>-prexit</code></td><td>Print session information when the client exits.</td></tr><tr><td><code>-quiet</code></td><td>Suppress most s_client output.</td></tr></tbody></table></div>
+
+<h2>Examples for an authorized lab</h2>
+<h3>Save the peer certificate</h3>
+<p>Capture the certificate chain for offline inspection.</p>
+<pre><code data-lang="bash">openssl s_client -connect lab.example.internal:443 -servername lab.example.internal -showcerts &lt; /dev/null &gt; handshake.txt 2&gt;&amp;1</code></pre>
+<p>The file contains more than the certificate. Extract the PEM block before feeding it to other tools.</p>
+<h3>Check a specific protocol</h3>
+<p>Fail quickly if the server does not negotiate the requested version.</p>
+<pre><code data-lang="bash">openssl s_client -connect lab.example.internal:443 -servername lab.example.internal -tls1_3 -brief &lt; /dev/null</code></pre>
+<p>Repeat with <code>-tls1_2</code> to compare. Do not enable obsolete protocols just to make a test pass.</p>
+<h3>Test SMTP STARTTLS</h3>
+<p>Upgrade a mail connection before the handshake.</p>
+<pre><code data-lang="bash">openssl s_client -starttls smtp -connect 192.168.1.25:25 -servername mail.example.internal &lt; /dev/null</code></pre>
+<p>The server must support STARTTLS on that port; otherwise the upgrade fails before TLS begins.</p>
+<h2>Understanding the output</h2>
+<p>A successful handshake prints protocol, cipher, session and certificate details. The example is abbreviated and illustrative.</p>
+<pre><code data-lang="text">CONNECTED(00000003)
+depth=0 CN = lab.example.internal
+verify return:1
+---
+Certificate chain
+ 0 s:CN = lab.example.internal
+   i:CN = Lab Internal CA
+---
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Server public key is 256 bit
+Secure Renegotiation IS supported
+SSL-Session:
+    Protocol  : TLSv1.3
+    Cipher    : TLS_AES_256_GCM_SHA384
+---
+Verify return code: 0 (ok)</code></pre>
+<ul>
+  <li><strong>Verify return code: 0 (ok)</strong> means the chain validated against the trust store for the checks performed.</li>
+  <li>The <strong>subject</strong> and <strong>issuer</strong> lines show the leaf and its issuer; use <code>-showcerts</code> for the full chain.</li>
+  <li>The protocol and cipher show what this specific handshake negotiated, not everything the server supports.</li>
+  <li>SNI matters: connecting by IP without <code>-servername</code> can return a different certificate.</li>
+</ul>
+<h2>Advanced usage</h2>
+<p>To inspect the leaf certificate in detail, extract the PEM block from <code>-showcerts</code> output and run <code>openssl x509 -noout -subject -issuer -dates -ext subjectAltName</code>. To compare trust stores, pass <code>-CAfile</code> explicitly instead of relying on the system default. For a broad configuration review, use <a href="../testssl/">testssl.sh</a>; s_client is best for a controlled, single handshake.</p>
+<h2>Troubleshooting</h2>
+<div class="table-scroll"><table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to try</th></tr></thead><tbody><tr><td><code>no peer certificate available</code></td><td>The endpoint is not speaking TLS on that port, or the handshake failed before the certificate.</td><td>Confirm the port and protocol, and try <code>-state</code> for more detail.</td></tr><tr><td>Verification fails with a self-signed certificate</td><td>The issuer is not in the local trust store.</td><td>Import the lab CA only if it is trusted for this environment; do not disable verification as a habit.</td></tr><tr><td>Wrong certificate returned</td><td>SNI is missing or the name does not match the virtual host.</td><td>Add <code>-servername</code> and <code>-verify_hostname</code> with the exact DNS name.</td></tr><tr><td>Handshake fails for one protocol version</td><td>The server does not support that version or the client's provider disables it.</td><td>Confirm with testssl.sh before concluding the server is misconfigured.</td></tr><tr><td>Command appears to hang</td><td>s_client is waiting for stdin.</td><td>Redirect <code>&lt; /dev/null</code> or use <code>-quiet</code> with an explicit timeout.</td></tr></tbody></table></div>
+
+<h2>Security and etiquette</h2>
+<ul>
+  <li>Test only endpoints in scope; TLS handshakes are logged by servers and middleboxes.</li>
+  <li>Do not disable certificate verification to make a test pass.</li>
+  <li>Do not enable obsolete protocols or weak ciphers outside an isolated lab.</li>
+  <li>Private keys captured during testing must be protected or destroyed.</li>
+  <li>Use testssl.sh for broad checks and s_client for targeted inspection.</li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://docs.openssl.org/3.5/man1/openssl-s_client/">OpenSSL s_client manual</a></li>
+  <li><a href="https://docs.openssl.org/3.5/man1/openssl-x509/">OpenSSL x509 manual</a></li>
+  <li><a href="https://docs.openssl.org/">OpenSSL documentation</a></li>
+</ul>
+<p>Related guides: <a href="../../guides/host-discovery/">host discovery</a>, <a href="../../guides/service-discovery/">service discovery</a>, <a href="../../guides/working-with-results/">working with results</a>. Return to the <a href="../">tool catalog</a>.</p>
+
+        </article>
+        <nav class="page-nav" aria-label="Previous and next pages">
+          <a href="../whois/"><span>← Previous</span><strong>whois</strong></a>
+          <a class="next" href="../testssl/"><span>Next →</span><strong>testssl.sh</strong></a>
+        </nav>
+      </div>
+      <aside class="docs-toc" data-toc aria-label="On this page"></aside>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="../../" aria-label="Eergn Network Recon Installer home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M7 10.5 16 5l9 5.5v11L16 27l-9-5.5v-11Z" stroke="currentColor" stroke-width="1.4" opacity=".85"/><circle cx="16" cy="16" r="3.1" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="5" r="2" fill="currentColor"/><circle cx="7" cy="21.5" r="2" fill="currentColor"/><circle cx="25" cy="21.5" r="2" fill="currentColor"/></svg>
+      </span>
+      <span class="brand-text">Eergn <span>Recon Installer</span></span>
+    </a>
+        <p>A single-file Bash installer for network discovery and diagnostic tools. Built for authorized lab work and careful network troubleshooting.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Project</h3>
+        <ul>
+          <li><a href="../../documentation/">Documentation</a></li>
+          <li><a href="../../installation/">Installation</a></li>
+          <li><a href="../../tools/">Supported tools</a></li>
+          <li><a href="../../reference/architecture/">Architecture</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Learn</h3>
+        <ul>
+          <li><a href="../../getting-started/">Getting started</a></li>
+          <li><a href="../../guides/">Practical guides</a></li>
+          <li><a href="../../reference/commands/">Command reference</a></li>
+          <li><a href="../../reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer">GitHub repository</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/issues">Issues</a></li>
+          <li><a href="../../reference/contributing/">Contributing</a></li>
+          <li><a href="https://github.com/Eergn/eergn-network-recon-installer/blob/main/LICENSE">GPL-3.0 license</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Eergn · GPL-3.0 · Not affiliated with the upstream tool maintainers.</p>
+      <p class="authorized"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/></svg> Authorized networks only</p>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/search-index.js" defer></script>
+<script src="../../assets/js/site.js" defer></script>
+
+</body>
+</html>
